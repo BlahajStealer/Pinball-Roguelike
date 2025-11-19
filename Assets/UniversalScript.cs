@@ -1,16 +1,19 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using System.Collections;
 public class UniversalScript : MonoBehaviour
 {
 
     public GameObject Flap1;
     public GameObject Flap2;
+    public GameObject ball;
     public float FlapSpeed;
-    bool RightFlap;
-    bool LeftFlap;
-    bool RightFlapEnd;
-    bool LeftFlapEnd;
+    public float RespawnSpeed;
+    public bool RightFlap;
+    public bool LeftFlap;
+    public bool RightFlapEnd;
+    public bool LeftFlapEnd;
+    public bool Respawning;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -27,6 +30,16 @@ public class UniversalScript : MonoBehaviour
     {
         Flap();
         FlapAct();
+        if (ball.transform.position.y <= -1.5f)
+        {
+            Respawning = true;
+            //Vector3 tempVect = ball.transform.position;
+            //Vector3 NewVect = new Vector3(tempVect.x, 10.18f, tempVect.z);
+            StartCoroutine(moveObjectRight());
+            StartCoroutine(moveObjectUp());
+
+        }
+        
         
     }
 
@@ -89,6 +102,40 @@ public class UniversalScript : MonoBehaviour
                 LeftFlapEnd = false;
             }
         }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Ball") {
+            Debug.Log("Bounce!");
+        }
+    }
+    public IEnumerator moveObjectRight()
+    {
+        Vector3 Destination = new Vector3(-9.31f, -1.56f, .2829f);
+        Vector3 Origin = ball.transform.position;
+
+        float CurrentTime = 0f;
+        while (Vector3.Distance(transform.localPosition, Destination) > 0)
+        {
+            CurrentTime += Time.deltaTime;
+            ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
+            yield return StartCoroutine(moveObjectUp());
+;
+        }
+    }
+    public IEnumerator moveObjectUp()
+    {
+        Vector3 Destination = new Vector3(-9.31f, 12.09f, .2829f);
+        Vector3 Origin = ball.transform.position;
+
+        float CurrentTime = 0f;
+        while (Vector3.Distance(transform.localPosition, Destination) > 0)
+        {
+            CurrentTime += Time.deltaTime;
+            ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
+            yield return null;
+        }
+
     }
     
 }

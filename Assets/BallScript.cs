@@ -3,6 +3,7 @@ using UnityEngine;
 public class BallScript : MonoBehaviour
 {
     Rigidbody rb;
+    UniversalScript us;
     public float force;
     public float RightForce;
     public float LeftForce;
@@ -15,7 +16,7 @@ public class BallScript : MonoBehaviour
     }
     void Start()
     {
-        
+        us = GameObject.GetComponent<UniversalScript>();
     }
 
     // Update is called once per frame
@@ -25,13 +26,16 @@ public class BallScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "FlapRight")
+        if (other.gameObject.tag == "FlapRight" && (us.RightFlap || us.RightFlapEnd))
         {
-            rb.AddForce(RightForce, force, 0);
+            Debug.Log("Bounce");
+            rb.AddForce(RightForce,force,0);
         }
-        if (other.gameObject.tag == "FlapLeft")
+        if (other.gameObject.tag == "FlapLeft" && (us.RightFlap || us.RightFlapEnd))
         {
-            rb.AddForce(LeftForce, force, 0);
+            Debug.Log("Bounce");
+            rb.AddForce(LeftForce,force,0);
+
         }
     }
 }
