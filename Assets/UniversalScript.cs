@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using TMPro;
 public class UniversalScript : MonoBehaviour
 {
 
+    Coroutine rightCoroutine;
+    Rigidbody rb;
     public GameObject Flap1;
     public GameObject Flap2;
     public GameObject ball;
@@ -14,15 +17,20 @@ public class UniversalScript : MonoBehaviour
     public bool RightFlapEnd;
     public bool LeftFlapEnd;
     public bool Respawning;
+    public bool Respawning2;
+    public GameObject GameOver;
+    public int Lives = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
 
-
     }
     void Start()
     {
-        
+        Respawning = false;
+        rb = ball.GetComponent<Rigidbody>();
+        GameOver.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -32,14 +40,33 @@ public class UniversalScript : MonoBehaviour
         FlapAct();
         if (ball.transform.position.y <= -1.5f)
         {
+            if (Lives == 0 && !Respawning && !Respawning2)
+            {
+                GameOver.SetActive(true);
+            } else if (Lives > 0 && !Respawning && !Respawning2)
+            {
+                Lives -= 1;
+            }
             Respawning = true;
+
             //Vector3 tempVect = ball.transform.position;
             //Vector3 NewVect = new Vector3(tempVect.x, 10.18f, tempVect.z);
-            StartCoroutine(moveObjectRight());
+
+        }
+        if (Respawning && rightCoroutine == null)
+        {
+            rightCoroutine = StartCoroutine(moveObjectRight());
+
+
+        }
+        else if (Respawning2)
+        
+        {
+            StopCoroutine(rightCoroutine);
             StartCoroutine(moveObjectUp());
 
         }
-        
+
         
     }
 
@@ -113,29 +140,52 @@ public class UniversalScript : MonoBehaviour
     {
         Vector3 Destination = new Vector3(-9.31f, -1.56f, .2829f);
         Vector3 Origin = ball.transform.position;
+        if (Vector3.Distance(Origin, Destination) < 0.1f)
 
+        {
+            Debug.Log("Moving Up");
+
+
+
+            yield break;
+
+        }
         float CurrentTime = 0f;
-        while (Vector3.Distance(transform.localPosition, Destination) > 0)
+        while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
         {
             CurrentTime += Time.deltaTime;
             ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
-            yield return StartCoroutine(moveObjectUp());
+            yield return null;
 ;
         }
+        Respawning2 = true;
+        Respawning = false;
+        rightCoroutine = null;
     }
     public IEnumerator moveObjectUp()
     {
         Vector3 Destination = new Vector3(-9.31f, 12.09f, .2829f);
         Vector3 Origin = ball.transform.position;
-
-        float CurrentTime = 0f;
-        while (Vector3.Distance(transform.localPosition, Destination) > 0)
+        if (Vector3.Distance(Origin, Destination) < 0.1f)
         {
+            Debug.Log("End");
+            Respawning = false;
+            Respawning2 = false;
+            yield break;
+
+        }
+        float CurrentTime = 0f;
+        while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
+        {
+            Debug.Log("3");
+
             CurrentTime += Time.deltaTime;
             ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
             yield return null;
         }
-
+        Respawning2 = false;
+        Respawning = false;
+        rb.AddForce(1.5f,0,0);
     }
     
 }
