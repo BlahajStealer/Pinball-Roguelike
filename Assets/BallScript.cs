@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 public class BallScript : MonoBehaviour
 {
     Rigidbody rb;
     UniversalScript us;
 
     GameObject GameObject;
+    TextMeshProUGUI Text;
     bool Started;
     Vector3 initial;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -53,14 +55,14 @@ public class BallScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "FlapRight" && (us.RightFlap || us.RightFlapEnd))
+        if (other.GameObject.tag == "Pingy Thing")
         {
-            Debug.Log("Bounce");
-        }
-        if (other.gameObject.tag == "FlapLeft" && (us.RightFlap || us.RightFlapEnd))
+            us.score += 100;
+            Text.text = us.score.toString();
+            Debug.Log(us.score);
+        } else if (other.GameObject.tag == "FlapRight")
         {
-            Debug.Log("Bounce");
-
+            
         }
     }
 }

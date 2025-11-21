@@ -6,8 +6,11 @@ public class UniversalScript : MonoBehaviour
 {
 
     Coroutine rightCoroutine;
+    Coroutine upCoroutine;
+    public float score;
     Rigidbody rb;
     public GameObject Flap1;
+    public float force;
     public GameObject Flap2;
     public GameObject ball;
     public float FlapSpeed;
@@ -27,6 +30,7 @@ public class UniversalScript : MonoBehaviour
     }
     void Start()
     {
+        score = 0f;
         Respawning = false;
         rb = ball.GetComponent<Rigidbody>();
         GameOver.SetActive(false);
@@ -59,11 +63,10 @@ public class UniversalScript : MonoBehaviour
 
 
         }
-        else if (Respawning2)
+        else if (Respawning2 && upCoroutine == null)
         
         {
-            StopCoroutine(rightCoroutine);
-            StartCoroutine(moveObjectUp());
+            upCoroutine = StartCoroutine(moveObjectUp());
 
         }
 
@@ -90,7 +93,7 @@ public class UniversalScript : MonoBehaviour
         if (RightFlap)
         {
             Quaternion currentRot = Flap1.transform.rotation;
-            Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, -135.0f);
+            Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, -90.0f);
             Flap1.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
             if (currentRot == targetRot)
             {
@@ -101,7 +104,7 @@ public class UniversalScript : MonoBehaviour
         if (RightFlapEnd)
         {
             Quaternion currentRot = Flap1.transform.rotation;
-            Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, -45.0f);
+            Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, 0.0f);
             Flap1.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
             if (currentRot == targetRot)
             {
@@ -111,7 +114,7 @@ public class UniversalScript : MonoBehaviour
         if (LeftFlap)
         {
             Quaternion currentRot = Flap2.transform.rotation;
-            Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, 135.0f);
+            Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, 90f);
             Flap2.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
             if (currentRot == targetRot)
             {
@@ -122,7 +125,7 @@ public class UniversalScript : MonoBehaviour
         if (LeftFlapEnd)
         {
             Quaternion currentRot = Flap2.transform.rotation;
-            Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, 45.0f);
+            Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, 0.0f);
             Flap2.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
             if (currentRot == targetRot)
             {
@@ -140,16 +143,6 @@ public class UniversalScript : MonoBehaviour
     {
         Vector3 Destination = new Vector3(-9.31f, -1.56f, .2829f);
         Vector3 Origin = ball.transform.position;
-        if (Vector3.Distance(Origin, Destination) < 0.1f)
-
-        {
-            Debug.Log("Moving Up");
-
-
-
-            yield break;
-
-        }
         float CurrentTime = 0f;
         while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
         {
@@ -158,22 +151,16 @@ public class UniversalScript : MonoBehaviour
             yield return null;
 ;
         }
+        Debug.Log("Ended First Coroutine");
         Respawning2 = true;
         Respawning = false;
         rightCoroutine = null;
+        yield return null;
     }
     public IEnumerator moveObjectUp()
     {
         Vector3 Destination = new Vector3(-9.31f, 12.09f, .2829f);
         Vector3 Origin = ball.transform.position;
-        if (Vector3.Distance(Origin, Destination) < 0.1f)
-        {
-            Debug.Log("End");
-            Respawning = false;
-            Respawning2 = false;
-            yield break;
-
-        }
         float CurrentTime = 0f;
         while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
         {
@@ -183,9 +170,13 @@ public class UniversalScript : MonoBehaviour
             ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
             yield return null;
         }
+        Debug.Log("Ended Second Coroutine");
         Respawning2 = false;
         Respawning = false;
-        rb.AddForce(1.5f,0,0);
+        upCoroutine = null;
+        StopCoroutine(moveObjectUp());
+        rb.AddForce(force,0,0);
+        yield return null;
     }
     
 }

@@ -9,6 +9,7 @@ TagManager:
   - FlapLeft
   - FlapRight
   - Ball
+  - Pingy Thing
   layers:
   - Default
   - TransparentFX
