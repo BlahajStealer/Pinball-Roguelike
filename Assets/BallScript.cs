@@ -5,9 +5,11 @@ public class BallScript : MonoBehaviour
 {
     Rigidbody rb;
     UniversalScript us;
+    public float ForceX;
+    public float ForceY;
 
-    GameObject GameObject;
-    TextMeshProUGUI Text;
+    public GameObject GameObject;
+    public TextMeshProUGUI Text;
     bool Started;
     Vector3 initial;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -55,14 +57,17 @@ public class BallScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GameObject.tag == "Pingy Thing")
+        if (other.gameObject.tag == "Pingy Thing")
         {
             us.score += 100;
-            Text.text = us.score.toString();
+            Text.text = "Score: " + us.score.ToString();
             Debug.Log(us.score);
-        } else if (other.GameObject.tag == "FlapRight")
+        } else if (other.gameObject.tag == "FlapRight" && (us.RightFlap || us.RightFlapEnd))
         {
-            
+            rb.AddForce(ForceX, ForceY, 0);
+        } else if (other.gameObject.tag == "FlapLeft" &&  (us.LeftFlap || us.LeftFlapEnd))
+        {
+            rb.AddForce(-ForceX, ForceY, 0);
         }
     }
 }

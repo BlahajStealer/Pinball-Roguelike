@@ -9,9 +9,9 @@ public class UniversalScript : MonoBehaviour
     Coroutine upCoroutine;
     public float score;
     Rigidbody rb;
-    public GameObject Flap1;
+    public GameObject Flap1; //right
     public float force;
-    public GameObject Flap2;
+    public GameObject Flap2; //left
     public GameObject ball;
     public float FlapSpeed;
     public float RespawnSpeed;
@@ -21,6 +21,9 @@ public class UniversalScript : MonoBehaviour
     public bool LeftFlapEnd;
     public bool Respawning;
     public bool Respawning2;
+    public GameObject transformFirst;
+
+    public GameObject transformSecond;
     public GameObject GameOver;
     public int Lives = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -42,7 +45,7 @@ public class UniversalScript : MonoBehaviour
     {
         Flap();
         FlapAct();
-        if (ball.transform.position.y <= -1.5f)
+        if (ball.transform.position.y <= -18.1f)
         {
             if (Lives == 0 && !Respawning && !Respawning2)
             {
@@ -75,12 +78,12 @@ public class UniversalScript : MonoBehaviour
 
     void Flap()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame && !LeftFlap && !LeftFlapEnd)
+        if ((Mouse.current.leftButton.wasPressedThisFrame || Keyboard.current.leftShiftKey.wasPressedThisFrame) && !LeftFlap && !LeftFlapEnd)
         {
             Debug.Log("left Flap Activated");
             LeftFlap = true;
         }        
-        if (Mouse.current.rightButton.wasPressedThisFrame && !RightFlap && !RightFlapEnd)
+        if ((Mouse.current.rightButton.wasPressedThisFrame || Keyboard.current.rightShiftKey.wasPressedThisFrame) && !RightFlap && !RightFlapEnd)
         {
             Debug.Log("Right Flap Activated");
             RightFlap = true;
@@ -133,7 +136,7 @@ public class UniversalScript : MonoBehaviour
             }
         }
     }
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Ball") {
             Debug.Log("Bounce!");
@@ -141,10 +144,10 @@ public class UniversalScript : MonoBehaviour
     }
     public IEnumerator moveObjectRight()
     {
-        Vector3 Destination = new Vector3(-9.31f, -1.56f, .2829f);
+        Vector3 Destination = transformSecond.transform.position;
         Vector3 Origin = ball.transform.position;
         float CurrentTime = 0f;
-        while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
+        while (Vector3.Distance(ball.transform.localPosition, Destination) > -18.1f)
         {
             CurrentTime += Time.deltaTime;
             ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
@@ -159,10 +162,10 @@ public class UniversalScript : MonoBehaviour
     }
     public IEnumerator moveObjectUp()
     {
-        Vector3 Destination = new Vector3(-9.31f, 12.09f, .2829f);
+        Vector3 Destination = transformSecond.transform.position;
         Vector3 Origin = ball.transform.position;
         float CurrentTime = 0f;
-        while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
+        while (Vector3.Distance(ball.transform.localPosition, Destination) > -18.1f)
         {
             Debug.Log("3");
 
@@ -178,5 +181,6 @@ public class UniversalScript : MonoBehaviour
         rb.AddForce(force,0,0);
         yield return null;
     }
+    
     
 }
