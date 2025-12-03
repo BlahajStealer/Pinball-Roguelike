@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 public class CameraScript : MonoBehaviour
 {
     Rigidbody rb;
@@ -10,11 +11,14 @@ public class CameraScript : MonoBehaviour
     public ColorBlock tsp;
     public ColorBlock notTsp;
     public TextMeshProUGUI Text;
-
+    UniversalScript US;
+    public GameObject Universal;
+    public float RespawnSpeed = 2;
     bool Following;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        US = Universal.GetComponent<UniversalScript>();
         Following = true;
         OriginalPos = transform.position;
         rb = GetComponent<Rigidbody>();
@@ -25,7 +29,10 @@ public class CameraScript : MonoBehaviour
     {
         if (Following)
         {
-            Follows();
+            if (!US.StopFollow)
+            {
+                Follows();
+            }
         } else
         {
             FollowsNot();
@@ -56,5 +63,22 @@ public class CameraScript : MonoBehaviour
             Debug.Log("Following");
             
         }
+
+    }
+    public IEnumerator moveCamera()
+    {
+        Vector3 Destination = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z);
+        Vector3 Origin = transform.position;
+        float CurrentTime = 0f;
+        while (Vector3.Distance(transform.localPosition, Destination) > 0.1f)
+        {
+            CurrentTime += Time.deltaTime;
+            transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
+
+            yield return null;
+;
+        }
+        US.StopFollow = false;
+        yield return null;
     }
 }

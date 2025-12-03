@@ -7,15 +7,23 @@ public class BallScript : MonoBehaviour
     UniversalScript us;
     public float ForceX;
     public float ForceY;
-
+    AudioSource audioSource;
     public GameObject GameObject;
     public TextMeshProUGUI Text;
-    bool Started;
+    public GameObject Camera;
     Vector3 initial;
+    [SerializeField] bool startCooldown;
+    [SerializeField] float cooldown;
+    MeshCollider mc;
+    MeshRenderer Main;
+    MeshRenderer Sub;
+    public float ScoreCooldown;
+    bool wait;
+    float waitToTruify;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-        Started = false;
+        audioSource = Camera.GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         GameObject = GameObject.FindGameObjectWithTag("Empty");
     }
@@ -28,46 +36,60 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Started)
+        if (wait)
         {
-            rb.useGravity = false;
-            transform.position = initial;
-            
-        } else
-        {
-            rb.useGravity = true;
+            waitToTruify += Time.deltaTime;
+            if (waitToTruify > .1f) {
+                mc.enabled = true;
+                Main.enabled = true;
+                Sub.enabled = true;
+                wait = false;
+                waitToTruify = 0;
+            }
         }
-        if (Keyboard.current.dKey.wasPressedThisFrame && !rb.useGravity)
+        if (startCooldown)
         {
-            initial = new Vector3(initial.x+.5f, initial.y, initial.z);
-            Debug.Log("d");
+            cooldown += Time.deltaTime;
+            if (cooldown > ScoreCooldown)
+            {
+                startCooldown = false;
+                cooldown = 0.0f;
+            }
         }
-        if (Keyboard.current.aKey.wasPressedThisFrame && !rb.useGravity)
+        if (mc != null)
         {
-            initial = new Vector3(initial.x-.5f, initial.y, initial.z);
+            if (us.ForceCounter.activeSelf)
+            {
+                mc.enabled = false;
+                Main.enabled = false;
+                Sub.enabled = false;
+            }
+        }
 
-            Debug.Log("a");
-
-        }
-        if (Keyboard.current.spaceKey.wasPressedThisFrame && !rb.useGravity)
-        {
-            rb.useGravity = true;
-            Started = true;
-        }
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Pingy Thing")
+
+        if (other.gameObject.tag == "Pingy Thing" && !startCooldown)
         {
+            startCooldown = true;
+            audioSource.Play();
             us.score += 100;
             Text.text = "Score: " + us.score.ToString();
             Debug.Log(us.score);
         } else if (other.gameObject.tag == "FlapRight" && (us.RightFlap || us.RightFlapEnd))
         {
-            rb.AddForce(ForceX, ForceY, 0);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
         } else if (other.gameObject.tag == "FlapLeft" &&  (us.LeftFlap || us.LeftFlapEnd))
         {
-            rb.AddForce(-ForceX, ForceY, 0);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
+        } else if (other.gameObject.tag == "Appear Trigger")
+        {
+            mc = other.GetComponent<MeshCollider>();
+            Main = other.GetComponent<MeshRenderer>();
+            Sub = other.transform.GetChild(0).GetComponent<MeshRenderer>();
+            wait = true;
+
         }
     }
 }

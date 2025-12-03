@@ -10,6 +10,7 @@ TagManager:
   - FlapRight
   - Ball
   - Pingy Thing
+  - Appear Trigger
   layers:
   - Default
   - TransparentFX

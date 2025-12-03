@@ -2,11 +2,11 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
+using UnityEngine.UI;
 public class UniversalScript : MonoBehaviour
 {
 
-    Coroutine rightCoroutine;
-    Coroutine upCoroutine;
+
     public float score;
     Rigidbody rb;
     public GameObject Flap1; //right
@@ -22,10 +22,19 @@ public class UniversalScript : MonoBehaviour
     public bool Respawning;
     public bool Respawning2;
     public GameObject transformFirst;
-
-    public GameObject transformSecond;
+    float forceTime = 0;
     public GameObject GameOver;
     public int Lives = 1;
+    bool down;
+    public float timeMult;
+    public GameObject ForceCounter;
+    public Slider ForceCounterText;
+    [SerializeField] bool cooldown;
+    double cooldownTimer;
+    BallScript bs;
+    public GameObject Camera;
+    CameraScript cs;
+    public bool StopFollow;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -33,47 +42,91 @@ public class UniversalScript : MonoBehaviour
     }
     void Start()
     {
+        cs = Camera.GetComponent<CameraScript>();
+        ball.transform.position = transformFirst.transform.position;
+        bs = ball.GetComponent<BallScript>();
         score = 0f;
         Respawning = false;
         rb = ball.GetComponent<Rigidbody>();
         GameOver.SetActive(false);
+        ForceCounterText.value = 0;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         Flap();
         FlapAct();
-        if (ball.transform.position.y <= -18.1f)
+        if (cooldown)
         {
-            if (Lives == 0 && !Respawning && !Respawning2)
+            cooldownTimer += Time.deltaTime; 
+            if (cooldownTimer >= 5 || ball.transform.position.y >= (.02 + transformFirst.transform.position.y))
+            {
+                cooldown = false;
+                cooldownTimer = 0;
+            }
+        }
+        if (ball.transform.position.y <= transformFirst.transform.position.y + .1f && !Respawning && !cooldown)
+        {
+            if (Lives == 0)
             {
                 GameOver.SetActive(true);
-            } else if (Lives > 0 && !Respawning && !Respawning2)
+            } else if (Lives > 0)
             {
                 Lives -= 1;
+                rb.angularVelocity = Vector3.zero;
+                rb.linearVelocity = Vector3.zero;
+                StopFollow = true;
+                ball.transform.position = transformFirst.transform.position;
+                StartCoroutine(cs.moveCamera());
+
+                Respawning = true;
+
             }
-            Respawning = true;
 
             //Vector3 tempVect = ball.transform.position;
             //Vector3 NewVect = new Vector3(tempVect.x, 10.18f, tempVect.z);
 
-        }
-        if (Respawning && rightCoroutine == null)
+        } else if (ball.transform.position.y > transformFirst.transform.position.y)
         {
-            rightCoroutine = StartCoroutine(moveObjectRight());
-
-
+           Respawning = false;
         }
-        else if (Respawning2 && upCoroutine == null)
-        
+        if (((ball.transform.position.x - transformFirst.transform.position.x >= -.01 && ball.transform.position.x - transformFirst.transform.position.x <= .01) && ball.transform.position.y == transformFirst.transform.position.y))
         {
-            upCoroutine = StartCoroutine(moveObjectUp());
+            ForceCounter.SetActive(true);
+            if (forceTime <= 100 && !down)
+            {
+                forceTime += Time.deltaTime * timeMult;
+
+            }
+            else if (forceTime > 100 || down)
+            {
+                forceTime -= Time.deltaTime * timeMult;
+                down = true;
+                if (forceTime <= 0)
+                {
+                    down = false;
+                }
+            }
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                rb.linearVelocity = new Vector3(0, forceTime, 0);
+                Respawning = false;
+                cooldown = true;
+                StopFollow = false;
+
+            }
+            ForceCounterText.value = forceTime / 100;
+        }
+        else
+        {
+            ForceCounter.SetActive(false);
 
         }
-
         
+
     }
 
     void Flap()
@@ -142,12 +195,12 @@ public class UniversalScript : MonoBehaviour
             Debug.Log("Bounce!");
         }
     }
-    public IEnumerator moveObjectRight()
+    /*public IEnumerator moveObjectRight()
     {
         Vector3 Destination = transformSecond.transform.position;
         Vector3 Origin = ball.transform.position;
         float CurrentTime = 0f;
-        while (Vector3.Distance(ball.transform.localPosition, Destination) > -18.1f)
+        while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
         {
             CurrentTime += Time.deltaTime;
             ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
@@ -165,7 +218,7 @@ public class UniversalScript : MonoBehaviour
         Vector3 Destination = transformSecond.transform.position;
         Vector3 Origin = ball.transform.position;
         float CurrentTime = 0f;
-        while (Vector3.Distance(ball.transform.localPosition, Destination) > -18.1f)
+        while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
         {
             Debug.Log("3");
 
@@ -180,7 +233,7 @@ public class UniversalScript : MonoBehaviour
         StopCoroutine(moveObjectUp());
         rb.AddForce(force,0,0);
         yield return null;
-    }
+    }*/
     
     
 }
