@@ -35,28 +35,70 @@ public class UniversalScript : MonoBehaviour
     public GameObject Camera;
     CameraScript cs;
     public bool StopFollow;
+    public TextMeshProUGUI livesCounter;
+    public GameObject DDOL;
+    DontDestroyOnLoadScript DDOLS;
+    public char endlessGoal;
+    public int target = 10000;
+    public GameObject youWin;
+    public GameObject goalTextObj;
+    public TextMeshProUGUI goalText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-
+        youWin.SetActive(false);
     }
     void Start()
-    {
+    {   
+
+        DDOL = GameObject.FindGameObjectWithTag("DDOL");
+        if (DDOL != null)
+        {
+            DDOLS = DDOL.GetComponent<DontDestroyOnLoadScript>();
+            Debug.Log("DDOL is not NUll");
+            endlessGoal = DDOLS.goalOrEndless;
+
+        } else
+        {
+            endlessGoal = 'e';
+
+        }
+        if (endlessGoal == 'g')
+        {
+            goalText.text = "Goal: " + target;
+            goalTextObj.SetActive(true);
+        } else
+        {
+            goalTextObj.SetActive(false);
+
+        }
+
         cs = Camera.GetComponent<CameraScript>();
         ball.transform.position = transformFirst.transform.position;
         bs = ball.GetComponent<BallScript>();
         score = 0f;
-        Respawning = false;
+        Respawning = true;
         rb = ball.GetComponent<Rigidbody>();
         GameOver.SetActive(false);
         ForceCounterText.value = 0;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (endlessGoal == 'g')
+        {
+            if (target == score)
+            {
+                youWin.SetActive(true);
+                Time.timeScale = 0;
+
+            } else
+            {
+                youWin.SetActive(false);
+            }
+        }
+        livesCounter.text = "Lives: " + Lives.ToString();
         Flap();
         FlapAct();
         if (cooldown)

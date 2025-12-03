@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+
 using TMPro;
 using System.Collections;
 public class CameraScript : MonoBehaviour
@@ -14,6 +16,10 @@ public class CameraScript : MonoBehaviour
     UniversalScript US;
     public GameObject Universal;
     public float RespawnSpeed = 2;
+    public float moveInSpeed = .5f;
+    bool moveBool;
+    bool moveBool2;
+    public GameObject transformTwo;
     bool Following;
     Coroutine CameraMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -30,41 +36,55 @@ public class CameraScript : MonoBehaviour
     {
         if (Following)
         {
-            if (!US.StopFollow)
-            {
-                Follows();
-
-            } else
+            if (US.StopFollow)
             {
                 CameraMove = StartCoroutine(moveCamera());
 
+            }else if (!US.StopFollow && moveBool) {
+                
             }
+            else if (!US.StopFollow)
+            {
+                Follows();
+
+            } 
         } else
         {
-            FollowsNot();
+            if (!moveBool2)
+            {
+                FollowsNot();
+            }
+        }
+        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        {
+            ChangePersp();
         }
     }
     void Follows()
     {
-        transform.position = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z);
+        transform.position = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z-3.5f);
 
     }
     void FollowsNot()
     {
-        transform.position = new Vector3(0,0.8f,-34.7f);
-    }    
+        transform.position = transformTwo.transform.position;
+    }
+
     public void ChangePersp()
     {
         if (Following)
         {
-            Following = false;
-            StopCoroutine(CameraMove);
             StopAllCoroutines();
+
+            StartCoroutine(moveCameraThree());
+            Following = false;
             button.colors = tsp;
             Text.text = "Overview";
             Debug.Log("Overview");
         } else
         {
+            StopAllCoroutines();
+            StartCoroutine(moveCameraTwo());
             Following = true;
             button.colors = notTsp;
             Text.text = "Following";
@@ -75,7 +95,7 @@ public class CameraScript : MonoBehaviour
     }
     public IEnumerator moveCamera()
     {
-        Vector3 Destination = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z);
+        Vector3 Destination = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z-3.5f);
         Vector3 Origin = transform.position;
         float CurrentTime = 0f;
         while (Vector3.Distance(transform.localPosition, Destination) > 0.1f)
@@ -89,4 +109,39 @@ public class CameraScript : MonoBehaviour
         US.StopFollow = false;
         yield return null;
     }
+    public IEnumerator moveCameraTwo()
+    {
+        moveBool = true;
+        Vector3 Destination = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z-3.5f);
+        Vector3 Origin = transform.position;
+        float CurrentTime = 0f;
+        while (Vector3.Distance(transform.localPosition, Destination) > 0.1f)
+        {
+            CurrentTime += Time.deltaTime;
+            transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / moveInSpeed);
+
+            yield return null;
+;
+        }
+        moveBool = false;
+        yield return null;
+    }     
+    public IEnumerator moveCameraThree()
+    {
+        moveBool2 = true;
+        Vector3 Destination = transformTwo.transform.position;
+        Vector3 Origin = transform.position;
+        float CurrentTime = 0f;
+        while (Vector3.Distance(transform.localPosition, Destination) > 0.1f)
+        {
+            CurrentTime += Time.deltaTime;
+            transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / moveInSpeed);
+
+            yield return null;
+
+        }
+        moveBool2 = false;
+        yield return null;
+    }
 }
+
