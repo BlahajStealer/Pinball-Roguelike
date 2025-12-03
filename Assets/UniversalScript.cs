@@ -80,7 +80,7 @@ public class UniversalScript : MonoBehaviour
                 rb.linearVelocity = Vector3.zero;
                 StopFollow = true;
                 ball.transform.position = transformFirst.transform.position;
-                StartCoroutine(cs.moveCamera());
+                
 
                 Respawning = true;
 

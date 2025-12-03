@@ -15,6 +15,7 @@ public class CameraScript : MonoBehaviour
     public GameObject Universal;
     public float RespawnSpeed = 2;
     bool Following;
+    Coroutine CameraMove;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +33,11 @@ public class CameraScript : MonoBehaviour
             if (!US.StopFollow)
             {
                 Follows();
+
+            } else
+            {
+                CameraMove = StartCoroutine(moveCamera());
+
             }
         } else
         {
@@ -52,6 +58,8 @@ public class CameraScript : MonoBehaviour
         if (Following)
         {
             Following = false;
+            StopCoroutine(CameraMove);
+            StopAllCoroutines();
             button.colors = tsp;
             Text.text = "Overview";
             Debug.Log("Overview");
