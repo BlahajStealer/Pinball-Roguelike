@@ -2629,6 +2629,38 @@ PrefabInstance:
       propertyPath: ForceCounterText
       value: 
       objectReference: {fileID: 1782403367}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: ballColors.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: 'ballColors.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d73fb8134f15b46e2b0a2544a0e863d2, type: 2}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: 'ballColors.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ccab35f3bb07e43508b247e424bbb274, type: 2}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: 'ballColors.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3961a933a8ab75f4abbffacef7a22a86, type: 2}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: 'ballColors.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 534e26724f167d14ca222fcc2b16b6d5, type: 2}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: 'ballColors.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2100000, guid: dd352619a2c5b6a42ac04608c7037b43, type: 2}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: 'ballColors.Array.data[5]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7749e2f0b9682cd47ad6bb6961c70804, type: 2}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: 'ballColors.Array.data[6]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 192f76817223b49c982aca8d9b65cd49, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4074,15 +4106,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5632923875091882778, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: m_CollisionDetection
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7012192402075302596, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: m_Radius
-      value: 0.70849174
+      value: 0.664381
       objectReference: {fileID: 0}
     - target: {fileID: 7012192402075302596, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: m_Center.x
-      value: 0.0062957406
+      value: -0.025832057
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

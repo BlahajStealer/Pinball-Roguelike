@@ -43,6 +43,7 @@ public class UniversalScript : MonoBehaviour
     public GameObject youWin;
     public GameObject goalTextObj;
     public TextMeshProUGUI goalText;
+    public Material[] ballColors;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
@@ -57,11 +58,13 @@ public class UniversalScript : MonoBehaviour
             DDOLS = DDOL.GetComponent<DontDestroyOnLoadScript>();
             Debug.Log("DDOL is not NUll");
             endlessGoal = DDOLS.goalOrEndless;
+            ball.GetComponent<Renderer>().material = ballColors[DDOLS.colorChoiceInt];
+            
 
         } else
         {
             endlessGoal = 'e';
-
+            ball.GetComponent<Renderer>().material = ballColors[6];
         }
         if (endlessGoal == 'g')
         {

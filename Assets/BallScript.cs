@@ -67,29 +67,43 @@ public class BallScript : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision collision)
     {
 
-        if (other.gameObject.tag == "Pingy Thing" && !startCooldown)
+        if (collision.gameObject.CompareTag("Pingy Thing") && !startCooldown)
         {
             startCooldown = true;
             audioSource.Play();
             us.score += 100;
             Text.text = "Score: " + us.score.ToString();
             Debug.Log(us.score);
-        } else if (other.gameObject.tag == "FlapRight" && (us.RightFlap || us.RightFlapEnd))
+        }
+        else if (collision.gameObject.CompareTag("FlapRight") && (us.RightFlap || us.RightFlapEnd))
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
-        } else if (other.gameObject.tag == "FlapLeft" &&  (us.LeftFlap || us.LeftFlapEnd))
+        }
+        else if (collision.gameObject.CompareTag("FlapLeft") && (us.LeftFlap || us.LeftFlapEnd))
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
-        } else if (other.gameObject.tag == "Appear Trigger")
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Appear Trigger"))
         {
             mc = other.GetComponent<MeshCollider>();
             Main = other.GetComponent<MeshRenderer>();
             Sub = other.transform.GetChild(0).GetComponent<MeshRenderer>();
             wait = true;
 
+        }
+        else if (other.gameObject.CompareTag("FlapRight") && (us.RightFlap || us.RightFlapEnd))
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
+        }
+        else if (other.gameObject.CompareTag("FlapLeft") && (us.LeftFlap || us.LeftFlapEnd))
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
         }
     }
 }
