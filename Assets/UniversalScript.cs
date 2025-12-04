@@ -40,14 +40,15 @@ public class UniversalScript : MonoBehaviour
     DontDestroyOnLoadScript DDOLS;
     public char endlessGoal;
     public int target = 10000;
-    public GameObject youWin;
+    public GameObject Shop;
     public GameObject goalTextObj;
     public TextMeshProUGUI goalText;
     public Material[] ballColors;
+    Vector3 BallStop;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        youWin.SetActive(false);
+        Shop.SetActive(false);
     }
     void Start()
     {   
@@ -93,12 +94,14 @@ public class UniversalScript : MonoBehaviour
         {
             if (target == score)
             {
-                youWin.SetActive(true);
-                Time.timeScale = 0;
+                Shop.SetActive(true);
+                rb.linearVelocity = Vector3.zero;
+                BallStop = ball.transform.position;
+                ball.transform.position = BallStop;
 
             } else
             {
-                youWin.SetActive(false);
+                Shop.SetActive(false);
             }
         }
         livesCounter.text = "Lives: " + Lives.ToString();
