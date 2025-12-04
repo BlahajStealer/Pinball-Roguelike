@@ -78,14 +78,7 @@ public class BallScript : MonoBehaviour
             Text.text = "Score: " + us.score.ToString();
             Debug.Log(us.score);
         }
-        else if (collision.gameObject.CompareTag("FlapRight") && (us.RightFlap || us.RightFlapEnd))
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
-        }
-        else if (collision.gameObject.CompareTag("FlapLeft") && (us.LeftFlap || us.LeftFlapEnd))
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
-        }
+        
     }
     private void OnTriggerEnter(Collider other)
     {
