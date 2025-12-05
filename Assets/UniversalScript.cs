@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UniversalScript : MonoBehaviour
 {
 
-
+    ShopScript sp;
     public float score;
     Rigidbody rb;
     public GameObject Flap1; //right
@@ -49,6 +49,7 @@ public class UniversalScript : MonoBehaviour
     void Awake()
     {
         Shop.SetActive(false);
+        sp = Shop.GetComponent<ShopScript>();
     }
     void Start()
     {   
@@ -98,6 +99,10 @@ public class UniversalScript : MonoBehaviour
                 rb.linearVelocity = Vector3.zero;
                 BallStop = ball.transform.position;
                 ball.transform.position = BallStop;
+                if (!sp.shopMoneyStarted)
+                {
+                    sp.shopMoneyStart = true;
+                }
 
             } else
             {

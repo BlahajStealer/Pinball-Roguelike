@@ -20,6 +20,8 @@ public class BallScript : MonoBehaviour
     public float ScoreCooldown;
     bool wait;
     float waitToTruify;
+    public float PointForceX;
+    public float PointForceY;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -77,6 +79,7 @@ public class BallScript : MonoBehaviour
             us.score += 100;
             Text.text = "Score: " + us.score.ToString();
             Debug.Log(us.score);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
         }
         
     }
