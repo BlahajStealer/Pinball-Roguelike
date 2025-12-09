@@ -518,7 +518,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 26528119}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: MachineButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &26528119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2209,7 +2221,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 692834224}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: BadgeButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &692834224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2517,7 +2541,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 740419559}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: MachineButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &740419559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2881,7 +2917,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 824143163}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: BadgeButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 5
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &824143163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3153,6 +3201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 952135913}
   - component: {fileID: 952135912}
+  - component: {fileID: 952135914}
   m_Layer: 0
   m_Name: Shop
   m_TagString: Untagged
@@ -3172,6 +3221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c3315e35faa4432097247e345c9995e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  IdDet: {fileID: 0}
   Money: 0
   MoneyText: {fileID: 237374379}
   Univ: {fileID: 4060687}
@@ -3214,6 +3264,9 @@ MonoBehaviour:
   - {fileID: 740419558}
   shopMoneyStart: 0
   shopMoneyStarted: 0
+  BadgeArray: 
+  BallArray: 
+  MachineArray: 
 --- !u!4 &952135913
 Transform:
   m_ObjectHideFlags: 0
@@ -3230,6 +3283,18 @@ Transform:
   - {fileID: 2071470600}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &952135914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952135911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0984d8482bba84c1482a47ce67b54e06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &993258873
 GameObject:
   m_ObjectHideFlags: 0
@@ -3720,7 +3785,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1131965692}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: MachineButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1131965692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3840,7 +3917,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1160358398}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: BadgeButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1160358398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4447,7 +4536,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1281083114}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: BadgeButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1281083114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5221,7 +5322,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1538899229}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135914}
+        m_TargetAssemblyTypeName: idDeterminer, Assembly-CSharp
+        m_MethodName: Ball
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1538899229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5452,7 +5565,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1668743444}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: BadgeButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1668743444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6153,7 +6278,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1805191928}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135912}
+        m_TargetAssemblyTypeName: ShopScript, Assembly-CSharp
+        m_MethodName: BadgeButtonHit
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1805191928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6792,7 +6929,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2013555516}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135914}
+        m_TargetAssemblyTypeName: idDeterminer, Assembly-CSharp
+        m_MethodName: Ball
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2013555516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7166,7 +7315,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2086577336}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135914}
+        m_TargetAssemblyTypeName: idDeterminer, Assembly-CSharp
+        m_MethodName: Ball
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2086577336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7397,7 +7558,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2093027443}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 952135914}
+        m_TargetAssemblyTypeName: idDeterminer, Assembly-CSharp
+        m_MethodName: Ball
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2093027443
 MonoBehaviour:
   m_ObjectHideFlags: 0
