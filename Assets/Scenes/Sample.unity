@@ -4255,6 +4255,10 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: FlapSpeed
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
       propertyPath: Respawning
       value: 0
       objectReference: {fileID: 0}
