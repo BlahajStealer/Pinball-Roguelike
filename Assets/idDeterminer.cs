@@ -75,9 +75,11 @@ public class idDeterminer : MonoBehaviour
                 break;
         }
     }
-    public void Ball(int ID)
+    public void Ball(int Id)
     {
-        switch (ID)
+        Id = ss.BallArray[Id];
+
+        switch (Id)
         {
             case 0: 
                 MoneyTaken = 10;
@@ -141,9 +143,9 @@ public class idDeterminer : MonoBehaviour
                 break;
         }
     }
-    public void Machine(int ID)
+    public void Machine(int id)
     {
-        switch (ID)
+        switch (id)
         {
             case 0: 
                 MoneyTaken = 10;

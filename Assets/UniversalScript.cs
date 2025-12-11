@@ -93,14 +93,15 @@ public class UniversalScript : MonoBehaviour
     {
         if (endlessGoal == 'g')
         {
-            if (target == score)
+            if (target <= score)
             {
                 Shop.SetActive(true);
                 rb.linearVelocity = Vector3.zero;
-                BallStop = ball.transform.position;
-                ball.transform.position = BallStop;
+                ball.transform.position = transformFirst.transform.position;
                 if (!sp.shopMoneyStarted)
                 {
+                    Lives += 1;
+
                     sp.shopMoneyStart = true;
                 }
 

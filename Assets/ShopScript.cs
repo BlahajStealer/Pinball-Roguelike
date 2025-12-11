@@ -21,6 +21,10 @@ public class ShopScript : MonoBehaviour
     public int[] BadgeArray;
     public int[] BallArray;
     public int[] MachineArray;
+    public TextMeshProUGUI NewScore;
+    public GameObject Shop;
+    public Sprite outOfStock;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,6 +41,7 @@ public class ShopScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        NewScore.text = Mathf.RoundToInt(us.score * 1.25f).ToString() + " Points Needed";
 
         if (shopMoneyStart && !shopMoneyStarted)
         {
@@ -76,6 +81,11 @@ public class ShopScript : MonoBehaviour
     public void MachineButtonHit(int ID)
     {
         IdDet.Machine(MachineArray[ID]);
+    }
+    public void Leave()
+    {
+        us.target *= Mathf.RoundToInt(us.score * 1.25f);
+        Shop.SetActive(false);
     }
 }
 
