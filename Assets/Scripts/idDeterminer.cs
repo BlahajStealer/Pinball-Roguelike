@@ -12,86 +12,32 @@ public class idDeterminer : MonoBehaviour
     }
     public void Badge(int ID, int OGID)
     {
-        switch (ID)
+        int iEnd = 0;
+        bool PhotoReal = false;
+        for (int i = 0; i < ss.Photos.Length; i++)
         {
-            case 0: 
-                MoneyTaken = 3;
-                Debug.Log("One is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.BadgeButtons[OGID].image.sprite = ss.outOfStock;
-                    Instantiate(BadgeObjects[ID]);
-
-                    break;
-                }
+            if (ss.Photos[i] == null)
+            {
+                PhotoReal = true;
+                iEnd = i;
                 break;
-            case 1: 
-                MoneyTaken = 3;
+            } else
+            {
+                PhotoReal = false;
+                
+            }
+        }
+        MoneyTaken = 3;
+        if (MoneyTaken <= ss.Money && PhotoReal)
+        {
 
-                Debug.Log("Two is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.BadgeButtons[OGID].image.sprite = ss.outOfStock;
-                    Instantiate(BadgeObjects[ID]);
+            GameObject nextGameObj;
+            ss.Money -= MoneyTaken;
+            ss.BadgeButtons[OGID].image.sprite = ss.outOfStock;
+            nextGameObj = Instantiate(BadgeObjects[ID]);
+            ss.Photos[iEnd] = nextGameObj;
 
-                    break;
-                }
 
-                break;
-            case 2: 
-                MoneyTaken = 3;
-                Debug.Log("Three is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.BadgeButtons[OGID].image.sprite = ss.outOfStock;
-                    Instantiate(BadgeObjects[ID]);
-
-                    ss.Money -= MoneyTaken;
-                    break;
-                }
-
-                break;
-            case 3: 
-                MoneyTaken = 3;
-                Debug.Log("Four is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.BadgeButtons[OGID].image.sprite = ss.outOfStock;
-                    Instantiate(BadgeObjects[ID]);
-
-                    break;
-                }
-
-                break;
-            case 4: 
-                MoneyTaken = 3;
-                Debug.Log("Five is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.BadgeButtons[OGID].image.sprite = ss.outOfStock;
-                    Instantiate(BadgeObjects[ID]);
-
-                    break;
-                }
-                break;
-            case 5: 
-                MoneyTaken = 3;
-                Debug.Log("Six is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.BadgeButtons[OGID].image.sprite = ss.outOfStock;
-                    Instantiate(BadgeObjects[ID]);
-
-                    break;
-                }
-                break;
-            default:
-                break;
         }
     }
 

@@ -5,6 +5,7 @@ using static UnityEngine.Random;
 
 public class ShopScript : MonoBehaviour
 {
+    public Sprite Transparent;
     public idDeterminer IdDet;
     public float Money;
     public TextMeshProUGUI MoneyText;
@@ -26,13 +27,15 @@ public class ShopScript : MonoBehaviour
     public float DivisionPts = 1;
     public bool Halfpts;
     public float normalTarget;
+    public GameObject[] Photos;
+    public Image[] Swap;
+    public Sprite[] IDSprites;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         DivisionPts = 1;
         IdDet = GetComponent<idDeterminer>();
         us = Univ.GetComponent<UniversalScript>();
-        normalTarget = us.target;
 
         BadgeArray = new int[BadgeButtons.Length];
         MachineArray = new int[MachineModsButton.Length];
@@ -43,23 +46,14 @@ public class ShopScript : MonoBehaviour
     void Update()
     {
         Leaving = false;
-        if (cutPts)
-        {
-            NewScore.text = Mathf.RoundToInt((2 * (normalTarget * 1.25f)) / 3).ToString() + " Points Needed";
 
-        }
-        else if (Halfpts)
-        {
-            NewScore.text = Mathf.RoundToInt(((normalTarget * 1.25f)) / 2).ToString() + " Points Needed";
 
-        } else
-        {
-            NewScore.text = Mathf.RoundToInt(normalTarget * 1.25f).ToString() + " Points Needed";
-        }
         if (shopMoneyStart && !shopMoneyStarted)
         {
 
             Money += Mathf.RoundToInt(10/DivisionPts);
+            normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
+            us.Lives += 1;
 
         
             shopMoneyStart = false;
@@ -69,6 +63,13 @@ public class ShopScript : MonoBehaviour
                 int RandomInt = Random.Range(0,Badges.Length);
                 BadgeButtons[i].image.sprite = Badges[RandomInt];
                 BadgeArray[i] = RandomInt;
+                for (int n = 0; n < IDSprites.Length; n++)
+                {
+                    if (IDSprites[n] == null)
+                    {
+                        IDSprites[n] = BadgeButtons[i].image.sprite;
+                    }
+                }
             }
 
             for (int i = 0; i < MachineModsButton.Length; i++)
@@ -78,11 +79,32 @@ public class ShopScript : MonoBehaviour
                 MachineArray[i] = RandomInt;
             }
         }
+
+        if (cutPts)
+        {
+            NewScore.text = Mathf.RoundToInt(2*normalTarget/3) + " Points Needed";
+        } else if (Halfpts)
+        {
+            NewScore.text = Mathf.RoundToInt(normalTarget/ 2) + " Points Needed";
+        } else
+        {
+            NewScore.text = Mathf.RoundToInt(normalTarget) + " Points Needed";
+        }
+
         MoneyText.text = "Money: " + Money.ToString();
 
     }
     public void BadgeButtonHit(int ID)
     {
+        for (int i = 0; i < Swap.Length; i++)
+        {
+            if (Swap[i].sprite == Transparent)
+            {
+                Swap[i].sprite = IDSprites[ID];
+                break;
+            }
+            
+        }
         if ((BadgeButtons[ID].image.sprite != outOfStock))
         {
             IdDet.Badge(BadgeArray[ID], ID);
@@ -100,22 +122,17 @@ public class ShopScript : MonoBehaviour
     }
     public void Leave()
     {
+
         if (cutPts)
         {
-            normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
-
-            us.target = Mathf.RoundToInt((2*(normalTarget * 1.25f))/3);
+            us.target = Mathf.RoundToInt(2*normalTarget/3);
 
         } else if (Halfpts)
         {
-            normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
-
-            us.target = Mathf.RoundToInt(((normalTarget * 1.25f)) / 2);
+            us.target = Mathf.RoundToInt(normalTarget/2);
         } else
         {
-            normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
-
-            us.target = Mathf.RoundToInt(normalTarget * 1.25f);
+            us.target = Mathf.RoundToInt(normalTarget);
         }
         us.score = 0;
         Shop.SetActive(false);
@@ -123,5 +140,16 @@ public class ShopScript : MonoBehaviour
         Leaving = true;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
 
 

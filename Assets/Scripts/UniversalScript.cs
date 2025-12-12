@@ -93,6 +93,7 @@ public class UniversalScript : MonoBehaviour
     void Update()
     {
         goalText.text = "Goal: " + target;
+
         {
             if (sp.Leaving && AddPtsSold)
             {
@@ -111,8 +112,6 @@ public class UniversalScript : MonoBehaviour
                     ball.transform.position = transformFirst.transform.position;
                     if (!sp.shopMoneyStarted)
                     {
-                        Lives += 1;
-
                         sp.shopMoneyStart = true;
                     }
 
@@ -264,45 +263,4 @@ public class UniversalScript : MonoBehaviour
             Debug.Log("Bounce!");
         }
     }
-    /*public IEnumerator moveObjectRight()
-    {
-        Vector3 Destination = transformSecond.transform.position;
-        Vector3 Origin = ball.transform.position;
-        float CurrentTime = 0f;
-        while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
-        {
-            CurrentTime += Time.deltaTime;
-            ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
-            yield return null;
-;
-        }
-        Debug.Log("Ended First Coroutine");
-        Respawning2 = true;
-        Respawning = false;
-        rightCoroutine = null;
-        yield return null;
-    }
-    public IEnumerator moveObjectUp()
-    {
-        Vector3 Destination = transformSecond.transform.position;
-        Vector3 Origin = ball.transform.position;
-        float CurrentTime = 0f;
-        while (Vector3.Distance(ball.transform.localPosition, Destination) > 0.1f)
-        {
-            Debug.Log("3");
-
-            CurrentTime += Time.deltaTime;
-            ball.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
-            yield return null;
-        }
-        Debug.Log("Ended Second Coroutine");
-        Respawning2 = false;
-        Respawning = false;
-        upCoroutine = null;
-        StopCoroutine(moveObjectUp());
-        rb.AddForce(force,0,0);
-        yield return null;
-    }*/
-    
-    
 }

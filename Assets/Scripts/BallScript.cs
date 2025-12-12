@@ -39,6 +39,8 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Text.text = "Score: " + us.score.ToString();
+        
         if (wait)
         {
             waitToTruify += Time.deltaTime;
@@ -81,7 +83,6 @@ public class BallScript : MonoBehaviour
             startCooldown = true;
             audioSource.Play();
             us.score += 100;
-            Text.text = "Score: " + us.score.ToString();
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
         }
