@@ -22,6 +22,7 @@ public class BallScript : MonoBehaviour
     float waitToTruify;
     public float PointForceX;
     public float PointForceY;
+    public bool JustHit;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -67,7 +68,10 @@ public class BallScript : MonoBehaviour
                 Sub.enabled = false;
             }
         }
-
+        if (JustHit)
+        {
+            JustHit = false;
+        }
     }
     void OnCollisionEnter(Collision collision)
     {
@@ -91,6 +95,7 @@ public class BallScript : MonoBehaviour
             Main = other.GetComponent<MeshRenderer>();
             Sub = other.transform.GetChild(0).GetComponent<MeshRenderer>();
             wait = true;
+            JustHit = true;
 
         }
         else if (other.gameObject.CompareTag("FlapRight") && (us.RightFlap || us.RightFlapEnd))
@@ -100,6 +105,6 @@ public class BallScript : MonoBehaviour
         else if (other.gameObject.CompareTag("FlapLeft") && (us.LeftFlap || us.LeftFlapEnd))
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
-        }
+        } 
     }
 }

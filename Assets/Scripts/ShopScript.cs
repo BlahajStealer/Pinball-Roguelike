@@ -11,29 +11,30 @@ public class ShopScript : MonoBehaviour
     public GameObject Univ;
     UniversalScript us;
     public Sprite[] Badges;
-    public Sprite[] BallMods;
     public Sprite[] MachineMods;
     public Button[] BadgeButtons;
-    public Button[] BallButtons;
     public Button[] MachineModsButton;
     public bool shopMoneyStart;
     public bool shopMoneyStarted;
     public int[] BadgeArray;
-    public int[] BallArray;
     public int[] MachineArray;
     public TextMeshProUGUI NewScore;
     public GameObject Shop;
     public Sprite outOfStock;
-
-
+    public bool cutPts;
+    public bool Leaving;
+    public float DivisionPts = 1;
+    public bool Halfpts;
+    public float normalTarget;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DivisionPts = 1;
         IdDet = GetComponent<idDeterminer>();
         us = Univ.GetComponent<UniversalScript>();
+        normalTarget = us.target;
 
         BadgeArray = new int[BadgeButtons.Length];
-        BallArray = new int[BallButtons.Length];
         MachineArray = new int[MachineModsButton.Length];
 
     }
@@ -41,11 +42,26 @@ public class ShopScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        NewScore.text = Mathf.RoundToInt(us.score * 1.25f).ToString() + " Points Needed";
+        Leaving = false;
+        if (cutPts)
+        {
+            NewScore.text = Mathf.RoundToInt((2 * (normalTarget * 1.25f)) / 3).ToString() + " Points Needed";
 
+        }
+        else if (Halfpts)
+        {
+            NewScore.text = Mathf.RoundToInt(((normalTarget * 1.25f)) / 2).ToString() + " Points Needed";
+
+        } else
+        {
+            NewScore.text = Mathf.RoundToInt(normalTarget * 1.25f).ToString() + " Points Needed";
+        }
         if (shopMoneyStart && !shopMoneyStarted)
         {
-            Money += us.score/100;
+
+            Money += Mathf.RoundToInt(10/DivisionPts);
+
+        
             shopMoneyStart = false;
             shopMoneyStarted = true;
             for (int i = 0; i < BadgeButtons.Length; i++)
@@ -54,12 +70,7 @@ public class ShopScript : MonoBehaviour
                 BadgeButtons[i].image.sprite = Badges[RandomInt];
                 BadgeArray[i] = RandomInt;
             }
-            for (int i = 0; i < BallButtons.Length; i++)
-            {
-                int RandomInt = Random.Range(0,BallMods.Length);
-                BallButtons[i].image.sprite = BallMods[RandomInt];
-                BallArray[i] = RandomInt;
-            }
+
             for (int i = 0; i < MachineModsButton.Length; i++)
             {
                 int RandomInt = Random.Range(0,MachineMods.Length);
@@ -72,20 +83,44 @@ public class ShopScript : MonoBehaviour
     }
     public void BadgeButtonHit(int ID)
     {
-        IdDet.Badge(BadgeArray[ID]);
-    }
-    public void BallButtonHit(int ID)
-    {
-        IdDet.Ball(BallArray[ID]);
+        if ((BadgeButtons[ID].image.sprite != outOfStock))
+        {
+            IdDet.Badge(BadgeArray[ID], ID);
+        }
+
     }
     public void MachineButtonHit(int ID)
     {
-        IdDet.Machine(MachineArray[ID]);
+        if (MachineModsButton[ID].image.sprite != outOfStock)
+        {
+            IdDet.Machine(MachineArray[ID], ID);
+        }
+
+
     }
     public void Leave()
     {
-        us.target *= Mathf.RoundToInt(us.score * 1.25f);
+        if (cutPts)
+        {
+            normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
+
+            us.target = Mathf.RoundToInt((2*(normalTarget * 1.25f))/3);
+
+        } else if (Halfpts)
+        {
+            normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
+
+            us.target = Mathf.RoundToInt(((normalTarget * 1.25f)) / 2);
+        } else
+        {
+            normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
+
+            us.target = Mathf.RoundToInt(normalTarget * 1.25f);
+        }
+        us.score = 0;
         Shop.SetActive(false);
+        shopMoneyStarted = false;
+        Leaving = true;
     }
 }
 
