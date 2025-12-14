@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Percent20 : MonoBehaviour
+public class Multiplicable : MonoBehaviour
 {
     GameObject Universal;
     UniversalScript us;
@@ -15,16 +15,26 @@ public class Percent20 : MonoBehaviour
         us = Universal.GetComponent<UniversalScript>();
         Ball = GameObject.FindGameObjectWithTag("Player");
         bs = Ball.GetComponent<BallScript>();
-        Shop = GameObject.FindGameObjectWithTag("Shop");
+        Shop = GameObject.FindGameObjectWithTag("Player");
         sc = Shop.GetComponent<ShopScript>();
     }
 
     void Update()
     {
-        if (sc.shopMoneyStart && !sc.shopMoneyStarted)
+        int numOBadges = 0;
+        float Markiplier = 1;
+        for (int i = 0; i < sc.Photos.Length; i++)
         {
-            sc.Money *= Mathf.RoundToInt(1.2f);
-            us.AddOnAct();
+            if (sc.Photos[i] != null)
+            {
+                numOBadges++;
+            }
         }
+        for (int i = 0; i < numOBadges; i++)
+        {
+            Markiplier += .2f;
+        }
+        sc.NumberBadges = Markiplier;
     }
+
 }

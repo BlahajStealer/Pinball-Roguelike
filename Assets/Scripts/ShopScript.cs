@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using static UnityEngine.Random;
+using JetBrains.Annotations;
 
 public class ShopScript : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class ShopScript : MonoBehaviour
     public GameObject[] Photos;
     public Image[] Swap;
     public Sprite[] IDSprites;
+    public float NumberBadges;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -51,12 +53,18 @@ public class ShopScript : MonoBehaviour
         if (shopMoneyStart && !shopMoneyStarted)
         {
 
-            Money += Mathf.RoundToInt(10/DivisionPts);
+            Money += Mathf.RoundToInt((10/DivisionPts) * NumberBadges);
             normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
             us.Lives += 1;
-
+            NumberBadges = 1;
         
             shopMoneyStart = false;
+            for (int n = 0; n < IDSprites.Length; n++)
+            {
+
+                IDSprites[n] = null;
+                
+            }
             shopMoneyStarted = true;
             for (int i = 0; i < BadgeButtons.Length; i++)
             {
@@ -68,6 +76,7 @@ public class ShopScript : MonoBehaviour
                     if (IDSprites[n] == null)
                     {
                         IDSprites[n] = BadgeButtons[i].image.sprite;
+                        break;
                     }
                 }
             }
@@ -96,15 +105,7 @@ public class ShopScript : MonoBehaviour
     }
     public void BadgeButtonHit(int ID)
     {
-        for (int i = 0; i < Swap.Length; i++)
-        {
-            if (Swap[i].sprite == Transparent)
-            {
-                Swap[i].sprite = IDSprites[ID];
-                break;
-            }
-            
-        }
+
         if ((BadgeButtons[ID].image.sprite != outOfStock))
         {
             IdDet.Badge(BadgeArray[ID], ID);
@@ -125,10 +126,14 @@ public class ShopScript : MonoBehaviour
 
         if (cutPts)
         {
+            us.AddOnAct();
+
             us.target = Mathf.RoundToInt(2*normalTarget/3);
 
         } else if (Halfpts)
         {
+            us.AddOnAct();
+
             us.target = Mathf.RoundToInt(normalTarget/2);
         } else
         {
@@ -138,6 +143,17 @@ public class ShopScript : MonoBehaviour
         Shop.SetActive(false);
         shopMoneyStarted = false;
         Leaving = true;
+    }
+
+    public void Sell(int ID)
+    {
+        if (Photos[ID] != null)
+        {
+            Swap[ID].sprite = Transparent;
+            Destroy(Photos[ID]);
+            Photos[ID] = null;
+        }
+
     }
 }
 

@@ -24,6 +24,8 @@ public class AddPts : MonoBehaviour
         if (sc.Leaving) {
             us.score = us.target / 3;
             sc.Leaving = false;
+            us.AddOnAct();
+
         }
         sc.DivisionPts = 3;
     }

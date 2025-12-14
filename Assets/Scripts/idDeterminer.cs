@@ -29,6 +29,7 @@ public class idDeterminer : MonoBehaviour
         }
         MoneyTaken = 3;
         if (MoneyTaken <= ss.Money && PhotoReal)
+
         {
 
             GameObject nextGameObj;
@@ -36,7 +37,15 @@ public class idDeterminer : MonoBehaviour
             ss.BadgeButtons[OGID].image.sprite = ss.outOfStock;
             nextGameObj = Instantiate(BadgeObjects[ID]);
             ss.Photos[iEnd] = nextGameObj;
+            for (int i = 0; i < ss.Swap.Length; i++)
+            {
+                if (ss.Swap[i].sprite == ss.Transparent)
+                {
+                    ss.Swap[i].sprite = ss.IDSprites[OGID];
+                    break;
+                }
 
+            }
 
         }
     }
@@ -118,5 +127,5 @@ public class idDeterminer : MonoBehaviour
                 break;
         }
     }
-
+    
 }

@@ -5,48 +5,70 @@ using TMPro;
 using UnityEngine.UI;
 public class UniversalScript : MonoBehaviour
 {
-
-    ShopScript sp;
-    public float score;
-    Rigidbody rb;
-    public GameObject Flap1; //right
-    public float force;
-    public GameObject Flap2; //left
+    [Header("--Ball--")]
     public GameObject ball;
-    public float FlapSpeed;
-    public float RespawnSpeed;
+    public float score;
+    public float force;
+    public int Lives = 1;
+    public Material[] ballColors;
+    float forceTime = 0;
+    bool down;
+    bool cooldown;
+    double cooldownTimer;
+    public float timeMult;
+    public TextMeshProUGUI livesCounter;
+    public Slider ForceCounterText;
+
+    [Header("--Flaps--")]
+    public GameObject Flap1; //right
+    public GameObject Flap2; //left
     public bool RightFlap;
     public bool LeftFlap;
     public bool RightFlapEnd;
     public bool LeftFlapEnd;
+    public float FlapSpeed;
+
+    [Header("--Respawning--")]
+    public float RespawnSpeed;
     public bool Respawning;
     public bool Respawning2;
+    [Header("--Positioning--")]
+    Vector3 BallStop;
     public GameObject transformFirst;
-    float forceTime = 0;
-    public GameObject GameOver;
-    public int Lives = 1;
-    bool down;
-    public float timeMult;
+    [Header("--Objects--")]
     public GameObject ForceCounter;
-    public Slider ForceCounterText;
-    [SerializeField] bool cooldown;
-    double cooldownTimer;
-    BallScript bs;
-    public GameObject Camera;
-    CameraScript cs;
-    public bool StopFollow;
-    public TextMeshProUGUI livesCounter;
     public GameObject DDOL;
-    DontDestroyOnLoadScript DDOLS;
-    public char endlessGoal;
-    public int target = 10000;
     public GameObject Shop;
+    [Header("--Scripts--")]
+    ShopScript sp;
+    BallScript bs;
+    DontDestroyOnLoadScript DDOLS;
+    Rigidbody rb;
+
+    [Header("--Camera--")]
+    CameraScript cs;
+
+    public GameObject Camera;
+
+    public bool StopFollow;
+    [Header("--Goals and Gameover--")]
+
+    public char endlessGoal;
+    public GameObject GameOver;
     public GameObject goalTextObj;
     public TextMeshProUGUI goalText;
-    public Material[] ballColors;
-    Vector3 BallStop;
+    public int target = 10000;
+
+    [Header("--AddPts--")]
+
     public bool AddPtsSold;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    [Header("--Add50--")]
+
+    float actTimer;
+    public bool Add50;
+    public int AddedPoints;
+
     void Awake()
     {
         Shop.SetActive(false);
@@ -92,6 +114,15 @@ public class UniversalScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        actTimer += Time.deltaTime;
+        if (actTimer >= 10)
+        {
+            actTimer = 0;
+            if (Add50)
+            {
+                score += AddedPoints;
+            }
+        }
         goalText.text = "Goal: " + target;
 
         {
@@ -261,6 +292,15 @@ public class UniversalScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Ball") {
             Debug.Log("Bounce!");
+        }
+    }
+
+
+    public void AddOnAct()
+    {
+        if (Add50)
+        {
+            AddedPoints += 50;
         }
     }
 }
