@@ -21,10 +21,8 @@ public class Percent20 : MonoBehaviour
 
     void Update()
     {
-        if (sc.shopMoneyStart && !sc.shopMoneyStarted)
-        {
-            sc.Money *= Mathf.RoundToInt(1.2f);
-            us.AddOnAct();
-        }
+
+        sc.Percent20 = true;
+        
     }
 }

@@ -88,7 +88,7 @@ public class UniversalScript : MonoBehaviour
 
         } else
         {
-            endlessGoal = 'e';
+            endlessGoal = 'g';
             ball.GetComponent<Renderer>().material = ballColors[6];
         }
         if (endlessGoal == 'g')
@@ -112,6 +112,12 @@ public class UniversalScript : MonoBehaviour
     }
 
     // Update is called once per frame
+    private void FixedUpdate()
+    {
+        Flap();
+        FlapAct();
+    }
+
     void Update()
     {
         actTimer += Time.deltaTime;
@@ -125,107 +131,110 @@ public class UniversalScript : MonoBehaviour
         }
         goalText.text = "Goal: " + target;
 
+
+        if (sp.Leaving && AddPtsSold)
         {
-            if (sp.Leaving && AddPtsSold)
+            AddPtsSold = false;
+            score = Mathf.RoundToInt(target * (2 / 3));
+            sp.DivisionPts = 2 / 3;
+        }
+        if (endlessGoal == 'g')
+        {
+
+
+            if (target <= score)
             {
-                AddPtsSold = false;
-                score = Mathf.RoundToInt(target * (2 / 3));
-                sp.DivisionPts = 2/3;
-            }
-            if (endlessGoal == 'g')
-            {
-                
-
-                if (target <= score)
+                Shop.SetActive(true);
+                rb.linearVelocity = Vector3.zero;
+                ball.transform.position = transformFirst.transform.position;
+                if (!sp.shopMoneyStarted)
                 {
-                    Shop.SetActive(true);
-                    rb.linearVelocity = Vector3.zero;
-                    ball.transform.position = transformFirst.transform.position;
-                    if (!sp.shopMoneyStarted)
-                    {
-                        sp.shopMoneyStart = true;
-                    }
-
-                }
-                else
-                {
-                    Shop.SetActive(false);
-                }
-            }
-            livesCounter.text = "Lives: " + Lives.ToString();
-            Flap();
-            FlapAct();
-            if (cooldown)
-            {
-                cooldownTimer += Time.deltaTime;
-                if (cooldownTimer >= 5 || ball.transform.position.y >= (.02 + transformFirst.transform.position.y))
-                {
-                    cooldown = false;
-                    cooldownTimer = 0;
-                }
-            }
-            if (ball.transform.position.y <= transformFirst.transform.position.y + .1f && !Respawning && !cooldown)
-            {
-                if (Lives == 0)
-                {
-                    GameOver.SetActive(true);
-                }
-                else if (Lives > 0)
-                {
-                    Lives -= 1;
-                    rb.angularVelocity = Vector3.zero;
-                    rb.linearVelocity = Vector3.zero;
-                    StopFollow = true;
-                    ball.transform.position = transformFirst.transform.position;
-
-
-                    Respawning = true;
-
+                    sp.shopMoneyStart = true;
                 }
 
-                //Vector3 tempVect = ball.transform.position;
-                //Vector3 NewVect = new Vector3(tempVect.x, 10.18f, tempVect.z);
-
-            }
-            else if (ball.transform.position.y > transformFirst.transform.position.y)
-            {
-                Respawning = false;
-            }
-            if (((ball.transform.position.x - transformFirst.transform.position.x >= -.01 && ball.transform.position.x - transformFirst.transform.position.x <= .01) && ball.transform.position.y == transformFirst.transform.position.y))
-            {
-                ForceCounter.SetActive(true);
-                if (forceTime <= 100 && !down)
-                {
-                    forceTime += Time.deltaTime * timeMult;
-
-                }
-                else if (forceTime > 100 || down)
-                {
-                    forceTime -= Time.deltaTime * timeMult;
-                    down = true;
-                    if (forceTime <= 0)
-                    {
-                        down = false;
-                    }
-                }
-                if (Keyboard.current.spaceKey.wasPressedThisFrame)
-                {
-                    rb.linearVelocity = new Vector3(0, forceTime, 0);
-                    Respawning = false;
-                    cooldown = true;
-                    StopFollow = false;
-
-                }
-                ForceCounterText.value = forceTime / 100;
             }
             else
             {
-                ForceCounter.SetActive(false);
+                Shop.SetActive(false);
+            }
+        }
+        livesCounter.text = "Lives: " + Lives.ToString();
+        Flap();
+        FlapAct();
+        if (cooldown)
+        {
+            cooldownTimer += Time.deltaTime;
+            if (cooldownTimer >= 5 || ball.transform.position.y >= (.02 + transformFirst.transform.position.y))
+            {
+                cooldown = false;
+                cooldownTimer = 0;
+            }
+        }
+        if (ball.transform.position.y <= transformFirst.transform.position.y + .1f && !Respawning && !cooldown)
+        {
+            if (Lives == 0)
+            {
+                GameOver.SetActive(true);
+            }
+            else if (Lives > 0)
+            {
+                Lives -= 1;
+                rb.angularVelocity = Vector3.zero;
+                rb.linearVelocity = Vector3.zero;
+                StopFollow = true;
+                ball.transform.position = transformFirst.transform.position;
+
+
+                Respawning = true;
 
             }
 
+            //Vector3 tempVect = ball.transform.position;
+            //Vector3 NewVect = new Vector3(tempVect.x, 10.18f, tempVect.z);
 
         }
+        else if (ball.transform.position.y > transformFirst.transform.position.y)
+        {
+            Respawning = false;
+        }
+        bool xAlligned = Mathf.Abs(ball.transform.position.x - transformFirst.transform.position.x) < 0.05f;
+        bool yAlligned = Mathf.Abs(ball.transform.position.y - transformFirst.transform.position.y) < 0.05f;
+        if (xAlligned && yAlligned)
+        {
+            ForceCounter.SetActive(true);
+            if (forceTime <= 100 && !down)
+            {
+                forceTime += Time.deltaTime * timeMult;
+
+            }
+            else if (forceTime > 100 || down)
+            {
+                forceTime -= Time.deltaTime * timeMult;
+                down = true;
+                if (forceTime <= 0)
+                {
+                    down = false;
+                }
+            }
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                rb.linearVelocity = new Vector3(0, forceTime, 0);
+                Respawning = false;
+                cooldown = true;
+                StopFollow = false;
+
+            }
+            ForceCounterText.value = forceTime / 100;
+        }
+        else
+        {
+            ForceCounter.SetActive(false);
+
+        }
+    }
+
+
+        
 
         void Flap()
         {
@@ -287,7 +296,7 @@ public class UniversalScript : MonoBehaviour
                 }
             }
         }
-    }
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Ball") {
@@ -303,4 +312,5 @@ public class UniversalScript : MonoBehaviour
             AddedPoints += 50;
         }
     }
+
 }

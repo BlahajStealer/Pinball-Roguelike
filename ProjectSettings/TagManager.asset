@@ -13,6 +13,16 @@ TagManager:
   - Appear Trigger
   - DDOL
   - Shop
+  - 20Percent
+  - Add50
+  - AddPts
+  - CutPoints
+  - Every15
+  - HalfPointsMoney
+  - Multiplicable
+  - First Image
+  - Second Image
+  - Gold Pingy Thing
   layers:
   - Default
   - TransparentFX

@@ -22,9 +22,16 @@ public class CameraScript : MonoBehaviour
     public GameObject transformTwo;
     bool Following;
     Coroutine CameraMove;
+    bool goldPingActive;
+    bool addPingActive;
+    bool removePingActive;
+    public Material Gold;
+    public GameObject Shop;
+    ShopScript ss;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        ss = Shop.GetComponent<ShopScript>();
         US = Universal.GetComponent<UniversalScript>();
         Following = true;
         OriginalPos = transform.position;
@@ -59,6 +66,59 @@ public class CameraScript : MonoBehaviour
         {
             ChangePersp();
         }
+        Raycasting();
+
+    }
+    void Raycasting()
+    {
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+
+            if (hit.collider.CompareTag("Pingy Thing") && goldPingActive && Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                Debug.Log("Hai2");
+                hit.collider.gameObject.transform.GetChild(0).GetComponentInChildren<Renderer>().material = Gold;
+                hit.collider.tag = "Gold Pingy Thing";
+                goldPingActive = false;
+                ss.SellConsume.SetActive(false);
+                if (ss.rtc.anchoredPosition.y == 180)
+                {
+                    Destroy(ss.Consumables[0]);
+                    ss.Consumables[0] = null;
+                    ss.ConsumableSpots[0].sprite = ss.Transparent;
+                } else
+                {
+                    Destroy(ss.Consumables[1]);
+                    ss.Consumables[1] = null;
+                    ss.ConsumableSpots[1].sprite = ss.Transparent;
+                }
+                
+            }
+        }
+    }
+
+    public void GoldPinger(int ID)
+    {
+        if (ID == 0)
+        {
+            goldPingActive = true;
+
+        } else
+        {
+            goldPingActive = false;
+
+        }
+    }    
+    public void AddPinger(int ID)
+    {
+        addPingActive = true;
+    }    
+    public void RemovePinger(int ID)
+    {
+        removePingActive = true;
     }
     void Follows()
     {

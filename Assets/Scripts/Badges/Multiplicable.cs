@@ -15,7 +15,7 @@ public class Multiplicable : MonoBehaviour
         us = Universal.GetComponent<UniversalScript>();
         Ball = GameObject.FindGameObjectWithTag("Player");
         bs = Ball.GetComponent<BallScript>();
-        Shop = GameObject.FindGameObjectWithTag("Player");
+        Shop = GameObject.FindGameObjectWithTag("Shop");
         sc = Shop.GetComponent<ShopScript>();
     }
 

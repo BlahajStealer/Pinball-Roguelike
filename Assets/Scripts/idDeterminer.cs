@@ -3,6 +3,7 @@ using UnityEngine;
 public class idDeterminer : MonoBehaviour
 {
     public GameObject[] BadgeObjects;
+    public GameObject[] ConsumableObjs;
 
     ShopScript ss;
     int MoneyTaken;
@@ -52,80 +53,42 @@ public class idDeterminer : MonoBehaviour
 
     public void Machine(int id, int OGID)
     {
-        switch (id)
+        int iEnd = 0;
+        bool PhotoReal = false;
+        for (int i = 0; i < ss.Consumables.Length; i++)
         {
-            case 0: 
-                MoneyTaken = 10;
-
-                Debug.Log("One is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.MachineModsButton[OGID].image.sprite = ss.outOfStock;
-
-                    ss.Money -= MoneyTaken;
-                    break;
-                }
+            if (ss.Consumables[i] == null)
+            {
+                PhotoReal = true;
+                iEnd = i;
+                Debug.Log("True");
                 break;
-            case 1: 
-                MoneyTaken = 20;
-
-                Debug.Log("Two is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.MachineModsButton[OGID].image.sprite = ss.outOfStock;
-
-                    break;
-                }
-                break;
-            case 2: 
-                MoneyTaken = 30;
-
-                Debug.Log("Three is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.MachineModsButton[OGID].image.sprite = ss.outOfStock;
-
-                    break;
-                }
-                break;
-            case 3: 
-                MoneyTaken = 40;
-                Debug.Log("Four is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.MachineModsButton[OGID].image.sprite = ss.outOfStock;
-
-                    break;
-                }
-                break;
-            case 4: 
-                MoneyTaken = 50;
-                Debug.Log("Five is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.MachineModsButton[OGID].image.sprite = ss.outOfStock;
-
-                    break;
-                }
-                break;
-            case 5: 
-                MoneyTaken = 60;
-                Debug.Log("Six is Displayed");
-                if (MoneyTaken <= ss.Money)
-                {
-                    ss.Money -= MoneyTaken;
-                    ss.MachineModsButton[OGID].image.sprite = ss.outOfStock;
-
-                    break;
-                }
-                break;
-            default:
-                break;
+            } else
+            {
+                PhotoReal = false;
+            }
         }
+        Debug.Log(PhotoReal);
+        MoneyTaken = 2;
+        if (MoneyTaken <= ss.Money && PhotoReal)
+        {
+            Debug.Log("Made it");
+            GameObject NextGameObj;
+            ss.Money -= MoneyTaken;
+            ss.MachineModsButton[OGID].image.sprite = ss.outOfStock;
+            NextGameObj = Instantiate(ConsumableObjs[id]);
+            ss.Consumables[iEnd] = NextGameObj;
+            for (int i = 0; i < ss.ConsumableSpots.Length; i++)
+            {
+                if (ss.ConsumableSpots[i].sprite == ss.Transparent)
+                {
+                    Debug.Log(id);
+                    ss.ConsumableSpots[i].sprite = ss.IDConsumables[OGID];
+                    break;
+                }
+            }
+
+        }
+
     }
-    
 }

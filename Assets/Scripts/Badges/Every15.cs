@@ -28,8 +28,9 @@ public class Every15 : MonoBehaviour
             Hits += 1;
         }
         if (Hits >= 15)
-        {
+        { 
             sc.Money += 1;
+            Hits = 0;
             us.AddOnAct();
         }
     }

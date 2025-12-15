@@ -85,6 +85,13 @@ public class BallScript : MonoBehaviour
             us.score += 100;
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
+        } else if (collision.gameObject.CompareTag("Gold Pingy Thing") && !startCooldown)
+        {
+            startCooldown = true;
+            audioSource.Play();
+            us.score += 300;
+            Debug.Log(us.score);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
         }
         
     }
@@ -107,5 +114,9 @@ public class BallScript : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
         } 
+    }
+    private void OnMouseOver()
+    {
+        Debug.Log("Hai :3");
     }
 }
