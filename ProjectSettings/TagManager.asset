@@ -23,6 +23,7 @@ TagManager:
   - First Image
   - Second Image
   - Gold Pingy Thing
+  - Surface
   layers:
   - Default
   - TransparentFX

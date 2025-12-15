@@ -81,7 +81,7 @@ public class ShopScript : MonoBehaviour
             Money = Mathf.RoundToInt(Money * NumberBadges);
             Money += Mathf.RoundToInt((10/DivisionPts));
             normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
-            us.Lives += 1;
+            us.Lives = 4;
             NumberBadges = 1;
             inShop = true;
             shopMoneyStart = false;

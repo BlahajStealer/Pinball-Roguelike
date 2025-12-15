@@ -28,6 +28,7 @@ public class CameraScript : MonoBehaviour
     public Material Gold;
     public GameObject Shop;
     ShopScript ss;
+    public GameObject Pinger;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -96,6 +97,9 @@ public class CameraScript : MonoBehaviour
                     ss.ConsumableSpots[1].sprite = ss.Transparent;
                 }
                 
+            } else if (hit.collider.CompareTag("Surface") && addPingActive && 
+                Mouse.current.leftButton.wasPressedThisFrame) {
+                Instantiate(Pinger, new Vector3(hit.point.x, hit.point.y, 0), Quaternion.Euler(0,90,0));
             }
         }
     }
