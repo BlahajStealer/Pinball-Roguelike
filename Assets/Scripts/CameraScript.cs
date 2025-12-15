@@ -87,23 +87,46 @@ public class CameraScript : MonoBehaviour
                 ss.SellConsume.SetActive(false);
                 if (ss.rtc.anchoredPosition.y == 180)
                 {
-                    Destroy(ss.Consumables[0]);
-                    ss.Consumables[0] = null;
-                    ss.ConsumableSpots[0].sprite = ss.Transparent;
+                    destroyGameObj(0);
                 } else
                 {
-                    Destroy(ss.Consumables[1]);
-                    ss.Consumables[1] = null;
-                    ss.ConsumableSpots[1].sprite = ss.Transparent;
+                    destroyGameObj(1);
                 }
                 
             } else if (hit.collider.CompareTag("Surface") && addPingActive && 
                 Mouse.current.leftButton.wasPressedThisFrame) {
                 Instantiate(Pinger, new Vector3(hit.point.x, hit.point.y, 0), Quaternion.Euler(0,90,0));
+                addPingActive = false;
+                ss.SellConsume.SetActive(false);
+                if (ss.rtc.anchoredPosition.y == 180)
+                {
+                    destroyGameObj(0);
+                } else
+                {
+                    destroyGameObj(1);
+                }
+            } else if (hit.collider.CompareTag("Pingy Thing") && removePingActive && 
+                Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                Destroy(hit.collider.gameObject);
+                removePingActive = false;
+                ss.SellConsume.SetActive(false);
+                if (ss.rtc.anchoredPosition.y == 180)
+                {
+                    destroyGameObj(0);
+                } else
+                {
+                    destroyGameObj(1);
+                }
             }
         }
     }
-
+    void destroyGameObj(int ID)
+    {
+        Destroy(ss.Consumables[ID]);
+        ss.Consumables[ID] = null;
+        ss.ConsumableSpots[ID].sprite = ss.Transparent;
+    }
     public void GoldPinger(int ID)
     {
         if (ID == 0)
@@ -118,11 +141,27 @@ public class CameraScript : MonoBehaviour
     }    
     public void AddPinger(int ID)
     {
-        addPingActive = true;
+        if (ID == 0)
+        {
+            addPingActive = true;
+
+        } else
+        {
+            addPingActive = false;
+
+        }
     }    
     public void RemovePinger(int ID)
     {
-        removePingActive = true;
+        if (ID == 0)
+        {
+            removePingActive = true;
+            
+        } else
+        {
+            removePingActive = false;
+            
+        }
     }
     void Follows()
     {

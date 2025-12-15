@@ -59,6 +59,9 @@ public class UniversalScript : MonoBehaviour
     public TextMeshProUGUI goalText;
     public int target = 10000;
 
+    Rigidbody Flap1rb;
+    Rigidbody Flap2rb;
+
     [Header("--AddPts--")]
 
     public bool AddPtsSold;
@@ -76,6 +79,8 @@ public class UniversalScript : MonoBehaviour
     }
     void Start()
     {   
+        Flap1rb = Flap1.GetComponent<Rigidbody>();
+        Flap2rb = Flap2.GetComponent<Rigidbody>();
 
         DDOL = GameObject.FindGameObjectWithTag("DDOL");
         if (DDOL != null)
@@ -159,8 +164,7 @@ public class UniversalScript : MonoBehaviour
             }
         }
         livesCounter.text = "Lives: " + Lives.ToString();
-        Flap();
-        FlapAct();
+
         if (cooldown)
         {
             cooldownTimer += Time.deltaTime;
@@ -257,7 +261,8 @@ public class UniversalScript : MonoBehaviour
             {
                 Quaternion currentRot = Flap1.transform.rotation;
                 Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, -90.0f);
-                Flap1.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
+                Flap1rb.MoveRotation(Quaternion.Slerp(currentRot, targetRot, FlapSpeed));
+                //Flap1.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
                 if (currentRot == targetRot)
                 {
                     RightFlapEnd = true;
@@ -268,7 +273,7 @@ public class UniversalScript : MonoBehaviour
             {
                 Quaternion currentRot = Flap1.transform.rotation;
                 Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, 0.0f);
-                Flap1.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
+                Flap1rb.MoveRotation(Quaternion.Slerp(currentRot, targetRot, FlapSpeed));
                 if (currentRot == targetRot)
                 {
                     RightFlapEnd = false;
@@ -278,7 +283,7 @@ public class UniversalScript : MonoBehaviour
             {
                 Quaternion currentRot = Flap2.transform.rotation;
                 Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, 90f);
-                Flap2.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
+                Flap2rb.MoveRotation(Quaternion.Slerp(currentRot, targetRot, FlapSpeed));
                 if (currentRot == targetRot)
                 {
                     LeftFlapEnd = true;
@@ -289,7 +294,7 @@ public class UniversalScript : MonoBehaviour
             {
                 Quaternion currentRot = Flap2.transform.rotation;
                 Quaternion targetRot = Quaternion.Euler(currentRot.x, currentRot.y, 0.0f);
-                Flap2.transform.rotation = Quaternion.Slerp(currentRot, targetRot, FlapSpeed);
+                Flap2rb.MoveRotation(Quaternion.Slerp(currentRot, targetRot, FlapSpeed));
                 if (currentRot == targetRot)
                 {
                     LeftFlapEnd = false;

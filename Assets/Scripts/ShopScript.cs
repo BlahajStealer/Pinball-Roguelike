@@ -200,6 +200,7 @@ public class ShopScript : MonoBehaviour
 
     public void Sell(int ID)
     {
+        
         if (Photos[ID] != null)
         {
             int Y;
@@ -207,25 +208,37 @@ public class ShopScript : MonoBehaviour
             {
                 case 0:
                     Y = 287;
+            Debug.Log("287");
+
                     break;
                 case 1:
                     Y = 137;
+            Debug.Log("137");
+
                     break;
                 case 2:
                     Y = -13;
+            Debug.Log("-13");
+
                     break;
                 case 3:
                     Y = -163;
+            Debug.Log("-163");
+
                     break;
                 case 4:
                     Y = -313;
+            Debug.Log("-313");
+
                     break;
                 default:
                     Y = 287;
+            Debug.Log("Defaulted");
+
                     break;
             }
-            Y += 24;
-            rt.anchoredPosition = new Vector2(-719, Y);
+            Y += 37;
+            rt.anchoredPosition = new Vector2(98, Y);
             SellButton.SetActive(true);
 
         }
@@ -238,19 +251,19 @@ public class ShopScript : MonoBehaviour
         int ID;
         switch (y)
         {
-            case 287+24:
+            case 287+37:
                 ID = 0;
                 break;
-            case 137 + 24:
+            case 137 + 37:
                 ID = 1;
                 break;
-            case -13 + 24:
+            case -13 + 37:
                 ID = 2;
                 break;
-            case -163 + 24:
+            case -163 + 37:
                 ID = 3;
                 break;
-            case -313 + 24:
+            case -313 + 37:
                 ID = 4;
                 break;
             default:
@@ -334,7 +347,7 @@ public class ShopScript : MonoBehaviour
             {
                 y = -120;
             }
-            rtc.anchoredPosition = new Vector2(-94, y);
+            rtc.anchoredPosition = new Vector2(759, y);
             SellConsume.SetActive(true);
             
         }
@@ -348,6 +361,9 @@ public class ShopScript : MonoBehaviour
     {
         SellConsume.SetActive(false);
         cs.GoldPinger(1);
+        cs.AddPinger(1);
+        cs.RemovePinger(1);
+
     }
 }
 
