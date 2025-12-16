@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 26528119}
   - component: {fileID: 26528118}
   m_Layer: 0
-  m_Name: Button (1)
+  m_Name: Consume2
   m_TagString: Consume2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -799,16 +799,16 @@ RectTransform:
   m_GameObject: {fileID: 51304627}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2828, y: 1.2828, z: 1.2828}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2108848874}
-  m_Father: {fileID: 1325644991}
+  m_Father: {fileID: 2071470600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -107.99998, y: 232.00006}
-  m_SizeDelta: {x: 100, y: -50}
+  m_AnchoredPosition: {x: 20.457642, y: 297.60968}
+  m_SizeDelta: {x: -1720, y: -1030}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &51304629
 MonoBehaviour:
@@ -2539,7 +2539,7 @@ GameObject:
   - component: {fileID: 567899975}
   - component: {fileID: 567899977}
   m_Layer: 0
-  m_Name: Button (4)
+  m_Name: Consume5
   m_TagString: Consume5
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2836,6 +2836,9 @@ MonoBehaviour:
   Shop: {fileID: 952135911}
   Pinger: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
   Canvas: {fileID: 2071470599}
+  DescriptionOffsetx: 125
+  DescriptionOffsety: 35
+  cooldown: 0
 --- !u!82 &589460813
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2946,7 +2949,7 @@ GameObject:
   - component: {fileID: 692834224}
   - component: {fileID: 692834223}
   m_Layer: 0
-  m_Name: Button (2)
+  m_Name: Badge3
   m_TagString: Badge3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3305,7 +3308,7 @@ GameObject:
   - component: {fileID: 740419559}
   - component: {fileID: 740419558}
   m_Layer: 0
-  m_Name: Button (2)
+  m_Name: Consume3
   m_TagString: Consume3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3930,7 +3933,7 @@ GameObject:
   - component: {fileID: 895235966}
   - component: {fileID: 895235968}
   m_Layer: 0
-  m_Name: Button (3)
+  m_Name: Consume4
   m_TagString: Consume4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4466,7 +4469,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ac444dbd40b9be34fb30058a0d9543f9, type: 3}
   SellConsume: {fileID: 887403677}
   Description: {fileID: 2108848875}
-  Descriptions: []
+  Descriptions:
+  - Test1
+  - Test2
+  - Test3
+  - Test4
+  - Test5
+  - Test6
+  - Test7
   DescriptionObj: {fileID: 51304627}
 --- !u!4 &952135913
 Transform:
@@ -5437,7 +5447,7 @@ GameObject:
   - component: {fileID: 1131965692}
   - component: {fileID: 1131965691}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Consume1
   m_TagString: Consume1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6564,7 +6574,6 @@ RectTransform:
   - {fileID: 862040638}
   - {fileID: 1426255094}
   - {fileID: 237374378}
-  - {fileID: 51304628}
   m_Father: {fileID: 2071470600}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -7378,7 +7387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -204, y: -63}
+  m_AnchoredPosition: {x: -232, y: -63}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1426255095
@@ -7976,7 +7985,7 @@ GameObject:
   - component: {fileID: 1668743444}
   - component: {fileID: 1668743443}
   m_Layer: 0
-  m_Name: Button (1)
+  m_Name: Badge2
   m_TagString: Badge2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9032,7 +9041,7 @@ GameObject:
   - component: {fileID: 1805191928}
   - component: {fileID: 1805191927}
   m_Layer: 0
-  m_Name: Button
+  m_Name: Badge1
   m_TagString: Badge1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10344,6 +10353,7 @@ RectTransform:
   - {fileID: 21503886}
   - {fileID: 2045220256}
   - {fileID: 224245007}
+  - {fileID: 51304628}
   m_Father: {fileID: 952135913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
