@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-
+using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 public class CameraScript : MonoBehaviour
 {
     Rigidbody rb;
@@ -29,9 +30,18 @@ public class CameraScript : MonoBehaviour
     public GameObject Shop;
     ShopScript ss;
     public GameObject Pinger;
+    GraphicRaycaster gRaycast;
+    PointerEventData PointerEventDataGraphics;
+    EventSystem gEventSystem;
+    public GameObject Canvas;
+    public float DescriptionOffsetx;
+    public float DescriptionOffsety;
+    public float cooldown;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        gRaycast = Canvas.GetComponent<GraphicRaycaster>();
+        gEventSystem = Canvas.GetComponent<EventSystem>();
         ss = Shop.GetComponent<ShopScript>();
         US = Universal.GetComponent<UniversalScript>();
         Following = true;
@@ -42,6 +52,7 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        cooldown+=Time.deltaTime;
         if (Following)
         {
             if (US.StopFollow)
@@ -68,7 +79,7 @@ public class CameraScript : MonoBehaviour
             ChangePersp();
         }
         Raycasting();
-
+        TwoDRaycast();
     }
     void Raycasting()
     {
@@ -118,7 +129,61 @@ public class CameraScript : MonoBehaviour
                 {
                     destroyGameObj(1);
                 }
+            } /*else if (hit.collider.CompareTag("Badge1"))
+            {
+                Debug.Log("Badge1 Detected");
+                int BadgeId;
+                BadgeId = ss.BadgeArray[0];
+                ss.Description.text = ss.Descriptions[BadgeId];
+                ss.DescriptionObj.SetActive(true);
+                ss.DescriptionObj.transform.position = mousePos;
+            }*/
+        }
+    }
+    void TwoDRaycast()
+    {
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+
+        PointerEventDataGraphics = new PointerEventData(gEventSystem);
+        PointerEventDataGraphics.position = mousePos;
+        List<RaycastResult> results = new List<RaycastResult>();
+        gRaycast.Raycast(PointerEventDataGraphics, results);
+        foreach(RaycastResult result in results)
+        {
+            if (result.gameObject.tag == "Badge1")
+            {
+                cooldown = 0;
+                Debug.Log("Badge1 Detected");
+                int BadgeId;
+                BadgeId = ss.BadgeArray[0];
+                ss.Description.text = ss.Descriptions[BadgeId];
+                ss.DescriptionObj.SetActive(true);
+                ss.DescriptionObj.transform.position = new Vector3(mousePos.x+DescriptionOffsetx, mousePos.y+DescriptionOffsety);
+            } else if (result.gameObject.tag == "Badge2")
+            {
+                cooldown=0;
+                Debug.Log("Badge2 Detected");
+                int BadgeId;
+                BadgeId = ss.BadgeArray[1];
+                ss.Description.text = ss.Descriptions[BadgeId];
+                ss.DescriptionObj.SetActive(true);
+                ss.DescriptionObj.transform.position = new Vector3(mousePos.x+DescriptionOffsetx, mousePos.y+DescriptionOffsety);  
+            } else if (result.gameObject.tag == "Badge3")
+            {
+                cooldown=0;
+                Debug.Log("Badge3 Detected");
+                int BadgeId;
+                BadgeId = ss.BadgeArray[2];
+                ss.Description.text = ss.Descriptions[BadgeId];
+                ss.DescriptionObj.SetActive(true);
+                ss.DescriptionObj.transform.position = new Vector3(mousePos.x+DescriptionOffsetx, mousePos.y+DescriptionOffsety);  
             }
+            if (cooldown > .03f)
+            {
+                ss.DescriptionObj.SetActive(false);
+
+            }
+            Debug.Log("Hit" + result.gameObject.name);
         }
     }
     void destroyGameObj(int ID)

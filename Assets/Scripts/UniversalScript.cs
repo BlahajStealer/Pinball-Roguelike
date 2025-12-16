@@ -140,7 +140,14 @@ public class UniversalScript : MonoBehaviour
         if (sp.Leaving && AddPtsSold)
         {
             AddPtsSold = false;
-            score = Mathf.RoundToInt(target * (2 / 3));
+            score = Mathf.RoundToInt(target * (2 / 3)/10);
+            if (score % 5 == 0)
+            {
+                score *=10;
+            } else
+            {
+                score =Mathf.RoundToInt(score/5)*50;
+            }
             sp.DivisionPts = 2 / 3;
         }
         if (endlessGoal == 'g')

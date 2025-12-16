@@ -46,9 +46,14 @@ public class ShopScript : MonoBehaviour
     public GameObject[] Consumables;
     public Sprite[] ConsumeSprites;
     public GameObject SellConsume;
+
+    public TextMeshProUGUI Description;
+    public string[] Descriptions;
+    public GameObject DescriptionObj;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DescriptionObj.SetActive(false);
         cs = Camera.GetComponent<CameraScript>();
         SellConsume.SetActive(false);
         DivisionPts = 1;
@@ -80,7 +85,14 @@ public class ShopScript : MonoBehaviour
             }
             Money = Mathf.RoundToInt(Money * NumberBadges);
             Money += Mathf.RoundToInt((10/DivisionPts));
-            normalTarget = Mathf.RoundToInt(normalTarget * 1.25f);
+            normalTarget = Mathf.RoundToInt((normalTarget * 1.25f)/10);
+            if (normalTarget % 5 == 0)
+            {
+                normalTarget*=10;
+            } else
+            {
+                normalTarget = (Mathf.RoundToInt(normalTarget/5)*5)*10;
+            }
             us.Lives = 4;
             NumberBadges = 1;
             inShop = true;
@@ -132,20 +144,54 @@ public class ShopScript : MonoBehaviour
         {
             if (TwoThirdsSell)
             {
-                us.score += Mathf.RoundToInt((2 * us.target) / 3);
+                us.score += Mathf.RoundToInt((2 * us.target / 3)/10);
+                if (us.score % 5 == 0)
+                {
+                    us.score*=10;
+                } else
+                {
+                    us.score = (Mathf.RoundToInt(us.score/5)*5)*10;
+                }
                 TwoThirdsSell = false;
             }
         }
 
         if (cutPts)
         {
-            NewScore.text = Mathf.RoundToInt(2*normalTarget/3) + " Points Needed";
+            float Next;
+            Next = Mathf.RoundToInt((2*normalTarget/3)/10);
+            if (Next%5 == 0)
+            {
+                NewScore.text = (Mathf.RoundToInt((2*normalTarget/3)/10)*10) + " Points Needed";
+
+            } else
+            {
+                NewScore.text = Mathf.RoundToInt(Next/5)*5*10 + " Points Needed";
+            }
         } else if (Halfpts)
         {
-            NewScore.text = Mathf.RoundToInt(normalTarget/ 2) + " Points Needed";
+            float Next;
+            Next = Mathf.RoundToInt((normalTarget/2)/10);
+            if (Next%5 == 0)
+            {
+                NewScore.text = (Mathf.RoundToInt((normalTarget/2)/10)*10) + " Points Needed";
+
+            } else
+            {
+                NewScore.text = Mathf.RoundToInt(Next/5)*5*10 + " Points Needed";
+            }
         } else
         {
-            NewScore.text = Mathf.RoundToInt(normalTarget) + " Points Needed";
+            float Next;
+            Next = Mathf.RoundToInt((normalTarget)/10);
+            if (Next%5 == 0)
+            {
+                NewScore.text = (Mathf.RoundToInt(normalTarget/10)*10) + " Points Needed";
+
+            } else
+            {
+                NewScore.text = Mathf.RoundToInt(Next/5)*5*10 + " Points Needed";
+            }
         }
 
         MoneyText.text = "Money: " + Money.ToString();
@@ -176,21 +222,30 @@ public class ShopScript : MonoBehaviour
         {
             us.AddOnAct();
 
-            us.target = Mathf.RoundToInt(2*normalTarget/3);
+            us.target = Mathf.RoundToInt((2*normalTarget/3)/10);
 
         } else if (Halfpts)
         {
             us.AddOnAct();
 
-            us.target = Mathf.RoundToInt(normalTarget/2);
+            us.target = Mathf.RoundToInt((normalTarget/2)/10);
         } else
         {
-            us.target = Mathf.RoundToInt(normalTarget);
+            us.target = Mathf.RoundToInt((normalTarget)/10);
+        }
+
+        if (us.target%5 == 0)
+        {
+            us.target *= 10;
+
+        } else
+        {
+            us.target = Mathf.RoundToInt(us.target/5)*5*10;
         }
         us.score = 0;
         if (TwoThirdsSell)
         {
-            us.score += Mathf.RoundToInt((2 * us.target) / 3);
+            us.score += Mathf.RoundToInt((2 * us.target / 3)/10)*10;
             TwoThirdsSell = false;
         }
         Shop.SetActive(false);
