@@ -129,15 +129,7 @@ public class CameraScript : MonoBehaviour
                 {
                     destroyGameObj(1);
                 }
-            } /*else if (hit.collider.CompareTag("Badge1"))
-            {
-                Debug.Log("Badge1 Detected");
-                int BadgeId;
-                BadgeId = ss.BadgeArray[0];
-                ss.Description.text = ss.Descriptions[BadgeId];
-                ss.DescriptionObj.SetActive(true);
-                ss.DescriptionObj.transform.position = mousePos;
-            }*/
+            } 
         }
     }
     void TwoDRaycast()
@@ -150,41 +142,56 @@ public class CameraScript : MonoBehaviour
         gRaycast.Raycast(PointerEventDataGraphics, results);
         foreach(RaycastResult result in results)
         {
-            if (result.gameObject.tag == "Badge1")
+            if (result.gameObject.tag == "Badge1" && ss.BadgeBools[0] == true)
             {
-                cooldown = 0;
-                Debug.Log("Badge1 Detected");
-                int BadgeId;
-                BadgeId = ss.BadgeArray[0];
-                ss.Description.text = ss.Descriptions[BadgeId];
-                ss.DescriptionObj.SetActive(true);
-                ss.DescriptionObj.transform.position = new Vector3(mousePos.x+DescriptionOffsetx, mousePos.y+DescriptionOffsety);
-            } else if (result.gameObject.tag == "Badge2")
+                DescriptionActivator(mousePos, 0);
+            } else if (result.gameObject.tag == "Badge2" && ss.BadgeBools[1] == true)
             {
-                cooldown=0;
-                Debug.Log("Badge2 Detected");
-                int BadgeId;
-                BadgeId = ss.BadgeArray[1];
-                ss.Description.text = ss.Descriptions[BadgeId];
-                ss.DescriptionObj.SetActive(true);
-                ss.DescriptionObj.transform.position = new Vector3(mousePos.x+DescriptionOffsetx, mousePos.y+DescriptionOffsety);  
-            } else if (result.gameObject.tag == "Badge3")
+                DescriptionActivator(mousePos, 1);
+            } else if (result.gameObject.tag == "Badge3" && ss.BadgeBools[2] == true)
             {
-                cooldown=0;
-                Debug.Log("Badge3 Detected");
-                int BadgeId;
-                BadgeId = ss.BadgeArray[2];
-                ss.Description.text = ss.Descriptions[BadgeId];
-                ss.DescriptionObj.SetActive(true);
-                ss.DescriptionObj.transform.position = new Vector3(mousePos.x+DescriptionOffsetx, mousePos.y+DescriptionOffsety);  
+                DescriptionActivator(mousePos, 2);
+            } else if (result.gameObject.tag == "Consume1" && ss.ConsumeBools[0] == true)
+            {
+                ConsumeDescAct(mousePos, 0);
+            }else if (result.gameObject.tag == "Consume2" && ss.ConsumeBools[1] == true)
+            {
+                ConsumeDescAct(mousePos, 1);
+            }else if (result.gameObject.tag == "Consume3" && ss.ConsumeBools[2] == true)
+            {
+                ConsumeDescAct(mousePos, 2);
+            }else if (result.gameObject.tag == "Consume4" && ss.ConsumeBools[3] == true)
+            {
+                ConsumeDescAct(mousePos, 3);
+            }else if (result.gameObject.tag == "Consume5" && ss.ConsumeBools[4] == true)
+            {
+                ConsumeDescAct(mousePos, 4);
             }
             if (cooldown > .03f)
             {
                 ss.DescriptionObj.SetActive(false);
 
             }
-            Debug.Log("Hit" + result.gameObject.name);
         }
+    }
+
+    void DescriptionActivator(Vector2 mousePos, int ID)
+    {
+        cooldown = 0;
+        int BadgeId;
+        BadgeId = ss.BadgeArray[ID];
+        ss.Description.text = ss.Descriptions[BadgeId];
+        ss.DescriptionObj.SetActive(true);
+        ss.DescriptionObj.transform.position = new Vector3(mousePos.x + DescriptionOffsetx, mousePos.y + DescriptionOffsety);
+    }
+    void ConsumeDescAct(Vector2 mousePos, int ID)
+    {
+        cooldown = 0;
+        int BadgeId;
+        BadgeId = ss.MachineArray[ID];
+        ss.Description.text = ss.ConsumeDescription[BadgeId];
+        ss.DescriptionObj.SetActive(true);
+        ss.DescriptionObj.transform.position = new Vector3(mousePos.x + DescriptionOffsetx, mousePos.y + DescriptionOffsety);
     }
     void destroyGameObj(int ID)
     {

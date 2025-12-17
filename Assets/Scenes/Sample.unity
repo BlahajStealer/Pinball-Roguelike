@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4470,14 +4470,24 @@ MonoBehaviour:
   SellConsume: {fileID: 887403677}
   Description: {fileID: 2108848875}
   Descriptions:
-  - Test1
-  - Test2
-  - Test3
-  - Test4
-  - Test5
-  - Test6
-  - Test7
+  - At the end of every round, Money is increased by 20%
+  - Adds 1/3 of target to score at the beginning of a round. Increases to 2/3 when
+    sold. Money decreases $3
+  - Cuts target by 1/3.
+  - For every 15 pingers hit, add $1 to total money.
+  - Halves points needed. Halves Money earned.
+  - Add 50 score to this badge every time another activates. Activates every 10 seconds.
+  - Multiply money by 1.2 at the end of a round for every badge owned.
   DescriptionObj: {fileID: 51304627}
+  BadgeBools: 
+  ConsumeDescription:
+  - Convert 1 pinger to gold; Gold pingers give 300 points
+  - Add one pinger to the board
+  - Remove one pinger from the board
+  - Convert 1 pinger to gold; Gold pingers give 300 points
+  - Add one pinger to the board
+  - Remove one pinger from the board
+  ConsumeBools: 
 --- !u!4 &952135913
 Transform:
   m_ObjectHideFlags: 0
@@ -10620,8 +10630,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
-  m_fontSizeBase: 12
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -10658,7 +10668,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: -60.424866}
+  m_margin: {x: 1.8492813, y: 32.814674, z: 2.3737488, w: -28.716557}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
