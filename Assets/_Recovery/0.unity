@@ -654,7 +654,7 @@ GameObject:
   - component: {fileID: 26528118}
   m_Layer: 0
   m_Name: Consume2
-  m_TagString: Untagged
+  m_TagString: Consume2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2540,7 +2540,7 @@ GameObject:
   - component: {fileID: 567899977}
   m_Layer: 0
   m_Name: Consume5
-  m_TagString: Untagged
+  m_TagString: Consume5
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2950,7 +2950,7 @@ GameObject:
   - component: {fileID: 692834223}
   m_Layer: 0
   m_Name: Badge3
-  m_TagString: Untagged
+  m_TagString: Badge3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3309,7 +3309,7 @@ GameObject:
   - component: {fileID: 740419558}
   m_Layer: 0
   m_Name: Consume3
-  m_TagString: Untagged
+  m_TagString: Consume3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3934,7 +3934,7 @@ GameObject:
   - component: {fileID: 895235968}
   m_Layer: 0
   m_Name: Consume4
-  m_TagString: Untagged
+  m_TagString: Consume4
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4733,53 +4733,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 993258873}
   m_CullTransparentMesh: 1
---- !u!1 &1000295689
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1000295691}
-  - component: {fileID: 1000295690}
-  m_Layer: 0
-  m_Name: Boss Manager
-  m_TagString: BossMan
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1000295690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000295689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 95a92850e7dd54335b9c910f6017acc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  Shop: {fileID: 952135911}
-  Round: 1
-  CompletedBosses: 010000000000000000000000000000000000000000000000000000000000000000000000
---- !u!4 &1000295691
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000295689}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 916.59906, y: 444.73782, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1023491911
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5505,7 +5458,7 @@ GameObject:
   - component: {fileID: 1131965691}
   m_Layer: 0
   m_Name: Consume1
-  m_TagString: Untagged
+  m_TagString: Consume1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8043,7 +7996,7 @@ GameObject:
   - component: {fileID: 1668743443}
   m_Layer: 0
   m_Name: Badge2
-  m_TagString: Untagged
+  m_TagString: Badge2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9099,7 +9052,7 @@ GameObject:
   - component: {fileID: 1805191927}
   m_Layer: 0
   m_Name: Badge1
-  m_TagString: Untagged
+  m_TagString: Badge1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10973,4 +10926,3 @@ SceneRoots:
   - {fileID: 2012869859}
   - {fileID: 336571802}
   - {fileID: 1819414002}
-  - {fileID: 1000295691}

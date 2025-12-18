@@ -71,7 +71,6 @@ public class UniversalScript : MonoBehaviour
     float actTimer;
     public bool Add50;
     public int AddedPoints;
-
     void Awake()
     {
         Shop.SetActive(false);

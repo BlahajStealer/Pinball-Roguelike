@@ -54,8 +54,12 @@ public class ShopScript : MonoBehaviour
     //Consumable Descriptions
     public string[] ConsumeDescription;
     public bool[] ConsumeBools;
+    GameObject BossManager;
+    BossManager bm;
     void Start()
     {
+        BossManager = GameObject.FindGameObjectWithTag("BossMan");
+        bm = BossManager.GetComponent<BossManager>();
         BadgeBools = new bool[3];
         ConsumeBools = new bool[5];
         DescriptionObj.SetActive(false);
@@ -92,6 +96,7 @@ public class ShopScript : MonoBehaviour
     {
         if (shopMoneyStart && !shopMoneyStarted)
         {
+            bm.Round++;
             for (int i = 0; i < BadgeBools.Length; i++)
             {
                 BadgeBools[i] = true;
@@ -163,6 +168,21 @@ public class ShopScript : MonoBehaviour
                     }
                 }
             }
+        } 
+        if (bm.CompletedBosses[0] == 1)
+        {
+            normalTarget *= 3;
+            normalTarget = Mathf.RoundToInt(normalTarget/10);
+            if (normalTarget % 5 == 0)
+            {
+                normalTarget*=10;
+            } else
+            {
+                normalTarget = Mathf.RoundToInt(normalTarget/5) * 50;
+                
+            }
+            NewScore.text = normalTarget + " Points Needed";
+
         }
     }
     void NotInShop()

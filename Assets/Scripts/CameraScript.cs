@@ -153,16 +153,16 @@ public class CameraScript : MonoBehaviour
                 DescriptionActivator(mousePos, 2);
             } else if (result.gameObject.tag == "Consume1" && ss.ConsumeBools[0] == true)
             {
-                ConsumeDescAct(mousePos, 0);
+                ConsumeDescAct(mousePos, 1);
             }else if (result.gameObject.tag == "Consume2" && ss.ConsumeBools[1] == true)
             {
-                ConsumeDescAct(mousePos, 1);
+                ConsumeDescAct(mousePos, 2);
             }else if (result.gameObject.tag == "Consume3" && ss.ConsumeBools[2] == true)
             {
-                ConsumeDescAct(mousePos, 2);
+                ConsumeDescAct(mousePos, 3);
             }else if (result.gameObject.tag == "Consume4" && ss.ConsumeBools[3] == true)
             {
-                ConsumeDescAct(mousePos, 3);
+                ConsumeDescAct(mousePos, 0);
             }else if (result.gameObject.tag == "Consume5" && ss.ConsumeBools[4] == true)
             {
                 ConsumeDescAct(mousePos, 4);

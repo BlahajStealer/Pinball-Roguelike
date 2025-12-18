@@ -24,14 +24,7 @@ TagManager:
   - Second Image
   - Gold Pingy Thing
   - Surface
-  - Badge1
-  - Badge2
-  - Badge3
-  - Consume1
-  - Consume2
-  - Consume3
-  - Consume4
-  - Consume5
+  - BossMan
   layers:
   - Default
   - TransparentFX
