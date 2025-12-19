@@ -22,9 +22,11 @@ public class BossManager : MonoBehaviour
     public GameObject[] FakePingers;
     public GameObject[] GoldPingers;
     public GameObject[] Badges;
+    bool End6;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        End6 = false;
         oneStarted = false;
         twoStarted = false;
         Round = 1;
@@ -57,7 +59,7 @@ public class BossManager : MonoBehaviour
             }
 
 
-        } else if (Round % 3 != 0 && BossActive)
+        } else if (Round % 3 != 0 && BossActive && CompletedBosses[6] != 1)
         {
             BossActive = false;
             CompletedBosses[RandomNum] = 2;
@@ -121,6 +123,35 @@ public class BossManager : MonoBehaviour
 
             }
         }
+        if (CompletedBosses[6] == 1 && Round % 3 != 0)
+        {
+            if (ss.inShop && !End6)
+            {
+                int totalSellValue = 0;
+                for (int i = 0; i < ss.currentBadgeIDs.Length; i++)
+                {
+                    if (ss.currentBadgeIDs[i] != 7)
+                    {
+                        totalSellValue += ss.BadgeSellValue[ss.currentBadgeIDs[i]];
+
+                    }
+                }
+                if ((ss.Money - totalSellValue) <= 0)
+                {
+                    End6 = true;
+                    ss.Money = 0;
+                } else
+                {
+                    End6 = true;
+                    Debug.Log("Total Sell Value was" + totalSellValue);
+                    ss.Money -= totalSellValue-1;
+                }
+            } else if (End6)
+            {
+                BossActive = false;
+                CompletedBosses[6] = 2;
+            }
+        }
 
     }
     
@@ -131,8 +162,8 @@ public class BossManager : MonoBehaviour
 2. Remove all Added pingers for this round - done
 3. Remove all Gold Pingers- done
 4. Lose 50 Points every 10 seconds for every pinger on board - done - nerf
-5. All badges null until x score
-6. Lose sell value of all badges at end of round
+5. All badges null until x score - Close to done, need to finish the rest for it to work
+6. Lose half sell value of all badges at end of round
 7. Pingers give half score originally
 8. Every time the ball hits a flap lose 50 points
 9. Evil Pingers, lose 100 score

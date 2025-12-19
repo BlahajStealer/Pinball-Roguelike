@@ -8,9 +8,12 @@ public class CutPoints : MonoBehaviour
     BallScript bs;
     GameObject Shop;
     ShopScript sc;
-    
+    public int sellValue;
+    public int buyValue;
     void Start()
     {
+        sellValue = 3;
+        buyValue = 5;
         Universal = GameObject.FindGameObjectWithTag("Empty");
         us = Universal.GetComponent<UniversalScript>();
         Ball = GameObject.FindGameObjectWithTag("Player");

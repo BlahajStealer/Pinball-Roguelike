@@ -8,9 +8,12 @@ public class Multiplicable : MonoBehaviour
     BallScript bs;
     GameObject Shop;
     ShopScript sc;
-
+    public int sellValue;
+    public int buyValue;
     void Start()
     {
+        sellValue = 4;
+        buyValue = 6;
         Universal = GameObject.FindGameObjectWithTag("Empty");
         us = Universal.GetComponent<UniversalScript>();
         Ball = GameObject.FindGameObjectWithTag("Player");

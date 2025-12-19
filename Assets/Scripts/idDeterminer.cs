@@ -28,10 +28,10 @@ public class idDeterminer : MonoBehaviour
                 
             }
         }
-        MoneyTaken = 3;
+        MoneyTaken = ss.BadgeBuyValue[ID];
         if (MoneyTaken <= ss.Money && PhotoReal)
-
         {
+            ss.BadgeSellTexts[OGID].text="";
 
             GameObject nextGameObj;
             ss.Money -= MoneyTaken;
@@ -43,6 +43,8 @@ public class idDeterminer : MonoBehaviour
                 if (ss.Swap[i].sprite == ss.Transparent)
                 {
                     ss.Swap[i].sprite = ss.IDSprites[OGID];
+                    ss.currentBadgeIDs[i] = ss.BadgeArray[OGID];
+
                     break;
                 }
 
@@ -69,21 +71,25 @@ public class idDeterminer : MonoBehaviour
             }
         }
         Debug.Log(PhotoReal);
-        MoneyTaken = 2;
+        MoneyTaken = ss.ConsumeBuyValue[id];
         if (MoneyTaken <= ss.Money && PhotoReal)
         {
+
             Debug.Log("Made it");
             GameObject NextGameObj;
             ss.Money -= MoneyTaken;
             ss.MachineModsButton[OGID].image.sprite = ss.outOfStock;
             NextGameObj = Instantiate(ConsumableObjs[id]);
             ss.Consumables[iEnd] = NextGameObj;
+            ss.ConsumeSellTexts[OGID].text = "";
             for (int i = 0; i < ss.ConsumableSpots.Length; i++)
             {
                 if (ss.ConsumableSpots[i].sprite == ss.Transparent)
                 {
                     Debug.Log(id);
                     ss.ConsumableSpots[i].sprite = ss.IDConsumables[OGID];
+                    ss.currentConsumeIDs[i] = ss.MachineArray[OGID];
+
                     break;
                 }
             }

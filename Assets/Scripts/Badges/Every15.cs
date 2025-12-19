@@ -8,10 +8,15 @@ public class Every15 : MonoBehaviour
     BallScript bs;    
     GameObject Shop;
     ShopScript sc;
-    int Hits;
+    public int Hits = 0;
+    public int sellValue;
+    public int buyValue;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        sellValue = 2;
+        buyValue = 4;
+
         Universal = GameObject.FindGameObjectWithTag("Empty");
         us = Universal.GetComponent<UniversalScript>();        
         Ball = GameObject.FindGameObjectWithTag("Player");
@@ -26,9 +31,11 @@ public class Every15 : MonoBehaviour
         if (bs.JustHit)
         {
             Hits += 1;
+            bs.JustHit = false;
         }
         if (Hits >= 15)
         { 
+            Debug.Log("Fifteen hits!");
             sc.Money += 1;
             Hits = 0;
             us.AddOnAct();

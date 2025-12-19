@@ -55,7 +55,7 @@ public class UniversalScript : MonoBehaviour
 
     public bool StopFollow;
     [Header("--Goals and Gameover--")]
-
+    public TextMeshProUGUI MoneyDisp;
     public char endlessGoal;
     public GameObject GameOver;
     public GameObject goalTextObj;
@@ -129,6 +129,15 @@ public class UniversalScript : MonoBehaviour
 
     void Update()
     {
+
+        if (sp != null)
+        {
+            MoneyDisp.text = "$" + sp.Money;
+        } else
+        {
+            MoneyDisp.text = "$0";
+
+        }
         actTimer += Time.deltaTime;
         if (actTimer >= 10 && !ForceCounter.activeSelf)
         {

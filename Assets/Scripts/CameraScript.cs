@@ -91,7 +91,6 @@ public class CameraScript : MonoBehaviour
 
             if (hit.collider.CompareTag("Pingy Thing") && goldPingActive && Mouse.current.leftButton.wasPressedThisFrame)
             {
-                Debug.Log("Hai2");
                 hit.collider.gameObject.transform.GetChild(0).GetComponentInChildren<Renderer>().material = Gold;
                 hit.collider.tag = "Gold Pingy Thing";
                 goldPingActive = false;
@@ -139,15 +138,9 @@ public class CameraScript : MonoBehaviour
         PointerEventDataGraphics = new PointerEventData(gEventSystem);
         PointerEventDataGraphics.position = mousePos;
         List<RaycastResult> results = new List<RaycastResult>();
-        gRaycast.Raycast(PointerEventDataGraphics, results);
-        if (Mouse.current == null)
-        {
-            Debug.LogError("Mouse.current is null");
-            return;
-        }
+
         foreach (RaycastResult result in results)
         {
-            Debug.Log(result);
             if (result.gameObject.tag == "Badge1" && ss.BadgeBools[0] == true)
             {
                 DescriptionActivator(mousePos, 0);
@@ -175,7 +168,6 @@ public class CameraScript : MonoBehaviour
             }
             if (cooldown > .03f)
             {
-                Debug.Log("Left Assigned Area");
                 ss.DescriptionObj.SetActive(false);
 
             }
@@ -262,7 +254,6 @@ public class CameraScript : MonoBehaviour
             Following = false;
             button.colors = tsp;
             Text.text = "Overview";
-            Debug.Log("Overview");
         } else
         {
             StopAllCoroutines();
@@ -270,7 +261,6 @@ public class CameraScript : MonoBehaviour
             Following = true;
             button.colors = notTsp;
             Text.text = "Following";
-            Debug.Log("Following");
             
         }
 

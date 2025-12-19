@@ -70,28 +70,31 @@ public class BallScript : MonoBehaviour
                 Sub.enabled = false;
             }
         }
-        if (JustHit)
-        {
-            JustHit = false;
-        }
+
     }
     void OnCollisionEnter(Collision collision)
     {
 
         if ((collision.gameObject.CompareTag("Pingy Thing") || collision.gameObject.CompareTag("AddedPinger")) && !startCooldown)
         {
+            JustHit = true;
+
             startCooldown = true;
             audioSource.Play();
             us.score += 100;
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
+
         } else if (collision.gameObject.CompareTag("Gold Pingy Thing") && !startCooldown)
         {
+            JustHit = true;
+
             startCooldown = true;
             audioSource.Play();
             us.score += 300;
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
+
         }
 
 
@@ -104,7 +107,6 @@ public class BallScript : MonoBehaviour
             Main = other.GetComponent<MeshRenderer>();
             Sub = other.transform.GetChild(0).GetComponent<MeshRenderer>();
             wait = true;
-            JustHit = true;
 
         }
         else if (other.gameObject.CompareTag("FlapRight") && (us.RightFlap))

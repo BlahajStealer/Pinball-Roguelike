@@ -7,57 +7,99 @@ using System.Runtime.CompilerServices;
 
 public class ShopScript : MonoBehaviour
 {
-    public GameObject Camera;
-    CameraScript cs;
     public Sprite Transparent;
     public idDeterminer IdDet;
-    public float Money;
     public TextMeshProUGUI MoneyText;
-    public GameObject Univ;
-    UniversalScript us;
-    public Sprite[] Badges;
-    public Sprite[] MachineMods;
-    public Button[] BadgeButtons;
-    public Button[] MachineModsButton;
+
+
+
     public bool shopMoneyStart;
     public bool shopMoneyStarted;
     public int[] BadgeArray;
-    public int[] MachineArray;
+
     public TextMeshProUGUI NewScore;
-    public GameObject Shop;
     public Sprite outOfStock;
     public bool cutPts;
     public bool Leaving;
-    public float DivisionPts = 1;
-    public bool Halfpts;
     public float normalTarget;
-    public GameObject[] Photos;
     public Image[] Swap;
     public Sprite[] IDSprites;
-    public float NumberBadges = 1;
-    public GameObject SellButton;
-    RectTransform rt;
-    public RectTransform rtc;
-    public bool TwoThirdsSell;
-    bool inShop;
-    public bool Percent20;
-    public Sprite[] IDConsumables;
-    public Image[] ConsumableSpots;
-    public GameObject[] Consumables;
-    public Sprite[] ConsumeSprites;
+
+    public bool inShop;
+    [Header("--Shop--")]
+    public float Money;
+
+
+    [Header("--GameObjects--")]
+    GameObject BossManager;
     public GameObject SellConsume;
-    //Badge Descriptions
+    public GameObject SellButton;
+    public GameObject[] Photos;
+    public GameObject Shop;
+    public GameObject Univ;
+    public GameObject Camera;
+
+    [Header("--Scripts--")]
+    BossManager bm;
+    UniversalScript us;
+    CameraScript cs;
+
+    [Header("--Descriptions--")]
     public TextMeshProUGUI Description;
     public string[] Descriptions;
     public GameObject DescriptionObj;
-    public bool[] BadgeBools;    
-    //Consumable Descriptions
+
+    [Header("--DescriptionsConsumes--")]
     public string[] ConsumeDescription;
     public bool[] ConsumeBools;
-    GameObject BossManager;
-    BossManager bm;
+
+    [Header("--Badges--")]
+    public int[] BadgeBuyValue;
+    public int[] BadgeSellValue;
+    public bool[] BadgeBools; 
+    public Sprite[] Badges;
+    public Button[] BadgeButtons;
+    RectTransform rt;
+    public int[] currentBadgeIDs;
+    public TextMeshProUGUI[] BadgeSellTexts;
+   
+    [Header("--Consumables--")]
+    public int[] ConsumeBuyValue;
+    public int[] ConsumeSellValue;
+    public GameObject[] Consumables;
+    public Sprite[] IDConsumables;
+    public Image[] ConsumableSpots;
+    public Sprite[] ConsumeSprites;
+    public int[] MachineArray;
+    public RectTransform rtc;
+    public Sprite[] MachineMods;
+    public Button[] MachineModsButton;
+    public int[] currentConsumeIDs;
+    public TextMeshProUGUI[] ConsumeSellTexts;
+
+    [Header("--BadgeSpecifics--")]
+    public bool Percent20;
+    public float NumberBadges = 1;
+    public bool TwoThirdsSell;
+    public bool Halfpts;
+    public float DivisionPts = 1;
+
+
+
+
     void Start()
     {
+        currentBadgeIDs = new int[5];
+        currentConsumeIDs = new int[2];
+        for (int i = 0; i < currentBadgeIDs.Length; i++)
+        {
+            currentBadgeIDs[i] = 7;
+        }        
+        for (int i = 0; i < currentConsumeIDs.Length; i++)
+        {
+            currentConsumeIDs[i] = 7;
+        }
+
         BossManager = GameObject.FindGameObjectWithTag("BossMan");
         bm = BossManager.GetComponent<BossManager>();
         BadgeBools = new bool[3];
@@ -112,7 +154,7 @@ public class ShopScript : MonoBehaviour
 
             }
             Money = Mathf.RoundToInt(Money * NumberBadges);
-            Money += Mathf.RoundToInt((10 / DivisionPts));
+            Money += Mathf.RoundToInt((10 - DivisionPts));
             normalTarget = Mathf.RoundToInt((normalTarget * 1.25f) / 10);
             if (normalTarget % 5 == 0)
             {
@@ -168,7 +210,15 @@ public class ShopScript : MonoBehaviour
                     }
                 }
             }
-
+            for (int i = 0; i < BadgeSellTexts.Length; i++)
+            {
+                BadgeSellTexts[i].text = "$" + BadgeBuyValue[BadgeArray[i]];
+            }
+            for (int i = 0; i < ConsumeSellTexts.Length; i++)
+            {
+                ConsumeSellTexts[i].text = "$" + ConsumeBuyValue[MachineArray[i]];
+                Debug.Log(ConsumeBuyValue[MachineArray[i]]);
+            }
         }
 
     }
@@ -390,6 +440,8 @@ public class ShopScript : MonoBehaviour
                 ID = 0;
                 break;
         }
+        Money += BadgeSellValue[currentBadgeIDs[ID]];
+        currentBadgeIDs[ID] = 7;
         Swap[ID].sprite = Transparent;
         switch (Photos[ID].tag)
         {
@@ -405,7 +457,7 @@ public class ShopScript : MonoBehaviour
                 Halfpts = false;
                 break;
         }
-
+        
         Destroy(Photos[ID]);
         Photos[ID] = null;
         SellButton.SetActive(false);
@@ -425,6 +477,9 @@ public class ShopScript : MonoBehaviour
             ID = 1;
 
         }
+        currentConsumeIDs[ID] = 7;
+
+        Money += ConsumeSellValue[currentBadgeIDs[ID]];
         ConsumableSpots[ID].sprite = Transparent;
         Destroy(Consumables[ID]);
         Consumables[ID] = null;
@@ -436,10 +491,14 @@ public class ShopScript : MonoBehaviour
         if (rtc.anchoredPosition.y == 180)
         {
             Parent = GameObject.FindGameObjectWithTag("First Image").GetComponent<Image>();
+            currentConsumeIDs[0] = 7;
+
         }
         else
         {
             Parent = GameObject.FindGameObjectWithTag("Second Image").GetComponent<Image>();
+            currentConsumeIDs[0] = 7;
+
         }
         if (Parent.sprite == ConsumeSprites[0])
         {
@@ -451,6 +510,7 @@ public class ShopScript : MonoBehaviour
         {
             cs.RemovePinger(0);
         }
+
 
     }
 
@@ -467,6 +527,7 @@ public class ShopScript : MonoBehaviour
             {
                 y = -120;
             }
+            
             rtc.anchoredPosition = new Vector2(759, y);
             SellConsume.SetActive(true);
             
