@@ -168,22 +168,9 @@ public class ShopScript : MonoBehaviour
                     }
                 }
             }
-        } 
-        if (bm.CompletedBosses[0] == 1)
-        {
-            normalTarget *= 3;
-            normalTarget = Mathf.RoundToInt(normalTarget/10);
-            if (normalTarget % 5 == 0)
-            {
-                normalTarget*=10;
-            } else
-            {
-                normalTarget = Mathf.RoundToInt(normalTarget/5) * 50;
-                
-            }
-            NewScore.text = normalTarget + " Points Needed";
 
         }
+
     }
     void NotInShop()
     {
@@ -234,6 +221,22 @@ public class ShopScript : MonoBehaviour
                 NewScore.text = Mathf.RoundToInt(Next / 5) * 5 * 10 + " Points Needed";
             }
         }
+        else if (bm.CompletedBosses[0] == 1)
+        {
+            float Next;
+            Next = Mathf.RoundToInt(normalTarget * 3 / 10);
+            if (Next % 5 == 0)
+            {
+                Next *= 10;
+            }
+            else
+            {
+                Next = Mathf.RoundToInt(Next / 5) * 50;
+
+            }
+            NewScore.text = Next + " Points Needed";
+
+        }
         else
         {
             float Next;
@@ -283,7 +286,13 @@ public class ShopScript : MonoBehaviour
             us.AddOnAct();
 
             us.target = Mathf.RoundToInt((normalTarget/2)/10);
-        } else
+        }
+        else if (bm.CompletedBosses[0] == 1)
+        {
+            us.target = Mathf.RoundToInt((normalTarget * 3) / 10);
+
+        }
+        else
         {
             us.target = Mathf.RoundToInt((normalTarget)/10);
         }
@@ -302,6 +311,8 @@ public class ShopScript : MonoBehaviour
             us.score += Mathf.RoundToInt((2 * us.target / 3)/10)*10;
             TwoThirdsSell = false;
         }
+
+
         Shop.SetActive(false);
         shopMoneyStarted = false;
         Leaving = true;

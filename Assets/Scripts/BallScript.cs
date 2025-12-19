@@ -78,7 +78,7 @@ public class BallScript : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
 
-        if (collision.gameObject.CompareTag("Pingy Thing") && !startCooldown)
+        if ((collision.gameObject.CompareTag("Pingy Thing") || collision.gameObject.CompareTag("AddedPinger")) && !startCooldown)
         {
             startCooldown = true;
             audioSource.Play();
@@ -93,7 +93,8 @@ public class BallScript : MonoBehaviour
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
         }
-        
+
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -106,14 +107,15 @@ public class BallScript : MonoBehaviour
             JustHit = true;
 
         }
-        else if (other.gameObject.CompareTag("FlapRight") && (us.RightFlap || us.RightFlapEnd))
+        else if (other.gameObject.CompareTag("FlapRight") && (us.RightFlap))
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
         }
-        else if (other.gameObject.CompareTag("FlapLeft") && (us.LeftFlap || us.LeftFlapEnd))
+        else if (other.gameObject.CompareTag("FlapLeft") && (us.LeftFlap))
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
-        } 
+        }
+
     }
     private void OnMouseOver()
     {

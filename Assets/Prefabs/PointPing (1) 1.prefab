@@ -123,8 +123,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8802952185664641169}
   m_Layer: 0
-  m_Name: PointPing (1)
-  m_TagString: Pingy Thing
+  m_Name: PointPing (1) 1
+  m_TagString: AddedPinger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

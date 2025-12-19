@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using TMPro;
 using UnityEngine.UI;
+using Mono.Cecil.Cil;
 public class UniversalScript : MonoBehaviour
 {
     [Header("--Ball--")]
@@ -39,11 +40,13 @@ public class UniversalScript : MonoBehaviour
     public GameObject ForceCounter;
     public GameObject DDOL;
     public GameObject Shop;
+    GameObject BossManager;
     [Header("--Scripts--")]
     ShopScript sp;
     BallScript bs;
     DontDestroyOnLoadScript DDOLS;
     Rigidbody rb;
+    BossManager bm;
 
     [Header("--Camera--")]
     CameraScript cs;
@@ -77,7 +80,9 @@ public class UniversalScript : MonoBehaviour
         sp = Shop.GetComponent<ShopScript>();
     }
     void Start()
-    {   
+    {
+        BossManager = GameObject.FindGameObjectWithTag("BossMan");
+        bm = BossManager.GetComponent<BossManager>();
         Flap1rb = Flap1.GetComponent<Rigidbody>();
         Flap2rb = Flap2.GetComponent<Rigidbody>();
 
@@ -125,15 +130,36 @@ public class UniversalScript : MonoBehaviour
     void Update()
     {
         actTimer += Time.deltaTime;
-        if (actTimer >= 10)
+        if (actTimer >= 10 && !ForceCounter.activeSelf)
         {
             actTimer = 0;
             if (Add50)
             {
                 score += AddedPoints;
             }
+            if (bm.CompletedBosses[3] == 1)
+            {
+                int totalPingys;
+                totalPingys = GameObject.FindGameObjectsWithTag("Pingy Thing").Length + 
+                    GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length + 
+                    GameObject.FindGameObjectsWithTag("AddedPinger").Length;
+
+                Debug.Log(totalPingys);
+                totalPingys *= 50;
+                if (score > totalPingys)
+                {
+                    score -= totalPingys;
+
+                } else
+                {
+                    score = 0;
+                }
+            }
+        } else if (actTimer >= 10 && ForceCounter.activeSelf)
+        {
+            actTimer = 0;
         }
-        goalText.text = "Goal: " + target;
+            goalText.text = "Goal: " + target;
 
 
         if (sp.Leaving && AddPtsSold)

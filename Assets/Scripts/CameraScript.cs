@@ -111,7 +111,7 @@ public class CameraScript : MonoBehaviour
                 ss.SellConsume.SetActive(false);
                 if (ss.rtc.anchoredPosition.y == 180)
                 {
-                    destroyGameObj(0);
+                    destroyGameObj(0); 
                 } else
                 {
                     destroyGameObj(1);
@@ -140,8 +140,14 @@ public class CameraScript : MonoBehaviour
         PointerEventDataGraphics.position = mousePos;
         List<RaycastResult> results = new List<RaycastResult>();
         gRaycast.Raycast(PointerEventDataGraphics, results);
-        foreach(RaycastResult result in results)
+        if (Mouse.current == null)
         {
+            Debug.LogError("Mouse.current is null");
+            return;
+        }
+        foreach (RaycastResult result in results)
+        {
+            Debug.Log(result);
             if (result.gameObject.tag == "Badge1" && ss.BadgeBools[0] == true)
             {
                 DescriptionActivator(mousePos, 0);
@@ -169,6 +175,7 @@ public class CameraScript : MonoBehaviour
             }
             if (cooldown > .03f)
             {
+                Debug.Log("Left Assigned Area");
                 ss.DescriptionObj.SetActive(false);
 
             }
