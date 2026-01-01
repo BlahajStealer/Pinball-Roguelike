@@ -82,10 +82,14 @@ public class ShopScript : MonoBehaviour
     public float NumberBadges = 1;
     public bool TwoThirdsSell;
     public bool Halfpts;
-    public float DivisionPts = 1;
+    public float DivisionPts = 0;
+    [Header("--NextLevel--")]
+    public GameObject NextLevels;
 
-
-
+    private void Awake()
+    {
+        NextLevels.SetActive(false);
+    }
 
     void Start()
     {
@@ -325,47 +329,9 @@ public class ShopScript : MonoBehaviour
     public void Leave()
     {
 
-        if (cutPts)
-        {
-            us.AddOnAct();
-
-            us.target = Mathf.RoundToInt((2*normalTarget/3)/10);
-
-        } else if (Halfpts)
-        {
-            us.AddOnAct();
-
-            us.target = Mathf.RoundToInt((normalTarget/2)/10);
-        }
-        else if (bm.CompletedBosses[0] == 1)
-        {
-            us.target = Mathf.RoundToInt((normalTarget * 3) / 10);
-
-        }
-        else
-        {
-            us.target = Mathf.RoundToInt((normalTarget)/10);
-        }
-
-        if (us.target%5 == 0)
-        {
-            us.target *= 10;
-
-        } else
-        {
-            us.target = Mathf.RoundToInt(us.target/5)*5*10;
-        }
-        us.score = 0;
-        if (TwoThirdsSell)
-        {
-            us.score += Mathf.RoundToInt((2 * us.target / 3)/10)*10;
-            TwoThirdsSell = false;
-        }
-
-
         Shop.SetActive(false);
-        shopMoneyStarted = false;
-        Leaving = true;
+
+        NextLevels.SetActive(true);
     }
 
     public void Sell(int ID)

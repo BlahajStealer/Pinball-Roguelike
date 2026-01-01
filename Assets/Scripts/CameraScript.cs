@@ -37,9 +37,12 @@ public class CameraScript : MonoBehaviour
     public float DescriptionOffsetx;
     public float DescriptionOffsety;
     public float cooldown;
+    public GameObject BossRewardObj;
+    BosssRewards br;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        br = BossRewardObj.GetComponent<BosssRewards>();
         gRaycast = Canvas.GetComponent<GraphicRaycaster>();
         gEventSystem = Canvas.GetComponent<EventSystem>();
         ss = Shop.GetComponent<ShopScript>();
@@ -133,14 +136,29 @@ public class CameraScript : MonoBehaviour
     }
     void TwoDRaycast()
     {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
 
-        PointerEventDataGraphics = new PointerEventData(gEventSystem);
-        PointerEventDataGraphics.position = mousePos;
-        List<RaycastResult> results = new List<RaycastResult>();
-
-        foreach (RaycastResult result in results)
+        if (EventSystem.current == null)
         {
+            Debug.LogError("No EventSystem in scene!");
+            return;
+        }
+
+        if (Mouse.current == null)
+            return;
+
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Debug.Log("Hello");
+
+        PointerEventDataGraphics = new PointerEventData(EventSystem.current);
+        PointerEventDataGraphics.position = mousePos;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(PointerEventDataGraphics, results);
+        foreach (RaycastResult result in results)
+
+        {
+
+            Debug.Log(result.gameObject.tag);
             if (result.gameObject.tag == "Badge1" && ss.BadgeBools[0] == true)
             {
                 DescriptionActivator(mousePos, 0);
@@ -165,11 +183,17 @@ public class CameraScript : MonoBehaviour
             }else if (result.gameObject.tag == "Consume5" && ss.ConsumeBools[4] == true)
             {
                 ConsumeDescAct(mousePos, 4);
+            } else if (result.gameObject.tag == "Opt1")
+            {
+                BossRewardAct(mousePos, br.random1);
+            }else if (result.gameObject.tag == "Opt2")
+            {
+                BossRewardAct(mousePos, br.random2);
             }
             if (cooldown > .03f)
             {
                 ss.DescriptionObj.SetActive(false);
-
+                br.descriptionObj.SetActive(false);
             }
         }
     }
@@ -191,6 +215,13 @@ public class CameraScript : MonoBehaviour
         ss.Description.text = ss.ConsumeDescription[BadgeId];
         ss.DescriptionObj.SetActive(true);
         ss.DescriptionObj.transform.position = new Vector3(mousePos.x + DescriptionOffsetx, mousePos.y + DescriptionOffsety);
+    }    
+    void BossRewardAct(Vector2 mousePos, int ID)
+    {
+        cooldown = 0;
+        br.text.text = br.descs[ID];
+        br.descriptionObj.SetActive(true);
+        br.descriptionObj.transform.position = new Vector3(mousePos.x + DescriptionOffsetx + 12, mousePos.y + DescriptionOffsety + 2); //offset needs to change these numbers for this version, no need to make new var
     }
     void destroyGameObj(int ID)
     {

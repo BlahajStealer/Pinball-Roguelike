@@ -34,6 +34,9 @@ TagManager:
   - Consume3
   - Consume4
   - Consume5
+  - Evil Pinger
+  - Opt1
+  - Opt2
   layers:
   - Default
   - TransparentFX

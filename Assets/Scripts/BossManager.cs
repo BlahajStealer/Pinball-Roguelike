@@ -14,7 +14,7 @@ public class BossManager : MonoBehaviour
     bool BossActive;
     [Header("--BossDeterminer--")]
     public int[] CompletedBosses;
-    int RandomNum;
+    public int RandomNum;
 
     [Header("--BossVariables--")]
     bool oneStarted;
@@ -23,7 +23,33 @@ public class BossManager : MonoBehaviour
     public GameObject[] GoldPingers;
     public GameObject[] Badges;
     bool End6;
+    bool NotChanged;
+    int EvilPinger1;
+    int EvilPinger2;
+    public Material red;
+    public Material white;
+    GameObject FirstEvil;
+    GameObject SecondEvil;
+    public GameObject BossWin;
+    BosssRewards BR;
+    public bool NextLevelRestarter = false;
+    public bool randomGen = false;
+    int tries;
+
+
+
+    //makes sure first bools
+
+    bool Boss1 = false;
+    bool Boss2 = false;
+    bool Boss5 = false;
+    bool Boss52 = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        BossWin.SetActive(false);
+
+    }
     void Start()
     {
         End6 = false;
@@ -42,16 +68,43 @@ public class BossManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Round % 3 == 1 && !randomGen)
+        {
+            RandomNum = Random.Range(0, CompletedBosses.Length);
+            if (CompletedBosses[RandomNum] != 2)
+            {
+                randomGen = true;
+            } else
+            {
+                tries++;
+            }
+            if (tries >= 100)
+            {
+                for (int i = 0; i < CompletedBosses.Length; i++)
+                {
+                    if (CompletedBosses[i] == 0)
+                    {
+                        RandomNum = i;
+                    } else if (i == CompletedBosses.Length - 1)
+                    {
+                        Debug.Log("Won!");
+                    }
+                }
+                tries = 0;
+            }
+        }
         Badges = ss.Photos;
         if (Round % 3 == 0 && !BossActive)
         {
             Debug.Log("Boss Round");
             BossActive = true;
-            RandomNum = Random.Range(0, CompletedBosses.Length);
             if (CompletedBosses[RandomNum] != 2)
             {
                 CompletedBosses[RandomNum] = 1;
+                if (RandomNum == 5)
+                {
+                    NotChanged = true;
+                }
             } else
             {
                 BossActive = false;
@@ -63,12 +116,20 @@ public class BossManager : MonoBehaviour
         {
             BossActive = false;
             CompletedBosses[RandomNum] = 2;
+            BossWin.SetActive(true);
+            NextLevelRestarter = true;
+            randomGen = false;
         }
         if (CompletedBosses[1] == 1 && !oneStarted)
         {
             oneStarted = true;
-            FakePingers = new GameObject[GameObject.FindGameObjectsWithTag("AddedPinger").Length];
-            FakePingers = GameObject.FindGameObjectsWithTag("AddedPinger");
+            if (Boss1)
+            {
+                FakePingers = new GameObject[GameObject.FindGameObjectsWithTag("AddedPinger").Length];
+                FakePingers = GameObject.FindGameObjectsWithTag("AddedPinger");
+                Boss1 = false;
+            }
+
             for (int i = 0;i < FakePingers.Length;i++)
             {
                 FakePingers[i].SetActive(false);
@@ -83,8 +144,13 @@ public class BossManager : MonoBehaviour
         if (CompletedBosses[2] == 1 && !twoStarted)
         {
             oneStarted = true;
-            GoldPingers = new GameObject[GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length];
-            GoldPingers = GameObject.FindGameObjectsWithTag("Gold Pingy Thing");
+            if (Boss2)
+            {
+                GoldPingers = new GameObject[GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length];
+                GoldPingers = GameObject.FindGameObjectsWithTag("Gold Pingy Thing");
+                Boss2 = false;
+            }
+
             for (int i = 0; i < GoldPingers.Length; i++)
             {
                 GoldPingers[i].SetActive(false);
@@ -125,6 +191,7 @@ public class BossManager : MonoBehaviour
         }
         if (CompletedBosses[6] == 1 && Round % 3 != 0)
         {
+            Debug.Log("Hello");
             if (ss.inShop && !End6)
             {
                 int totalSellValue = 0;
@@ -143,14 +210,54 @@ public class BossManager : MonoBehaviour
                 } else
                 {
                     End6 = true;
-                    Debug.Log("Total Sell Value was" + totalSellValue);
-                    ss.Money -= totalSellValue-1;
+                    Debug.Log("Total Sell Value was" + totalSellValue + " The amount now should be: " + (ss.Money - totalSellValue) + " The current amount of money is: " + ss.Money);
+                    ss.Money -= totalSellValue;
                 }
             } else if (End6)
             {
                 BossActive = false;
-                CompletedBosses[6] = 2;
+                CompletedBosses[RandomNum] = 2;
+                BossWin.SetActive(true);
+                NextLevelRestarter = true;
+                randomGen = false;
             }
+        }
+        if (CompletedBosses[5] == 1 && NotChanged)
+        {
+            if (Boss5)
+            {
+                EvilPinger1 = Random.Range(0, GameObject.FindGameObjectsWithTag("Pingy Thing").Length);
+
+                EvilPinger2 = Random.Range(0, GameObject.FindGameObjectsWithTag("Pingy Thing").Length);
+
+                FirstEvil = GameObject.FindGameObjectsWithTag("Pingy Thing")[EvilPinger1];
+                SecondEvil = GameObject.FindGameObjectsWithTag("Pingy Thing")[EvilPinger2];
+                FirstEvil.tag = "Evil Pinger";
+                FirstEvil.GetComponentInChildren<Renderer>().material = red;
+                SecondEvil.tag = "Evil Pinger";
+                SecondEvil.GetComponentInChildren<Renderer>().material = red;
+                Boss5 = false;
+            }
+
+
+            NotChanged = false;
+        } if (CompletedBosses[5] == 2 && Boss52)
+        {
+
+            if (FirstEvil != null)
+            {
+                FirstEvil.tag = "Pingy Thing";
+                FirstEvil.GetComponentInChildren<Renderer>().material = white;
+            }
+            if (SecondEvil != null)
+            {
+
+                SecondEvil.tag = "Pingy Thing";
+                FirstEvil.GetComponentInChildren<Renderer>().material = white;
+            }
+            Boss52 = false;
+
+
         }
 
     }
@@ -162,10 +269,9 @@ public class BossManager : MonoBehaviour
 2. Remove all Added pingers for this round - done
 3. Remove all Gold Pingers- done
 4. Lose 50 Points every 10 seconds for every pinger on board - done - nerf
-5. All badges null until x score - Close to done, need to finish the rest for it to work
-6. Lose half sell value of all badges at end of round
-7. Pingers give half score originally
-8. Every time the ball hits a flap lose 50 points
-9. Evil Pingers, lose 100 score
-
+5. Evil Pingers, lose 100 score 
+6. All badges null until x score - Close to done, need to finish the rest for it to work
+7. Lose half sell value of all badges at end of round - Done
+8. Pingers give half score originally
+9. Every time the ball hits a flap lose 50 points
 */
