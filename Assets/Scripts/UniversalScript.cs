@@ -4,6 +4,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine.UI;
 using Mono.Cecil.Cil;
+using Unity.VisualScripting;
 public class UniversalScript : MonoBehaviour
 {
     [Header("--Ball--")]
@@ -74,6 +75,9 @@ public class UniversalScript : MonoBehaviour
     float actTimer;
     public bool Add50;
     public int AddedPoints;
+
+    [Header("GoldPerc")]
+    public float Division = 0;
     void Awake()
     {
         Shop.SetActive(false);
@@ -164,6 +168,23 @@ public class UniversalScript : MonoBehaviour
                     score = 0;
                 }
             }
+            if (Division != 0)
+            {
+                float mult = Division + 1;
+                score *= mult;
+                score = Mathf.Round(score/10);
+                if (score % 5 == 0)
+                {
+                    score *= 10;
+                }
+                else
+                {
+                    score = Mathf.RoundToInt(score / 5) * 50;
+                }
+            }
+
+
+
         } else if (actTimer >= 10 && ForceCounter.activeSelf)
         {
             actTimer = 0;

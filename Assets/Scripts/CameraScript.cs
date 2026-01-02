@@ -98,6 +98,7 @@ public class CameraScript : MonoBehaviour
                 hit.collider.tag = "Gold Pingy Thing";
                 goldPingActive = false;
                 ss.SellConsume.SetActive(false);
+                ss.PercChanged = true;
                 if (ss.rtc.anchoredPosition.y == 180)
                 {
                     destroyGameObj(0);
@@ -108,19 +109,25 @@ public class CameraScript : MonoBehaviour
                 
             } else if (hit.collider.CompareTag("Surface") && addPingActive && 
                 Mouse.current.leftButton.wasPressedThisFrame) {
-                Instantiate(Pinger, new Vector3(hit.point.x, hit.point.y, 0), Quaternion.Euler(0,90,0));
+                GameObject newPinger = Instantiate(Pinger, new Vector3(hit.point.x, hit.point.y, 0), Quaternion.Euler(0,90,0));
+                ss.PercChanged = true;
+                Debug.Log("Hiya");
                 addPingActive = false;
                 ss.SellConsume.SetActive(false);
                 if (ss.rtc.anchoredPosition.y == 180)
                 {
-                    destroyGameObj(0); 
-                } else
+                    destroyGameObj(0);
+                }
+                else
                 {
                     destroyGameObj(1);
                 }
+
+
             } else if (hit.collider.CompareTag("Pingy Thing") && removePingActive && 
                 Mouse.current.leftButton.wasPressedThisFrame)
             {
+                ss.PercChanged = true;
                 Destroy(hit.collider.gameObject);
                 removePingActive = false;
                 ss.SellConsume.SetActive(false);

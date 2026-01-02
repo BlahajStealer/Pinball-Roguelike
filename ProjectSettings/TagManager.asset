@@ -37,6 +37,8 @@ TagManager:
   - Evil Pinger
   - Opt1
   - Opt2
+  - Corner Colliders
+  - gPinger100
   layers:
   - Default
   - TransparentFX

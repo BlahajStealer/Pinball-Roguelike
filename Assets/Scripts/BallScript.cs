@@ -15,7 +15,7 @@ public class BallScript : MonoBehaviour
     Vector3 initial;
     [SerializeField] bool startCooldown;
     [SerializeField] float cooldown;
-    MeshCollider mc;
+    public BoxCollider mc;
     MeshRenderer Main;
     MeshRenderer Sub;
     public float ScoreCooldown;
@@ -28,9 +28,12 @@ public class BallScript : MonoBehaviour
     BosssRewards br;
     public GameObject BossManagerObj;
     public GameObject BossRewardsObj;
-
     bool flapCooldown;
     float timer;
+
+
+    //BadgeMods
+    public bool gPinger100;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -65,7 +68,7 @@ public class BallScript : MonoBehaviour
             waitToTruify += Time.deltaTime;
             if (waitToTruify > .1f) {
                 mc.enabled = true;
-                Main.enabled = true;
+                //Main.enabled = true;
                 Sub.enabled = true;
                 wait = false;
                 waitToTruify = 0;
@@ -85,7 +88,7 @@ public class BallScript : MonoBehaviour
             if (us.ForceCounter.activeSelf)
             {
                 mc.enabled = false;
-                Main.enabled = false;
+                //Main.enabled = false;
                 Sub.enabled = false;
             }
         }
@@ -186,8 +189,60 @@ public class BallScript : MonoBehaviour
 
                 }
             }
+            if (gPinger100)
+            {
+                us.score += 100;
+            }
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
+
+        }else if (collision.gameObject.CompareTag("Corner Colliders") && !startCooldown)
+        {
+            JustHit = true;
+
+            startCooldown = true;
+            audioSource.Play();
+
+            if (br.Levels[0] > 0)
+            {
+                if (bm.CompletedBosses[7] == 1)
+                {
+                    float Mult = 0;
+                    for (int i = 0; i < br.Levels[0]; i++)
+                    {
+                        Mult += 1.5f;
+                    }
+                    us.score += (50 * Mult);
+
+                }
+                else
+                {
+                    float Mult = 0;
+                    for (int i = 0; i < br.Levels[0]; i++)
+                    {
+                        Mult += 1.5f;
+                    }
+                    us.score += (100 * Mult);
+
+                }
+            }
+            else
+            {
+                if (bm.CompletedBosses[7] == 1)
+                {
+
+                    us.score += 50;
+
+                }
+                else
+                {
+
+                    us.score += 100;
+
+                }
+            }
+            Debug.Log(us.score);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x * (PointForceX), rb.linearVelocity.y * (PointForceY), 0);
 
         }
 
@@ -228,9 +283,10 @@ public class BallScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Appear Trigger"))
         {
-            mc = other.GetComponent<MeshCollider>();
-            Main = other.GetComponent<MeshRenderer>();
-            Sub = other.transform.GetChild(0).GetComponent<MeshRenderer>();
+            Debug.Log(("Hello Chat"));
+            mc = other.transform.GetChild(0).GetComponent<BoxCollider>();
+            //Main = other.GetComponent<MeshRenderer>();
+            Sub = other.transform.GetComponentInChildren<MeshRenderer>();
             wait = true;
 
         }
@@ -238,19 +294,11 @@ public class BallScript : MonoBehaviour
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
 
-            if (bm.CompletedBosses[8] == 1)
-            {
-                us.score -= 50;
-            }
+
         }
         else if (other.gameObject.CompareTag("FlapLeft") && (us.LeftFlap))
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * ForceX, rb.linearVelocity.y * ForceY, 0);
-
-            if (bm.CompletedBosses[8] == 1)
-            {
-                us.score -= 50;
-            }
         }
         if ((other.gameObject.CompareTag("FlapRight") || other.gameObject.CompareTag("FlapLeft")) && !flapCooldown)
         {
@@ -263,6 +311,11 @@ public class BallScript : MonoBehaviour
                     addition += 100;
                 }
                 us.score += addition;
+                if (bm.CompletedBosses[8] == 1)
+                {
+                    Debug.Log("Sub (Like me)");
+                    us.score -= 50;
+                }
             }
         }
 

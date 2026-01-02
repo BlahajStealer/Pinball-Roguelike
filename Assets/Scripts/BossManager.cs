@@ -40,10 +40,10 @@ public class BossManager : MonoBehaviour
 
     //makes sure first bools
 
-    bool Boss1 = false;
-    bool Boss2 = false;
-    bool Boss5 = false;
-    bool Boss52 = false;
+    bool Boss1 = true;
+    bool Boss2 = true;
+    bool Boss5 = true;
+    bool Boss52 = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -59,10 +59,7 @@ public class BossManager : MonoBehaviour
         UniversalScriptObj = GameObject.FindGameObjectWithTag("Empty");
         us = UniversalScriptObj.GetComponent<UniversalScript>();
         ss = Shop.GetComponent<ShopScript>();
-        for (int i = 0; i < CompletedBosses.Length; i++)
-        {
-            CompletedBosses[i] = 0;
-        }
+
     }
 
     // Update is called once per frame
@@ -87,7 +84,6 @@ public class BossManager : MonoBehaviour
                         RandomNum = i;
                     } else if (i == CompletedBosses.Length - 1)
                     {
-                        Debug.Log("Won!");
                     }
                 }
                 tries = 0;
@@ -101,7 +97,7 @@ public class BossManager : MonoBehaviour
             if (CompletedBosses[RandomNum] != 2)
             {
                 CompletedBosses[RandomNum] = 1;
-                if (RandomNum == 5)
+                if (RandomNum == 4)
                 {
                     NotChanged = true;
                 }
@@ -164,7 +160,7 @@ public class BossManager : MonoBehaviour
                 GoldPingers[i].SetActive(true);
             }
         }
-        if (CompletedBosses[4] == 1 && us.score < (1f/3f * us.target))
+        if (CompletedBosses[5] == 1 && us.score < (1f/3f * us.target))
         {
             Debug.Log("Hiya");
             for (int i = 0; i < Badges.Length; i++)
@@ -176,7 +172,7 @@ public class BossManager : MonoBehaviour
 
                 }
             }
-        } else if (us.score > (1f/3f * us.target) && CompletedBosses[4] == 1)
+        } else if (us.score > (1f/3f * us.target) && CompletedBosses[5] == 1)
         {
             for (int i = 0; i < Badges.Length; i++)
             {
@@ -222,30 +218,36 @@ public class BossManager : MonoBehaviour
                 randomGen = false;
             }
         }
-        if (CompletedBosses[5] == 1 && NotChanged)
+        if (CompletedBosses[4] == 1 && NotChanged)
         {
+            Debug.Log("Kill Me");
             if (Boss5)
             {
+                Debug.Log("Kill Me 2");
+
                 EvilPinger1 = Random.Range(0, GameObject.FindGameObjectsWithTag("Pingy Thing").Length);
 
                 EvilPinger2 = Random.Range(0, GameObject.FindGameObjectsWithTag("Pingy Thing").Length);
 
                 FirstEvil = GameObject.FindGameObjectsWithTag("Pingy Thing")[EvilPinger1];
                 SecondEvil = GameObject.FindGameObjectsWithTag("Pingy Thing")[EvilPinger2];
-                FirstEvil.tag = "Evil Pinger";
-                FirstEvil.GetComponentInChildren<Renderer>().material = red;
-                SecondEvil.tag = "Evil Pinger";
-                SecondEvil.GetComponentInChildren<Renderer>().material = red;
+
                 Boss5 = false;
             }
-
+            FirstEvil.tag = "Evil Pinger";
+            FirstEvil.GetComponentInChildren<Renderer>().material = red;
+            SecondEvil.tag = "Evil Pinger";
+            SecondEvil.GetComponentInChildren<Renderer>().material = red;
 
             NotChanged = false;
-        } if (CompletedBosses[5] == 2 && Boss52)
+        } if (CompletedBosses[4] == 2 && Boss52)
         {
+            Debug.Log("Kill Me 3");
 
             if (FirstEvil != null)
             {
+                Debug.Log("Kill Me 4");
+
                 FirstEvil.tag = "Pingy Thing";
                 FirstEvil.GetComponentInChildren<Renderer>().material = white;
             }
@@ -265,13 +267,13 @@ public class BossManager : MonoBehaviour
 }
 /*
 
-1. 3x Score - done
-2. Remove all Added pingers for this round - done
-3. Remove all Gold Pingers- done
-4. Lose 50 Points every 10 seconds for every pinger on board - done - nerf
-5. Evil Pingers, lose 100 score 
-6. All badges null until x score - Close to done, need to finish the rest for it to work
-7. Lose half sell value of all badges at end of round - Done
-8. Pingers give half score originally
+1. 3x Score - done                                                                          Works
+2. Remove all Added pingers for this round - done                                           Works
+3. Remove all Gold Pingers- done                                                            Works
+4. Lose 50 Points every 10 seconds for every pinger on board - done - nerf -                Works
+5. Evil Pingers, lose 100 score                                                             Works
+6. All badges null until x score - Close to done, need to finish the rest for it to work    Works
+7. Lose half sell value of all badges at end of round - Done                                Works
+8. Pingers give half score originally                                                       Works
 9. Every time the ball hits a flap lose 50 points
 */

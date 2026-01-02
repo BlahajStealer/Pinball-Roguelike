@@ -1,9 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static UnityEngine.Random;
-using JetBrains.Annotations;
-using System.Runtime.CompilerServices;
 
 public class ShopScript : MonoBehaviour
 {
@@ -38,11 +35,14 @@ public class ShopScript : MonoBehaviour
     public GameObject Shop;
     public GameObject Univ;
     public GameObject Camera;
-
+    public GameObject NextLevelObj;
+    public GameObject Ball;
     [Header("--Scripts--")]
     BossManager bm;
     UniversalScript us;
     CameraScript cs;
+    NextLevels nl;
+    BallScript bs;
 
     [Header("--Descriptions--")]
     public TextMeshProUGUI Description;
@@ -83,16 +83,23 @@ public class ShopScript : MonoBehaviour
     public bool TwoThirdsSell;
     public bool Halfpts;
     public float DivisionPts = 0;
+    public bool PercChanged;
+
+
+
     [Header("--NextLevel--")]
     public GameObject NextLevels;
-
+    public float backup;
     private void Awake()
     {
-        NextLevels.SetActive(false);
     }
 
     void Start()
     {
+        bs = Ball.GetComponent<BallScript>();
+        NextLevels.SetActive(false);
+
+        nl = NextLevelObj.GetComponent<NextLevels>();
         currentBadgeIDs = new int[5];
         currentConsumeIDs = new int[2];
         for (int i = 0; i < currentBadgeIDs.Length; i++)
@@ -111,7 +118,7 @@ public class ShopScript : MonoBehaviour
         DescriptionObj.SetActive(false);
         cs = Camera.GetComponent<CameraScript>();
         SellConsume.SetActive(false);
-        DivisionPts = 1;
+        DivisionPts = 0;
         IdDet = GetComponent<idDeterminer>();
         us = Univ.GetComponent<UniversalScript>();
 
@@ -120,7 +127,7 @@ public class ShopScript : MonoBehaviour
         SellButton.SetActive(false);
         rt = SellButton.GetComponent<RectTransform>();
         rtc = SellConsume.GetComponent<RectTransform>();
-        normalTarget = us.target;
+        normalTarget = 5000;
 
     }
 
@@ -159,7 +166,18 @@ public class ShopScript : MonoBehaviour
             }
             Money = Mathf.RoundToInt(Money * NumberBadges);
             Money += Mathf.RoundToInt((10 - DivisionPts));
-            normalTarget = Mathf.RoundToInt((normalTarget * 1.25f) / 10);
+            if (nl.DiffMult == 0)
+            {
+                normalTarget = Mathf.RoundToInt((normalTarget * backup) / 10);
+                Debug.Log("Defaulted");
+            }
+            else
+            {
+                Debug.Log("Didn't Default");
+                normalTarget = Mathf.RoundToInt((normalTarget * nl.DiffMult) / 10);
+
+            }
+            Debug.Log(normalTarget);
             if (normalTarget % 5 == 0)
             {
                 normalTarget *= 10;
@@ -409,22 +427,29 @@ public class ShopScript : MonoBehaviour
         Money += BadgeSellValue[currentBadgeIDs[ID]];
         currentBadgeIDs[ID] = 7;
         Swap[ID].sprite = Transparent;
-        switch (Photos[ID].tag)
+        if (Photos[ID].TryGetComponent<AddPts>(out _))
         {
-            case "AddPts":
-                DivisionPts = 1;
-                TwoThirdsSell = true;
-                break;
-            case "CutPoints":
-                cutPts = false;
-                break;
-            case "HalfPointsMoney":
-                DivisionPts = 1f;
-                Halfpts = false;
-                break;
+            DivisionPts = 0;
+            TwoThirdsSell = true;
+        } else if (Photos[ID].TryGetComponent<CutPoints>(out _))
+        {
+            cutPts = false;
+
+        }else if (Photos[ID].TryGetComponent<HalfPtsMny>(out _))
+        {
+            DivisionPts = 0f;
+            Halfpts = false;
+        } else if (Photos[ID].TryGetComponent<EveryGoldPinger>(out _))
+        {
+            bs.gPinger100 = false;
+
+        } else if (Photos[ID].TryGetComponent<goldperc>(out _))
+        {
+            us.Division = 0;
         }
-        
-        Destroy(Photos[ID]);
+
+
+            Destroy(Photos[ID]);
         Photos[ID] = null;
         SellButton.SetActive(false);
     }

@@ -19,10 +19,14 @@ public class NextLevels : MonoBehaviour
     ShopScript ss;
     BossManager bm;
     UniversalScript us;
-    
+    public TextMeshProUGUI Section;
+    int sectionNum = 1;
+    public float DiffMult = 1.25f;
+    bool sectionAccounted;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DiffMult = 1.25f;
         us = UniversalObj.GetComponent<UniversalScript>();
         bm = BossManObj.GetComponent<BossManager>();
         ss = ShopScriptObj.GetComponent<ShopScript>();
@@ -34,8 +38,8 @@ public class NextLevels : MonoBehaviour
         int[] target = new int[3];
 
         target[0] = Mathf.RoundToInt(us.target);
-        target[1] = Mathf.RoundToInt(us.target * 1.25f);
-        target[2] = Mathf.RoundToInt(us.target * (1.25f*1.25f));
+        target[1] = Mathf.RoundToInt(us.target * DiffMult);
+        target[2] = Mathf.RoundToInt(us.target * (DiffMult *DiffMult));
         for (int i = 0; i < target.Length; i++)
         {
             target[i] = Mathf.RoundToInt(target[i] / 10);
@@ -105,12 +109,39 @@ public class NextLevels : MonoBehaviour
                 }
             }
         }
+        if (completedLevels[1] && !sectionAccounted)
+        {
+            sectionNum++;
+            sectionAccounted = true;
+        }
+        if (!completedLevels[1])
+        {
+            sectionAccounted = false;
+        }
+        if (sectionNum == 1 || sectionNum == 2)
+        {
+            DiffMult = 1.25f;
+        }
+        else if (sectionNum == 3 || sectionNum == 4)
+        {
+            DiffMult = 1.5f;
+        }
+        else if (sectionNum == 5)
+        {
+            DiffMult = 1.75f;
+        }
+        else if (sectionNum == 6)
+        {
+            DiffMult = 2f;
+        }
         if (bm.NextLevelRestarter)
         {
+            Section.text = "Section " + sectionNum;
+
             int[] target = new int[3];
-            target[0] = Mathf.RoundToInt(us.target * 1.25f);
-            target[1] = Mathf.RoundToInt(us.target * 1.25f * 1.25f);
-            target[2] = Mathf.RoundToInt(us.target * (1.25f * 1.25f * 1.25f));
+            target[0] = Mathf.RoundToInt(us.target * DiffMult);
+            target[1] = Mathf.RoundToInt(us.target * DiffMult * DiffMult);
+            target[2] = Mathf.RoundToInt(us.target * (DiffMult * DiffMult * DiffMult));
             for (int i = 0; i < completedLevels.Length; i++)
             {
                 completedLevels[i] = false;
