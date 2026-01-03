@@ -1,28 +1,21 @@
 using UnityEngine;
 
-public class HalfPtsMny : MonoBehaviour
+public class OneRandom : MonoBehaviour
 {
 
     GameObject Shop;
     ShopScript sc;
-    bool divisionChecked = false;
+
     void Start()
     {
-
-
         Shop = GameObject.FindGameObjectWithTag("Shop");
         sc = Shop.GetComponent<ShopScript>();
+
     }
 
     void Update()
     {
-        if (!divisionChecked)
-        {
-            sc.DivisionPts += 5f;
-            divisionChecked = true;
-        }
-        sc.Halfpts = true;
+        sc.OneRandomActive = true;
     }
-
 
 }

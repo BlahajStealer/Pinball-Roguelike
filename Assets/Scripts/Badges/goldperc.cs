@@ -32,7 +32,7 @@ public class goldperc : MonoBehaviour
     {
         if (sc.PercChanged)
         {
-            sc.PercChanged = false;
+            
             totalGold = GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length;
             totalNormal = GameObject.FindGameObjectsWithTag("Pingy Thing").Length;
             totalNormal += GameObject.FindGameObjectsWithTag("AddedPinger").Length;

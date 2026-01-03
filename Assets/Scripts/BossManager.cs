@@ -220,17 +220,18 @@ public class BossManager : MonoBehaviour
         }
         if (CompletedBosses[4] == 1 && NotChanged)
         {
-            Debug.Log("Kill Me");
             if (Boss5)
             {
-                Debug.Log("Kill Me 2");
 
                 EvilPinger1 = Random.Range(0, GameObject.FindGameObjectsWithTag("Pingy Thing").Length);
 
                 EvilPinger2 = Random.Range(0, GameObject.FindGameObjectsWithTag("Pingy Thing").Length);
+                if (GameObject.FindGameObjectsWithTag("Pingy Thing").Length >= 3)
+                {
+                    FirstEvil = GameObject.FindGameObjectsWithTag("Pingy Thing")[EvilPinger1];
+                    SecondEvil = GameObject.FindGameObjectsWithTag("Pingy Thing")[EvilPinger2];
+                }
 
-                FirstEvil = GameObject.FindGameObjectsWithTag("Pingy Thing")[EvilPinger1];
-                SecondEvil = GameObject.FindGameObjectsWithTag("Pingy Thing")[EvilPinger2];
 
                 Boss5 = false;
             }
@@ -242,11 +243,9 @@ public class BossManager : MonoBehaviour
             NotChanged = false;
         } if (CompletedBosses[4] == 2 && Boss52)
         {
-            Debug.Log("Kill Me 3");
 
             if (FirstEvil != null)
             {
-                Debug.Log("Kill Me 4");
 
                 FirstEvil.tag = "Pingy Thing";
                 FirstEvil.GetComponentInChildren<Renderer>().material = white;
@@ -255,7 +254,7 @@ public class BossManager : MonoBehaviour
             {
 
                 SecondEvil.tag = "Pingy Thing";
-                FirstEvil.GetComponentInChildren<Renderer>().material = white;
+                SecondEvil.GetComponentInChildren<Renderer>().material = white;
             }
             Boss52 = false;
 

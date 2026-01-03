@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 public class BallScript : MonoBehaviour
 {
     Rigidbody rb;
@@ -30,13 +31,18 @@ public class BallScript : MonoBehaviour
     public GameObject BossRewardsObj;
     bool flapCooldown;
     float timer;
-
-
+    public bool AllNormalPingers;
+    public bool Every50Norms;
     //BadgeMods
     public bool gPinger100;
+    public bool Remove100Pinger;
+    int CurrentPingers;
+    public GameObject Shop;
+    ShopScript ss;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
+        ss = Shop.GetComponent<ShopScript>();
         br = BossRewardsObj.GetComponent<BosssRewards>();
         bm = BossManagerObj.GetComponent<BossManager>();
         audioSource = Camera.GetComponent<AudioSource>();
@@ -47,11 +53,17 @@ public class BallScript : MonoBehaviour
     {
         initial = transform.position;
         us = GameObject.GetComponent<UniversalScript>();
+        CurrentPingers = GameObject.FindGameObjectsWithTag("Pingy Thing").Length + GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length + GameObject.FindGameObjectsWithTag("AddedPinger").Length + GameObject.FindGameObjectsWithTag("Evil Pinger").Length;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (ss.PercChanged)
+        {
+            CurrentPingers = GameObject.FindGameObjectsWithTag("Pingy Thing").Length + GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length + GameObject.FindGameObjectsWithTag("AddedPinger").Length + GameObject.FindGameObjectsWithTag("Evil Pinger").Length;
+        }
         if (flapCooldown)
         {
             timer += Time.deltaTime;
@@ -103,43 +115,52 @@ public class BallScript : MonoBehaviour
 
             startCooldown = true;
             audioSource.Play();
-            if (br.Levels[0] > 0)
+            float scoreToAdd = 0; ;
+
+            
+            if (bm.CompletedBosses[7] == 1) {
+
+                scoreToAdd += 50;
+
+            }
+            else
             {
-                if (bm.CompletedBosses[7] == 1)
-                {
-                    float Mult = 0;
-                    for (int i = 0; i < br.Levels[0]; i++)
-                    {
-                        Mult += 1.5f;
-                    }
-                    us.score += (50 * Mult);
 
-                }
-                else
-                {
-                    float Mult = 0;
-                    for (int i = 0; i < br.Levels[0]; i++)
-                    {
-                        Mult += 1.5f;
-                    }
-                    us.score += (100 * Mult);
+                scoreToAdd += 100;
 
-                }
-            } else
+            }
+            
+            if (AllNormalPingers)
             {
-                if (bm.CompletedBosses[7] == 1) {
-
-                    us.score += 50;
-
-                }
-                else
+                scoreToAdd += 200;
+            }
+            if (Every50Norms)
+            {
+                scoreToAdd += 50;
+            }
+            if (Remove100Pinger)
+            {
+                int AmountBelowPingers = us.StartingPinger - CurrentPingers;
+                if (AmountBelowPingers > 0)
                 {
-
-                    us.score += 100;
-
+                    for (int i = 0; i < AmountBelowPingers; i++)
+                    {
+                        scoreToAdd += 100;
+                    }
                 }
             }
-
+            if (br.Levels[0] > 0)
+            {
+                float Mult = 0;
+                for (int i = 0; i < br.Levels[0]; i++)
+                {
+                    Mult += 1.5f;
+                }
+                us.score += scoreToAdd * Mult;
+            } else
+            {
+                us.score += scoreToAdd;
+            }
 
                 Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
@@ -150,50 +171,48 @@ public class BallScript : MonoBehaviour
 
             startCooldown = true;
             audioSource.Play();
-
-            if (br.Levels[0] > 0)
+            float scoreToAdd = 0;
+            if (bm.CompletedBosses[7] == 1)
             {
-                if (bm.CompletedBosses[7] == 1)
-                {
-                    float Mult = 0;
-                    for (int i = 0; i < br.Levels[0]; i++)
-                    {
-                        Mult += 1.5f;
-                    }
-                    us.score += (150 * Mult);
 
-                }
-                else
-                {
-                    float Mult = 0;
-                    for (int i = 0; i < br.Levels[0]; i++)
-                    {
-                        Mult += 1.5f;
-                    }
-                    us.score += (300 * Mult);
+                scoreToAdd += 150;
 
-                }
             }
             else
             {
-                if (bm.CompletedBosses[7] == 1)
-                {
 
-                    us.score += 150;
+                scoreToAdd += 300;
 
-                }
-                else
-                {
-
-                    us.score += 300;
-
-                }
             }
             if (gPinger100)
             {
-                us.score += 100;
+                scoreToAdd += 100;
             }
-            Debug.Log(us.score);
+            if (Remove100Pinger)
+            {
+                int AmountBelowPingers = us.StartingPinger - CurrentPingers;
+                if (AmountBelowPingers > 0)
+                {
+                    for (int i = 0; i < AmountBelowPingers; i++)
+                    {
+                        scoreToAdd += 100;
+                    }
+                }
+            }
+            if (br.Levels[0] > 0)
+            {
+                float Mult = 0;
+                for (int i = 0; i < br.Levels[0]; i++)
+                {
+                    Mult += 1.5f;
+                }
+                us.score += scoreToAdd * Mult;
+            } else
+            {
+                us.score += scoreToAdd;
+            }
+
+                Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
 
         }else if (collision.gameObject.CompareTag("Corner Colliders") && !startCooldown)

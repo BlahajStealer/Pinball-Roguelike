@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
+using UnityEditor.Experimental.GraphView;
 public class NextLevels : MonoBehaviour
 {
     public bool[] completedLevels;
@@ -11,6 +12,7 @@ public class NextLevels : MonoBehaviour
     public GameObject BossManObj;
     public GameObject UniversalObj;
     public GameObject self;
+    public GameObject Cam;
     public TextMeshProUGUI[] Scores;
     public string[] BossTexts;
     public TextMeshProUGUI BossText;
@@ -19,10 +21,12 @@ public class NextLevels : MonoBehaviour
     ShopScript ss;
     BossManager bm;
     UniversalScript us;
+    CameraScript cs;
     public TextMeshProUGUI Section;
     int sectionNum = 1;
     public float DiffMult = 1.25f;
     bool sectionAccounted;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,41 +34,9 @@ public class NextLevels : MonoBehaviour
         us = UniversalObj.GetComponent<UniversalScript>();
         bm = BossManObj.GetComponent<BossManager>();
         ss = ShopScriptObj.GetComponent<ShopScript>();
-        for (int i = 0; i < completedLevels.Length; i++)
-        {
-            completedLevels[i] = false;
-        }
-
-        int[] target = new int[3];
-
-        target[0] = Mathf.RoundToInt(us.target);
-        target[1] = Mathf.RoundToInt(us.target * DiffMult);
-        target[2] = Mathf.RoundToInt(us.target * (DiffMult *DiffMult));
-        for (int i = 0; i < target.Length; i++)
-        {
-            target[i] = Mathf.RoundToInt(target[i] / 10);
-            if (target[i] % 5 == 0)
-            {
-                target[i] *= 10;
-            } else
-            {
-                target[i] = Mathf.RoundToInt(target[i] / 5) * 50;
-            }
-        }
         completedLevels[0] = true;
-        for (int i = 0; i < Scores.Length; i++)
-        {
-            if (bm.RandomNum == 0 && i == 2)
-            {
-                Scores[i].text = "Score Needed: " + (target[i] * 3).ToString();
-
-            } else
-            {
-                Scores[i].text = "Score Needed: " + target[i].ToString();
-            }
-        }
-        BossText.text = BossTexts[bm.RandomNum];
-
+        ChangeText(true);
+        cs = Cam.GetComponent<CameraScript>();
     }
 
     // Update is called once per frame
@@ -134,44 +106,20 @@ public class NextLevels : MonoBehaviour
         {
             DiffMult = 2f;
         }
-        if (bm.NextLevelRestarter)
+        if (bm.NextLevelRestarter || ss.BadgeBoughtNext)
         {
-            Section.text = "Section " + sectionNum;
+            if (bm.NextLevelRestarter)
+            {
+                for (int i = 0; i < completedLevels.Length; i++)
+                {
+                    completedLevels[i] = false;
+                }
+                ChangeText(false);
 
-            int[] target = new int[3];
-            target[0] = Mathf.RoundToInt(us.target * DiffMult);
-            target[1] = Mathf.RoundToInt(us.target * DiffMult * DiffMult);
-            target[2] = Mathf.RoundToInt(us.target * (DiffMult * DiffMult * DiffMult));
-            for (int i = 0; i < completedLevels.Length; i++)
+            } else
             {
-                completedLevels[i] = false;
+                ChangeText(false);
             }
-            for (int i = 0; i < target.Length; i++)
-            {
-                target[i] = Mathf.RoundToInt(target[i] / 10);
-                if (target[i] % 5 == 0)
-                {
-                    target[i] *= 10;
-                }
-                else
-                {
-                    target[i] = Mathf.RoundToInt(target[i] / 5) * 50;
-                }
-            }
-            for (int i = 0; i < Scores.Length; i++)
-            {
-                if (bm.RandomNum == 0 && i == 2)
-                {
-                    Scores[i].text = "Score Needed: " + (target[i] * 3).ToString();
-
-                }
-                else
-                {
-                    Scores[i].text = "Score Needed: " + target[i].ToString();
-                }
-            }
-            BossText.text = BossTexts[bm.RandomNum];
-            bm.NextLevelRestarter = false;
         }
     }
 
@@ -194,11 +142,14 @@ public class NextLevels : MonoBehaviour
         {
             us.target = Mathf.RoundToInt((ss.normalTarget * 3) / 10);
 
+        } else if (ss.AllGoldDivide)
+        {
+            us.target = Mathf.RoundToInt(ss.normalTarget * 0.75f / 10);
         }
         else
         {
             us.target = Mathf.RoundToInt((ss.normalTarget) / 10);
-        }
+        } 
 
         if (us.target % 5 == 0)
         {
@@ -216,10 +167,173 @@ public class NextLevels : MonoBehaviour
             ss.TwoThirdsSell = false;
         }
         completedLevels[ID] = true;
-
+        if (ss.OneRandomActive)
+        {
+            ss.PercChanged = true;
+            GameObject[] ping = GameObject.FindGameObjectsWithTag("Pingy Thing");
+            GameObject[] add = GameObject.FindGameObjectsWithTag("AddedPinger");
+            GameObject[] gold = GameObject.FindGameObjectsWithTag("Gold Pingy Thing");
+            int first = ping.Length;
+            int second = add.Length;
+            int third = gold.Length;
+            int AmtOfPingers = first + second + third;
+            GameObject[] GameObjArray = new GameObject[AmtOfPingers];
+            int index = 0;
+            for (int i = 0; i < ping.Length; i++) {
+                GameObjArray[index++] = ping[i];
+            }
+            for (int i = 0; i < add.Length; i++) {
+                GameObjArray[index++] = add[i];
+            }
+            for (int i = 0; i < gold.Length; i++) {
+                GameObjArray[index++] = gold[i];
+            }
+            Destroy(GameObjArray[Random.Range(0, AmtOfPingers)]);
+           
+            if (cs.DestroyPinger)
+            {
+                ss.Money += 5;
+            }
+        }
         ss.shopMoneyStarted = false;
         ss.Leaving = true;
         self.SetActive(false);
+    }
+    void ChangeText(bool start)
+    {
+        Section.text = "Section " + sectionNum;
+
+        int[] target = new int[3];
+        if (start)
+        {
+            target[0] = Mathf.RoundToInt(us.target);
+            target[1] = Mathf.RoundToInt(us.target * DiffMult);
+            target[2] = Mathf.RoundToInt(us.target * (DiffMult * DiffMult));
+        } else
+        {
+            if (!completedLevels[0])
+            {
+                Debug.Log("1st");
+                target[0] = Mathf.RoundToInt(us.target * DiffMult);
+                target[1] = Mathf.RoundToInt(us.target * DiffMult * DiffMult);
+                target[2] = Mathf.RoundToInt(us.target * (DiffMult * DiffMult * DiffMult));
+            }
+            else if (!completedLevels[1])
+            {
+                Debug.Log("2nd");
+
+                target[0] = Mathf.RoundToInt(us.target);
+                target[1] = Mathf.RoundToInt(us.target * DiffMult);
+                target[2] = Mathf.RoundToInt(us.target * (DiffMult * DiffMult));
+            }
+            else
+            {
+                Debug.Log("3rd");
+
+                target[0] = Mathf.RoundToInt(us.target / DiffMult);
+                target[1] = Mathf.RoundToInt(us.target);
+                target[2] = Mathf.RoundToInt(us.target * (DiffMult));
+            }
+        }
+
+        for (int i = 0; i < target.Length; i++)
+        {
+            target[i] = Mathf.RoundToInt(target[i] / 10);
+            if (target[i] % 5 == 0)
+            {
+                target[i] *= 10;
+            }
+            else
+            {
+                target[i] = Mathf.RoundToInt(target[i] / 5) * 50;
+            }
+        }
+
+        for (int i = 0; i < Scores.Length; i++)
+        {
+            if (bm.RandomNum == 0 && i == 2)
+            {
+                Scores[i].text = "Score Needed: \n" + (target[i] * 3).ToString();
+
+            }
+            if (ss.cutPts)
+            {
+                float Next;
+                Next = Mathf.RoundToInt((2 * target[i] / 3) / 10);
+                if (Next % 5 == 0)
+                {
+                    Scores[i].text = "Score Needed: \n" + (Mathf.RoundToInt((2 * target[i] / 3) / 10) * 10);
+
+                }
+                else
+                {
+                    Scores[i].text = "Score Needed: \n" + Mathf.RoundToInt(Next / 5) * 5 * 10;
+                }
+            }
+            else if (ss.Halfpts)
+            {
+                float Next;
+                Next = Mathf.RoundToInt((target[i] / 2) / 10);
+                if (Next % 5 == 0)
+                {
+                    Scores[i].text = "Score Needed: \n" + (Mathf.RoundToInt((target[i] / 2) / 10) * 10);
+
+                }
+                else
+                {
+                    Scores[i].text = "Score Needed: \n" + Mathf.RoundToInt(Next / 5) * 5 * 10;
+                }
+            }
+            else if (bm.CompletedBosses[0] == 1)
+            {
+                float Next;
+                Next = Mathf.RoundToInt(target[i] * 3 / 10);
+                if (Next % 5 == 0)
+                {
+                    Next *= 10;
+                }
+                else
+                {
+                    Next = Mathf.RoundToInt(Next / 5) * 50;
+
+                }
+                Scores[i].text = "Score Needed: \n" + Next;
+
+            }
+            else if (ss.AllGoldDivide)
+            {
+                float Next;
+                Next = Mathf.RoundToInt(target[i] * 0.75f / 10);
+                if (Next % 5 == 0)
+                {
+                    Next *= 10;
+                }
+                else
+                {
+                    Next = Mathf.RoundToInt(Next / 5) * 50;
+
+                }
+                Scores[i].text = "Score Needed: \n" + Next;
+            }
+            else
+            {
+                float Next;
+                Next = Mathf.RoundToInt((target[i]) / 10);
+                if (Next % 5 == 0)
+                {
+                    Scores[i].text = "Score Needed: \n" + (Mathf.RoundToInt(target[i] / 10) * 10);
+
+                }
+                else
+                {
+                    Scores[i].text = "Score Needed: \n" + Mathf.RoundToInt(Next / 5) * 5 * 10;
+                }
+            }
+
+        }
+        BossText.text = BossTexts[bm.RandomNum];
+        bm.NextLevelRestarter = false;
+        ss.BadgeBoughtNext = false;
     }
 }
 //ss.leaving = true

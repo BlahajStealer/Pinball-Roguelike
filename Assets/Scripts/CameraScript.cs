@@ -39,6 +39,7 @@ public class CameraScript : MonoBehaviour
     public float cooldown;
     public GameObject BossRewardObj;
     BosssRewards br;
+    public bool DestroyPinger;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -124,13 +125,17 @@ public class CameraScript : MonoBehaviour
                 }
 
 
-            } else if (hit.collider.CompareTag("Pingy Thing") && removePingActive && 
+            } else if ((hit.collider.CompareTag("Pingy Thing") || hit.collider.CompareTag("AddedPinger") || hit.collider.CompareTag("Gold Pingy Thing")) && removePingActive && 
                 Mouse.current.leftButton.wasPressedThisFrame)
             {
                 ss.PercChanged = true;
                 Destroy(hit.collider.gameObject);
                 removePingActive = false;
                 ss.SellConsume.SetActive(false);
+                if (DestroyPinger)
+                {
+                    ss.Money += 5;
+                }
                 if (ss.rtc.anchoredPosition.y == 180)
                 {
                     destroyGameObj(0);
@@ -138,7 +143,10 @@ public class CameraScript : MonoBehaviour
                 {
                     destroyGameObj(1);
                 }
-            } 
+            } else
+            {
+                ss.PercChanged = false;
+            }
         }
     }
     void TwoDRaycast()

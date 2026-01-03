@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AddPts : MonoBehaviour
+public class Remove100 : MonoBehaviour
 {
     GameObject Universal;
     UniversalScript us;
@@ -8,13 +8,9 @@ public class AddPts : MonoBehaviour
     BallScript bs;
     GameObject Shop;
     ShopScript sc;
-    public int sellValue;
-    public int buyValue;
+
     void Start()
     {
-        sellValue = 5;
-        buyValue = 8;
-        
         Universal = GameObject.FindGameObjectWithTag("Empty");
         us = Universal.GetComponent<UniversalScript>();
         Ball = GameObject.FindGameObjectWithTag("Player");
@@ -25,11 +21,6 @@ public class AddPts : MonoBehaviour
 
     void Update()
     {
-        if (sc.Leaving) {
-            us.score = us.target / 3;
-            sc.Leaving = false;
-            us.AddOnAct();
-
-        }
+        bs.Remove100Pinger = true;
     }
 }

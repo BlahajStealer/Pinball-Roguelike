@@ -4078,6 +4078,7 @@ MonoBehaviour:
   DescriptionOffsety: 35
   cooldown: 0
   BossRewardObj: {fileID: 2136203447}
+  DestroyPinger: 0
 --- !u!82 &589460813
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6869,7 +6870,7 @@ MonoBehaviour:
   Descriptions:
   - At the end of every round, Money is increased by 20%
   - Adds 1/3 of target to score at the beginning of a round. Increases to 2/3 when
-    sold. Money decreases $3
+    sold.
   - Cuts target by 1/3.
   - For every 15 pingers hit, add $1 to total money.
   - Halves points needed. Halves Money earned.
@@ -6877,6 +6878,16 @@ MonoBehaviour:
   - Multiply money by 1.2 at the end of a round for every badge owned.
   - Evey Gold Pinger gives 100 more points
   - Percent of pingers that are gold are added to mult. Ex. (50% -> 1.5x)
+  - Every 2 gold pingers gives $1 at the beginning of shop. Lose $2 at the beginning
+    of shop.
+  - If all pingers are gold, multiply target by 0.75
+  - Every 4 Normal Pingers add 100 points to score.
+  - If all Pingers are normal. score gained by pingers increases by 200.
+  - Every pinger gains +50 score
+  - This badge adds 500 score, -100 per golden pinger
+  - For every pinger below the starting amount, add 100 points to each pinger
+  - For every pinger you destroy gain $5
+  - Destroys one random pinger per round
   DescriptionObj: {fileID: 51304627}
   ConsumeDescription:
   - Convert 1 pinger to gold; Gold pingers give 300 points
@@ -6886,8 +6897,8 @@ MonoBehaviour:
   - Add one pinger to the board
   - Remove one pinger from the board
   ConsumeBools: 
-  BadgeBuyValue: 040000000800000005000000040000000900000006000000060000000600000008000000
-  BadgeSellValue: 010000000500000003000000020000000400000004000000040000000400000005000000
+  BadgeBuyValue: 0400000008000000050000000400000009000000060000000600000006000000080000000400000007000000050000000a0000000500000008000000090000000500000004000000
+  BadgeSellValue: 010000000500000003000000020000000400000004000000040000000400000005000000020000000400000006000000020000000500000004000000050000000300000002000000
   BadgeBools: 
   Badges:
   - {fileID: 21300000, guid: 70cb34a3227034b4caf8f6f8e59dad47, type: 3}
@@ -6898,7 +6909,16 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a5332fb6f29a4dd41b3806f5fa0bf98d, type: 3}
   - {fileID: 21300000, guid: 9a75bda0d30a7c340be8e3aa81b3c7b9, type: 3}
   - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
+  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
+  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
+  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
+  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
+  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
   - {fileID: 21300000, guid: 96b7cf75a6e744a98a36084bf9fd3d4c, type: 3}
+  - {fileID: 21300000, guid: f1eb817b9f23a42668a9cc9bfd77578c, type: 3}
+  - {fileID: 21300000, guid: 065670f73cdac418391184edf13f2348, type: 3}
+  - {fileID: 21300000, guid: 15492a350671c47c08b7b010e02aa951, type: 3}
+  - {fileID: 21300000, guid: b630e61eb533849f6ba974cac19af655, type: 3}
   BadgeButtons:
   - {fileID: 1805191927}
   - {fileID: 1668743443}
@@ -6954,8 +6974,11 @@ MonoBehaviour:
   Halfpts: 0
   DivisionPts: 0
   PercChanged: 0
+  AllGoldDivide: 0
+  OneRandomActive: 0
   NextLevels: {fileID: 998122328}
   backup: 1.25
+  BadgeBoughtNext: 0
 --- !u!4 &952135913
 Transform:
   m_ObjectHideFlags: 0
@@ -6994,6 +7017,15 @@ MonoBehaviour:
   - {fileID: 8204974853471024651, guid: c2e5bdc697ff5fa42a794c3b89cf62a0, type: 3}
   - {fileID: 8204974853471024651, guid: ca5b4c588cf37814a92f9475563820df, type: 3}
   - {fileID: 8204974853471024651, guid: f5c46ab2bdaf86342a7ff4a3ef61f35a, type: 3}
+  - {fileID: 8204974853471024651, guid: e95fe18cf39d23d4cb4969163f733660, type: 3}
+  - {fileID: 8204974853471024651, guid: a26875311a62f194fb88069a8b010e9f, type: 3}
+  - {fileID: 8204974853471024651, guid: 20aada0dd47265e49a5b817d62280fa1, type: 3}
+  - {fileID: 8204974853471024651, guid: 466489c2fa7373c48b2c788bf7a1bf10, type: 3}
+  - {fileID: 8204974853471024651, guid: ed45ad8fe2997674b86b6254f6b49262, type: 3}
+  - {fileID: 8204974853471024651, guid: 475e303ccc2fd4b4eb7d89c4c2661c83, type: 3}
+  - {fileID: 8204974853471024651, guid: 0b2021c71e213e249b62ba523401a48e, type: 3}
+  - {fileID: 8204974853471024651, guid: 1e281ccfde6a5154c89463dbd2711d51, type: 3}
+  - {fileID: 8204974853471024651, guid: 40eac53abc6a80b46b8f3f1aac58d4c5, type: 3}
   ConsumableObjs:
   - {fileID: 6885053547896425196, guid: 28acf420b796c9942a63d32b7915f799, type: 3}
   - {fileID: 6885053547896425196, guid: 91fdc59076736694e866c15d16abc04c, type: 3}
@@ -7470,6 +7502,7 @@ MonoBehaviour:
   BossManObj: {fileID: 1000295689}
   UniversalObj: {fileID: 4060687}
   self: {fileID: 998122328}
+  Cam: {fileID: 589460807}
   Scores:
   - {fileID: 1069123206}
   - {fileID: 1664146606}
@@ -7609,7 +7642,7 @@ MonoBehaviour:
   GoldPingers: []
   Badges: []
   red: {fileID: 2100000, guid: 0ec06f48eb6b40743bf4f5e9aeacec57, type: 2}
-  white: {fileID: 2100000, guid: ebf1606e0775f41f5a04a6fc2d92cf5d, type: 2}
+  white: {fileID: -6922793697723135513, guid: 4b72866dcabcec0459aebd3d8a2c3339, type: 3}
   BossWin: {fileID: 2136203447}
   NextLevelRestarter: 0
   randomGen: 0
@@ -9826,6 +9859,10 @@ PrefabInstance:
     - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
       propertyPath: force
       value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: score
+      value: 43423
       objectReference: {fileID: 0}
     - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
       propertyPath: Camera
@@ -15031,6 +15068,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
+      propertyPath: Shop
+      value: 
+      objectReference: {fileID: 952135911}
     - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: Text
       value: 

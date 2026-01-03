@@ -62,6 +62,7 @@ public class UniversalScript : MonoBehaviour
     public GameObject goalTextObj;
     public TextMeshProUGUI goalText;
     public int target = 10000;
+    public int StartingPinger;
 
     Rigidbody Flap1rb;
     Rigidbody Flap2rb;
@@ -78,6 +79,10 @@ public class UniversalScript : MonoBehaviour
 
     [Header("GoldPerc")]
     public float Division = 0;
+
+    [Header("--GeneralBadges--")]
+    public int Addition;
+    public float multiplication;
     void Awake()
     {
         Shop.SetActive(false);
@@ -85,6 +90,7 @@ public class UniversalScript : MonoBehaviour
     }
     void Start()
     {
+        StartingPinger = GameObject.FindGameObjectsWithTag("Pingy Thing").Length;
         BossManager = GameObject.FindGameObjectWithTag("BossMan");
         bm = BossManager.GetComponent<BossManager>();
         Flap1rb = Flap1.GetComponent<Rigidbody>();
@@ -122,6 +128,7 @@ public class UniversalScript : MonoBehaviour
         rb = ball.GetComponent<Rigidbody>();
         GameOver.SetActive(false);
         ForceCounterText.value = 0;
+        multiplication = 1;
     }
 
     // Update is called once per frame
@@ -182,6 +189,8 @@ public class UniversalScript : MonoBehaviour
                     score = Mathf.RoundToInt(score / 5) * 50;
                 }
             }
+            score += Addition;
+            score *= multiplication;
 
 
 

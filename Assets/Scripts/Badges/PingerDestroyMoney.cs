@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AddPts : MonoBehaviour
+public class PingerDestroyMoney : MonoBehaviour
 {
     GameObject Universal;
     UniversalScript us;
@@ -8,28 +8,23 @@ public class AddPts : MonoBehaviour
     BallScript bs;
     GameObject Shop;
     ShopScript sc;
-    public int sellValue;
-    public int buyValue;
+    GameObject Cam;
+    CameraScript cs;
     void Start()
     {
-        sellValue = 5;
-        buyValue = 8;
-        
         Universal = GameObject.FindGameObjectWithTag("Empty");
         us = Universal.GetComponent<UniversalScript>();
         Ball = GameObject.FindGameObjectWithTag("Player");
         bs = Ball.GetComponent<BallScript>();
         Shop = GameObject.FindGameObjectWithTag("Shop");
         sc = Shop.GetComponent<ShopScript>();
+        Cam = GameObject.FindGameObjectWithTag("MainCamera");
+        cs = Cam.GetComponent<CameraScript>();
     }
 
     void Update()
     {
-        if (sc.Leaving) {
-            us.score = us.target / 3;
-            sc.Leaving = false;
-            us.AddOnAct();
-
-        }
+        
+        cs.DestroyPinger = true;
     }
 }

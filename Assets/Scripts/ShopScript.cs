@@ -84,12 +84,14 @@ public class ShopScript : MonoBehaviour
     public bool Halfpts;
     public float DivisionPts = 0;
     public bool PercChanged;
-
+    public bool AllGoldDivide;
+    public bool OneRandomActive;
 
 
     [Header("--NextLevel--")]
     public GameObject NextLevels;
     public float backup;
+    public bool BadgeBoughtNext = false;
     private void Awake()
     {
     }
@@ -308,6 +310,20 @@ public class ShopScript : MonoBehaviour
             }
             NewScore.text = Next + " Points Needed";
 
+        } else if (AllGoldDivide)
+        {
+            float Next;
+            Next = Mathf.RoundToInt(normalTarget * 0.75f / 10);
+            if (Next % 5 == 0)
+            {
+                Next *= 10;
+            }
+            else
+            {
+                Next = Mathf.RoundToInt(Next / 5) * 50;
+
+            }
+            NewScore.text = Next + " Points Needed";
         }
         else
         {
@@ -329,6 +345,7 @@ public class ShopScript : MonoBehaviour
 
         if ((BadgeButtons[ID].image.sprite != outOfStock))
         {
+            BadgeBoughtNext = true;
             IdDet.Badge(BadgeArray[ID], ID);
             BadgeBools[ID] = false;
         }
@@ -429,15 +446,14 @@ public class ShopScript : MonoBehaviour
         Swap[ID].sprite = Transparent;
         if (Photos[ID].TryGetComponent<AddPts>(out _))
         {
-            DivisionPts = 0;
             TwoThirdsSell = true;
         } else if (Photos[ID].TryGetComponent<CutPoints>(out _))
         {
             cutPts = false;
 
-        }else if (Photos[ID].TryGetComponent<HalfPtsMny>(out _))
+        } else if (Photos[ID].TryGetComponent<HalfPtsMny>(out _))
         {
-            DivisionPts = 0f;
+            DivisionPts -= 5f;
             Halfpts = false;
         } else if (Photos[ID].TryGetComponent<EveryGoldPinger>(out _))
         {
@@ -446,6 +462,33 @@ public class ShopScript : MonoBehaviour
         } else if (Photos[ID].TryGetComponent<goldperc>(out _))
         {
             us.Division = 0;
+        } else if (Photos[ID].TryGetComponent<Every2Gold>(out _))
+        {
+            DivisionPts -= 2;
+
+        } else if (Photos[ID].TryGetComponent<AllGold>(out _))
+        {
+            AllGoldDivide = false;
+        } else if (Photos[ID].TryGetComponent<Every4>(out _))
+        {
+            us.Addition -= Photos[ID].GetComponent<Every4>().amountToAdd;
+        } else if (Photos[ID].TryGetComponent<AllNormal>(out _)) {
+            bs.AllNormalPingers = false;
+        } else if (Photos[ID].TryGetComponent<Every50>(out _))
+        {
+            bs.AllNormalPingers = false;
+        } else if (Photos[ID].TryGetComponent<Add500>(out _))
+        {
+            us.Addition -= Photos[ID].GetComponent<Add500>().Add;
+        } else if (Photos[ID].TryGetComponent<Remove100>(out _))
+        {
+            bs.Remove100Pinger = false;
+        } else if (Photos[ID].TryGetComponent<PingerDestroyMoney>(out _))
+        {
+            cs.DestroyPinger = false;
+        } else if (Photos[ID].TryGetComponent<OneRandom>(out _))
+        {
+            OneRandomActive = false;
         }
 
 
@@ -468,9 +511,10 @@ public class ShopScript : MonoBehaviour
             ID = 1;
 
         }
+
+        Money += ConsumeSellValue[currentConsumeIDs[ID]];
         currentConsumeIDs[ID] = 7;
 
-        Money += ConsumeSellValue[currentBadgeIDs[ID]];
         ConsumableSpots[ID].sprite = Transparent;
         Destroy(Consumables[ID]);
         Consumables[ID] = null;
