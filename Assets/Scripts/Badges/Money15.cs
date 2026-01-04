@@ -1,15 +1,16 @@
 using UnityEngine;
 
-public class MoneyPoints : MonoBehaviour
+public class Money15 : MonoBehaviour
 {
+
     GameObject Universal;
     UniversalScript us;
     GameObject Ball;
     BallScript bs;
     GameObject Shop;
     ShopScript sc;
-    float initialMoney;
-    public int lastAdd;
+    int MoneyAdded = 5;
+    bool ran = false;
     void Start()
     {
         Universal = GameObject.FindGameObjectWithTag("Empty");
@@ -18,34 +19,31 @@ public class MoneyPoints : MonoBehaviour
         bs = Ball.GetComponent<BallScript>();
         Shop = GameObject.FindGameObjectWithTag("Shop");
         sc = Shop.GetComponent<ShopScript>();
-        initialMoney = sc.Money;
-        int add = 0;
-        for (int i = 0; i < sc.Money; i++)
-        {
-            add += 50;
-        }
-        us.Addition += add;
-
-        lastAdd = add;
     }
 
     void Update()
     {
-        if ((initialMoney != sc.Money))
+        bs.hits15 = true;
+        
+        if (bs.hitc15 == 15)
         {
-            us.Addition -= lastAdd;
-            initialMoney = sc.Money;
-            int add = 0;
-            for (int i = 0; i < sc.Money; i++)
+            MoneyAdded--;
+        }
+        if (sc.shopMoneyStart && !sc.shopMoneyStarted && !ran)
+        {
+            if (MoneyAdded > 0)
             {
-                add += 50;
-            }
-            us.Addition += add;
+                sc.Money += MoneyAdded;
 
-            lastAdd = add;
+            }
+            MoneyAdded = 5;
+            bs.hitc15 = 0;
+            ran = true;
+        } if (!sc.inShop)
+        {
+            ran = false;
         }
     }
-
 
 
 }

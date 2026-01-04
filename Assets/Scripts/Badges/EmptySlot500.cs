@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MoneyPoints : MonoBehaviour
+public class EmptySlot500 : MonoBehaviour
 {
     GameObject Universal;
     UniversalScript us;
@@ -8,8 +8,7 @@ public class MoneyPoints : MonoBehaviour
     BallScript bs;
     GameObject Shop;
     ShopScript sc;
-    float initialMoney;
-    public int lastAdd;
+    int ScoreAdded;
     void Start()
     {
         Universal = GameObject.FindGameObjectWithTag("Empty");
@@ -18,34 +17,33 @@ public class MoneyPoints : MonoBehaviour
         bs = Ball.GetComponent<BallScript>();
         Shop = GameObject.FindGameObjectWithTag("Shop");
         sc = Shop.GetComponent<ShopScript>();
-        initialMoney = sc.Money;
-        int add = 0;
-        for (int i = 0; i < sc.Money; i++)
+        ScoreAdded = 0;
+        for (int i = 0; i < sc.Photos.Length; i++)
         {
-            add += 50;
+            if (sc.Photos[i] == null)
+            {
+                ScoreAdded += 500;
+            }
         }
-        us.Addition += add;
-
-        lastAdd = add;
+        us.Addition += ScoreAdded;
     }
 
     void Update()
     {
-        if ((initialMoney != sc.Money))
+        if (sc.BadgeChanged)
         {
-            us.Addition -= lastAdd;
-            initialMoney = sc.Money;
-            int add = 0;
-            for (int i = 0; i < sc.Money; i++)
+            us.Addition -= ScoreAdded;
+            ScoreAdded = 0;
+            for (int i = 0; i < sc.Photos.Length; i++)
             {
-                add += 50;
+                if (sc.Photos[i] == null)
+                {
+                    ScoreAdded += 500;
+                }
             }
-            us.Addition += add;
-
-            lastAdd = add;
+            us.Addition += ScoreAdded;
         }
+
     }
-
-
 
 }

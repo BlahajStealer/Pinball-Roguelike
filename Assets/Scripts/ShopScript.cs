@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor;
 
 public class ShopScript : MonoBehaviour
 {
@@ -86,7 +87,7 @@ public class ShopScript : MonoBehaviour
     public bool PercChanged;
     public bool AllGoldDivide;
     public bool OneRandomActive;
-
+    public bool BadgeChanged;
 
     [Header("--NextLevel--")]
     public GameObject NextLevels;
@@ -203,9 +204,18 @@ public class ShopScript : MonoBehaviour
                 IDConsumables[n] = null;
             }
             shopMoneyStarted = true;
+            int[] TakenBadges = new int[3];
             for (int i = 0; i < BadgeButtons.Length; i++)
             {
                 int RandomInt = Random.Range(0, Badges.Length);
+                for (int k = 0; i < TakenBadges.Length; k++)
+                {
+                    while (TakenBadges[0] == RandomInt || TakenBadges[1] == RandomInt || TakenBadges[2] == RandomInt)
+                    {
+                        RandomInt = Random.Range(0, Badges.Length);
+                    }
+                }
+                TakenBadges[i] = RandomInt;
                 BadgeButtons[i].image.sprite = Badges[RandomInt];
                 BadgeArray[i] = RandomInt;
                 for (int n = 0; n < IDSprites.Length; n++)
@@ -489,6 +499,16 @@ public class ShopScript : MonoBehaviour
         } else if (Photos[ID].TryGetComponent<OneRandom>(out _))
         {
             OneRandomActive = false;
+        } else if (Photos[ID].TryGetComponent<Every10>(out _))
+        {
+            us.Addition -= Mathf.RoundToInt(Photos[ID].GetComponent<Every10>().total);
+        } else if (Photos[ID].TryGetComponent<MoneyPoints>(out _))
+        {
+            us.Addition -= Mathf.RoundToInt(Photos[ID].GetComponent<MoneyPoints>().lastAdd);
+        } else if (Photos[ID].TryGetComponent<Money15>(out _))
+        {
+            bs.hitc15 = 0;
+            bs.hits15 = false;
         }
 
 

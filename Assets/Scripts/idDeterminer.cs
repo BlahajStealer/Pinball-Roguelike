@@ -31,6 +31,7 @@ public class idDeterminer : MonoBehaviour
         MoneyTaken = ss.BadgeBuyValue[ID];
         if (MoneyTaken <= ss.Money && PhotoReal)
         {
+            ss.BadgeChanged = true;
             ss.BadgeSellTexts[OGID].text="";
 
             GameObject nextGameObj;

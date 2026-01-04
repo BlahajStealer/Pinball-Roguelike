@@ -201,38 +201,39 @@ public class NextLevels : MonoBehaviour
     }
     void ChangeText(bool start)
     {
+        Debug.Log("Refreshed");
         Section.text = "Section " + sectionNum;
 
         int[] target = new int[3];
         if (start)
         {
-            target[0] = Mathf.RoundToInt(us.target);
-            target[1] = Mathf.RoundToInt(us.target * DiffMult);
-            target[2] = Mathf.RoundToInt(us.target * (DiffMult * DiffMult));
+            target[0] = Mathf.RoundToInt(ss.normalTarget / DiffMult);
+            target[1] = Mathf.RoundToInt(ss.normalTarget);
+            target[2] = Mathf.RoundToInt(ss.normalTarget * DiffMult);
         } else
         {
             if (!completedLevels[0])
             {
                 Debug.Log("1st");
-                target[0] = Mathf.RoundToInt(us.target * DiffMult);
-                target[1] = Mathf.RoundToInt(us.target * DiffMult * DiffMult);
-                target[2] = Mathf.RoundToInt(us.target * (DiffMult * DiffMult * DiffMult));
+                target[0] = Mathf.RoundToInt(ss.normalTarget);
+                target[1] = Mathf.RoundToInt(ss.normalTarget * DiffMult);
+                target[2] = Mathf.RoundToInt(ss.normalTarget * DiffMult * DiffMult);
             }
             else if (!completedLevels[1])
             {
                 Debug.Log("2nd");
 
-                target[0] = Mathf.RoundToInt(us.target);
-                target[1] = Mathf.RoundToInt(us.target * DiffMult);
-                target[2] = Mathf.RoundToInt(us.target * (DiffMult * DiffMult));
+                target[0] = Mathf.RoundToInt(ss.normalTarget / DiffMult);
+                target[1] = Mathf.RoundToInt(ss.normalTarget);
+                target[2] = Mathf.RoundToInt(ss.normalTarget * DiffMult);
             }
             else
             {
                 Debug.Log("3rd");
 
-                target[0] = Mathf.RoundToInt(us.target / DiffMult);
-                target[1] = Mathf.RoundToInt(us.target);
-                target[2] = Mathf.RoundToInt(us.target * (DiffMult));
+                target[0] = Mathf.RoundToInt(ss.normalTarget / DiffMult / DiffMult);
+                target[1] = Mathf.RoundToInt(ss.normalTarget / DiffMult);
+                target[2] = Mathf.RoundToInt(ss.normalTarget);
             }
         }
 
@@ -251,8 +252,23 @@ public class NextLevels : MonoBehaviour
 
         for (int i = 0; i < Scores.Length; i++)
         {
+            {
+                float Next;
+                Next = Mathf.RoundToInt((target[i]) / 10);
+                if (Next % 5 == 0)
+                {
+                    Scores[i].text = "Score Needed: \n" + (Mathf.RoundToInt(target[i] / 10) * 10);
+
+                }
+                else
+                {
+                    Scores[i].text = "Score Needed: \n" + Mathf.RoundToInt(Next / 5) * 5 * 10;
+                }
+            }
+
             if (bm.RandomNum == 0 && i == 2)
             {
+                Debug.Log("Score Needed: \n" + (target[i] * 3).ToString());
                 Scores[i].text = "Score Needed: \n" + (target[i] * 3).ToString();
 
             }
@@ -315,20 +331,9 @@ public class NextLevels : MonoBehaviour
                 }
                 Scores[i].text = "Score Needed: \n" + Next;
             }
-            else
-            {
-                float Next;
-                Next = Mathf.RoundToInt((target[i]) / 10);
-                if (Next % 5 == 0)
-                {
-                    Scores[i].text = "Score Needed: \n" + (Mathf.RoundToInt(target[i] / 10) * 10);
+            
 
-                }
-                else
-                {
-                    Scores[i].text = "Score Needed: \n" + Mathf.RoundToInt(Next / 5) * 5 * 10;
-                }
-            }
+            
 
         }
         BossText.text = BossTexts[bm.RandomNum];

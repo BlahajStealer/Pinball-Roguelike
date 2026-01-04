@@ -39,6 +39,11 @@ public class BallScript : MonoBehaviour
     int CurrentPingers;
     public GameObject Shop;
     ShopScript ss;
+
+    public bool hits;
+    public int hitc;
+    public bool hits15;
+    public int hitc15;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -149,6 +154,14 @@ public class BallScript : MonoBehaviour
                     }
                 }
             }
+            if (hits)
+            {
+                hitc++;
+            }
+            if (hits15)
+            {
+                hitc15++;
+            }
             if (br.Levels[0] > 0)
             {
                 float Mult = 0;
@@ -211,8 +224,15 @@ public class BallScript : MonoBehaviour
             {
                 us.score += scoreToAdd;
             }
-
-                Debug.Log(us.score);
+            if (hits)
+            {
+                hitc++;
+            }
+            if (hits15)
+            {
+                hitc15++;
+            }
+            Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
 
         }else if (collision.gameObject.CompareTag("Corner Colliders") && !startCooldown)
@@ -291,7 +311,14 @@ public class BallScript : MonoBehaviour
             {
                 us.score = 0;
             }
-
+            if (hits)
+            {
+                hitc++;
+            }
+            if (hits15)
+            {
+                hitc15++;
+            }
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
 

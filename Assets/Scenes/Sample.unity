@@ -6888,6 +6888,11 @@ MonoBehaviour:
   - For every pinger below the starting amount, add 100 points to each pinger
   - For every pinger you destroy gain $5
   - Destroys one random pinger per round
+  - Every 10 hits adds 50 points to this badge
+  - Gain 500 points per empty badge spot
+  - For every dollar held, gain 50 points
+  - Adds $5 to money at the end of the round, decreases by $1 every 15 hits. Restarts
+    at the end ooof a round.
   DescriptionObj: {fileID: 51304627}
   ConsumeDescription:
   - Convert 1 pinger to gold; Gold pingers give 300 points
@@ -6897,8 +6902,8 @@ MonoBehaviour:
   - Add one pinger to the board
   - Remove one pinger from the board
   ConsumeBools: 
-  BadgeBuyValue: 0400000008000000050000000400000009000000060000000600000006000000080000000400000007000000050000000a0000000500000008000000090000000500000004000000
-  BadgeSellValue: 010000000500000003000000020000000400000004000000040000000400000005000000020000000400000006000000020000000500000004000000050000000300000002000000
+  BadgeBuyValue: 0400000008000000050000000400000009000000060000000600000006000000080000000400000007000000050000000a000000050000000800000009000000050000000400000005000000070000000800000004000000
+  BadgeSellValue: 01000000050000000300000002000000040000000400000004000000040000000500000002000000040000000600000002000000050000000400000005000000030000000200000002000000040000000300000001000000
   BadgeBools: 
   Badges:
   - {fileID: 21300000, guid: 70cb34a3227034b4caf8f6f8e59dad47, type: 3}
@@ -6908,17 +6913,21 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cf6b0c443b89f8e47a2d883ee888b667, type: 3}
   - {fileID: 21300000, guid: a5332fb6f29a4dd41b3806f5fa0bf98d, type: 3}
   - {fileID: 21300000, guid: 9a75bda0d30a7c340be8e3aa81b3c7b9, type: 3}
-  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
-  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
-  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
-  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
-  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
-  - {fileID: 21300000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
-  - {fileID: 21300000, guid: 96b7cf75a6e744a98a36084bf9fd3d4c, type: 3}
-  - {fileID: 21300000, guid: f1eb817b9f23a42668a9cc9bfd77578c, type: 3}
-  - {fileID: 21300000, guid: 065670f73cdac418391184edf13f2348, type: 3}
-  - {fileID: 21300000, guid: 15492a350671c47c08b7b010e02aa951, type: 3}
-  - {fileID: 21300000, guid: b630e61eb533849f6ba974cac19af655, type: 3}
+  - {fileID: 21300000, guid: d540419fe0ac1dc47a02480095c6633c, type: 3}
+  - {fileID: 21300000, guid: a90f3b86604a4704fb9a1d2cfa500475, type: 3}
+  - {fileID: 21300000, guid: 8144b3608ec8da743b2337c52a9505d7, type: 3}
+  - {fileID: 21300000, guid: d9b8a6bb688d9cc4f9a4c6aa0776292a, type: 3}
+  - {fileID: 21300000, guid: faea22974602fdd488728cf75db42a90, type: 3}
+  - {fileID: 21300000, guid: f14a48dd07e80ae4487688db71f56728, type: 3}
+  - {fileID: 21300000, guid: 6fcb185d41054c443b76cc8f3a1ba9e1, type: 3}
+  - {fileID: 21300000, guid: 6285442c3c52e244397c0a4a5086bd26, type: 3}
+  - {fileID: 21300000, guid: cbfc23a122465104e8db44e4cf4ffee7, type: 3}
+  - {fileID: 21300000, guid: fea4a2eaa98a8f044919a295ab19bb75, type: 3}
+  - {fileID: 21300000, guid: 12e9c5f615e18fc4db35e1abfec141c0, type: 3}
+  - {fileID: 21300000, guid: 51fb46153e90a0f4e81d8185517772c7, type: 3}
+  - {fileID: 21300000, guid: b689316d353a0494986b9a77484b5ecc, type: 3}
+  - {fileID: 21300000, guid: 67b298f315596c942b4edda7729c1685, type: 3}
+  - {fileID: 21300000, guid: c0801a1ef79b98f40a56fd5b315097f3, type: 3}
   BadgeButtons:
   - {fileID: 1805191927}
   - {fileID: 1668743443}
@@ -6976,6 +6985,7 @@ MonoBehaviour:
   PercChanged: 0
   AllGoldDivide: 0
   OneRandomActive: 0
+  BadgeChanged: 0
   NextLevels: {fileID: 998122328}
   backup: 1.25
   BadgeBoughtNext: 0
@@ -7026,6 +7036,10 @@ MonoBehaviour:
   - {fileID: 8204974853471024651, guid: 0b2021c71e213e249b62ba523401a48e, type: 3}
   - {fileID: 8204974853471024651, guid: 1e281ccfde6a5154c89463dbd2711d51, type: 3}
   - {fileID: 8204974853471024651, guid: 40eac53abc6a80b46b8f3f1aac58d4c5, type: 3}
+  - {fileID: 8204974853471024651, guid: 60e7f2c4aa6ba1e479383add1cf370df, type: 3}
+  - {fileID: 8204974853471024651, guid: 6420fccc11ca03942824c1da4c0c4f8b, type: 3}
+  - {fileID: 8204974853471024651, guid: ea34fb6d430d8c54ab1770caf9e6e1b1, type: 3}
+  - {fileID: 8204974853471024651, guid: 9c89fcf6e04f0b44b9999abb4195646f, type: 3}
   ConsumableObjs:
   - {fileID: 6885053547896425196, guid: 28acf420b796c9942a63d32b7915f799, type: 3}
   - {fileID: 6885053547896425196, guid: 91fdc59076736694e866c15d16abc04c, type: 3}
@@ -9862,7 +9876,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
       propertyPath: score
-      value: 43423
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
       propertyPath: Camera
