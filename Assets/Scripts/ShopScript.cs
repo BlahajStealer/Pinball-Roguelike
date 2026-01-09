@@ -208,7 +208,7 @@ public class ShopScript : MonoBehaviour
             for (int i = 0; i < BadgeButtons.Length; i++)
             {
                 int RandomInt = Random.Range(0, Badges.Length);
-                for (int k = 0; i < TakenBadges.Length; k++)
+                for (int k = 0; k < TakenBadges.Length; k++)
                 {
                     while (TakenBadges[0] == RandomInt || TakenBadges[1] == RandomInt || TakenBadges[2] == RandomInt)
                     {
