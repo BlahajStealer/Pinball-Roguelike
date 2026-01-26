@@ -298,15 +298,11 @@ public class CameraScript : MonoBehaviour
 
             StartCoroutine(moveCameraThree());
             Following = false;
-            button.colors = tsp;
-            Text.text = "Overview";
         } else
         {
             StopAllCoroutines();
             StartCoroutine(moveCameraTwo());
             Following = true;
-            button.colors = notTsp;
-            Text.text = "Following";
             
         }
 

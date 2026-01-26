@@ -109,7 +109,6 @@ public class BallScript : MonoBehaviour
                 Sub.enabled = false;
             }
         }
-
     }
     void OnCollisionEnter(Collision collision)
     {
