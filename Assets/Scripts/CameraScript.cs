@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using static UnityEngine.Rendering.DebugUI.Table;
+using Unity.VisualScripting;
 public class CameraScript : MonoBehaviour
 {
     Rigidbody rb;
@@ -18,9 +20,11 @@ public class CameraScript : MonoBehaviour
     public GameObject Universal;
     public float RespawnSpeed = 2;
     public float moveInSpeed = .5f;
+    public float rotSpeed = 2f;
     bool moveBool;
     bool moveBool2;
     public GameObject transformTwo;
+    public GameObject ShopTrans;
     bool Following;
     Coroutine CameraMove;
     bool goldPingActive;
@@ -56,7 +60,12 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cooldown+=Time.deltaTime;
+        if (ss.Leaving)
+        {
+            StartCoroutine(ResetRot());
+
+        }
+        cooldown +=Time.deltaTime;
         if (Following)
         {
             if (US.StopFollow)
@@ -318,13 +327,15 @@ public class CameraScript : MonoBehaviour
             transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
 
             yield return null;
-;
+;           Debug.Log("Respawned");
         }
         US.StopFollow = false;
         yield return null;
     }
     public IEnumerator moveCameraTwo()
     {
+        Quaternion Rot = transform.rotation;
+        Quaternion endRot = Quaternion.Euler(0, 0, 0);
         moveBool = true;
         Vector3 Destination = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z-3.5f);
         Vector3 Origin = transform.position;
@@ -332,16 +343,19 @@ public class CameraScript : MonoBehaviour
         while (Vector3.Distance(transform.localPosition, Destination) > 0.1f)
         {
             CurrentTime += Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(Rot, endRot, CurrentTime / rotSpeed);
             transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / moveInSpeed);
 
             yield return null;
 ;
         }
+        transform.rotation = endRot;
         moveBool = false;
         yield return null;
     }     
     public IEnumerator moveCameraThree()
     {
+
         moveBool2 = true;
         Vector3 Destination = transformTwo.transform.position;
         Vector3 Origin = transform.position;
@@ -354,8 +368,51 @@ public class CameraScript : MonoBehaviour
             yield return null;
 
         }
+
         moveBool2 = false;
         yield return null;
+    }    
+    public IEnumerator ShopMove()
+    {
+        Quaternion Rot = transform.rotation;
+        Quaternion endRot = Quaternion.Euler(0, -67, 90);
+        Vector3 Destination = ShopTrans.transform.position;
+        Vector3 Origin = transform.position;
+        float CurrentTime = 0f;
+        while (Vector3.Distance(transform.localPosition, Destination) > 0.1f)
+        {
+            CurrentTime += Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(Rot, endRot, CurrentTime / rotSpeed);
+            transform.position = Vector3.Lerp(Origin, Destination, CurrentTime / rotSpeed);
+
+            yield return null;
+
+        }
+
+        yield return null;
+    }
+    public IEnumerator ResetRot()
+    {
+        Debug.Log("Started");
+
+        Quaternion startRot = transform.rotation;
+        Quaternion endRot = Quaternion.Euler(0, 0, 0);
+
+        float currentTime = 0f;
+
+        while (Quaternion.Angle(transform.rotation, endRot) > 0.1f)
+        {
+            currentTime += Time.deltaTime;
+            transform.rotation = Quaternion.Slerp(startRot, endRot, currentTime / rotSpeed);
+
+            Debug.Log("Doing");
+            yield return null; 
+        }
+
+        transform.rotation = endRot;
+        Debug.Log("Done!");
+        yield return null;
+
     }
 }
 

@@ -38,13 +38,14 @@ public class ShopScript : MonoBehaviour
     public GameObject Camera;
     public GameObject NextLevelObj;
     public GameObject Ball;
+    public GameObject Canvas;
     [Header("--Scripts--")]
     BossManager bm;
     UniversalScript us;
     CameraScript cs;
     NextLevels nl;
     BallScript bs;
-
+    ShopAnimations sa;
     [Header("--Descriptions--")]
     public TextMeshProUGUI Description;
     public string[] Descriptions;
@@ -101,7 +102,7 @@ public class ShopScript : MonoBehaviour
     {
         bs = Ball.GetComponent<BallScript>();
         NextLevels.SetActive(false);
-
+        sa = Shop.GetComponent<ShopAnimations>();
         nl = NextLevelObj.GetComponent<NextLevels>();
         currentBadgeIDs = new int[5];
         currentConsumeIDs = new int[2];
@@ -152,6 +153,9 @@ public class ShopScript : MonoBehaviour
     {
         if (shopMoneyStart && !shopMoneyStarted)
         {
+            Canvas.SetActive(false);
+            StartCoroutine(cs.ShopMove());
+            StartCoroutine(sa.ShopAnim());
             bm.Round++;
             for (int i = 0; i < BadgeBools.Length; i++)
             {
@@ -375,7 +379,6 @@ public class ShopScript : MonoBehaviour
     {
 
         Shop.SetActive(false);
-
         NextLevels.SetActive(true);
     }
 

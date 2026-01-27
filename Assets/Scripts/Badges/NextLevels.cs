@@ -18,6 +18,7 @@ public class NextLevels : MonoBehaviour
     public TextMeshProUGUI BossText;
     public Color Gray;
     public Color LesserGray;
+    public GameObject Canvas;
     ShopScript ss;
     BossManager bm;
     UniversalScript us;
@@ -26,7 +27,7 @@ public class NextLevels : MonoBehaviour
     int sectionNum = 1;
     public float DiffMult = 1.25f;
     bool sectionAccounted;
-    
+    bool startCoro;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,6 +38,7 @@ public class NextLevels : MonoBehaviour
         completedLevels[0] = true;
         ChangeText(true);
         cs = Cam.GetComponent<CameraScript>();
+        startCoro = true;
     }
 
     // Update is called once per frame
@@ -44,6 +46,14 @@ public class NextLevels : MonoBehaviour
     {
         if (self.activeSelf == true)
         {
+            ShopScriptObj.SetActive(false);
+            if (startCoro)
+            {
+                StartCoroutine(cs.ResetRot());
+                StartCoroutine(cs.moveCameraThree());
+                startCoro=false;
+            }
+
             for (int i = 0; i < completedLevels.Length;i++)
             {
                 if (!completedLevels[i])
@@ -125,6 +135,9 @@ public class NextLevels : MonoBehaviour
 
     public void StartNextLevel(int ID)
     {
+        startCoro = true;
+
+        Canvas.SetActive(true); 
         if (ss.cutPts)
         {
             us.AddOnAct();
