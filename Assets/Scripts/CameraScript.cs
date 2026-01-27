@@ -44,9 +44,11 @@ public class CameraScript : MonoBehaviour
     public GameObject BossRewardObj;
     BosssRewards br;
     public bool DestroyPinger;
+    bool InShop;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        InShop = false;
         br = BossRewardObj.GetComponent<BosssRewards>();
         gRaycast = Canvas.GetComponent<GraphicRaycaster>();
         gEventSystem = Canvas.GetComponent<EventSystem>();
@@ -60,11 +62,12 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ss.Leaving)
+        if (InShop)
         {
-            StartCoroutine(ResetRot());
-
+            transform.position = ShopTrans.transform.position;
+            InShop = false;
         }
+
         cooldown +=Time.deltaTime;
         if (Following)
         {
@@ -388,7 +391,8 @@ public class CameraScript : MonoBehaviour
             yield return null;
 
         }
-
+        transform.position = ShopTrans.transform.position;
+        InShop = true;
         yield return null;
     }
     public IEnumerator ResetRot()

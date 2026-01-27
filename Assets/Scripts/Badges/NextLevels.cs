@@ -28,6 +28,8 @@ public class NextLevels : MonoBehaviour
     public float DiffMult = 1.25f;
     bool sectionAccounted;
     bool startCoro;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,6 +41,7 @@ public class NextLevels : MonoBehaviour
         ChangeText(true);
         cs = Cam.GetComponent<CameraScript>();
         startCoro = true;
+
     }
 
     // Update is called once per frame
@@ -46,7 +49,6 @@ public class NextLevels : MonoBehaviour
     {
         if (self.activeSelf == true)
         {
-            ShopScriptObj.SetActive(false);
             if (startCoro)
             {
                 StartCoroutine(cs.ResetRot());

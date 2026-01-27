@@ -27,7 +27,6 @@ public class ShopScript : MonoBehaviour
     [Header("--Shop--")]
     public float Money;
 
-
     [Header("--GameObjects--")]
     GameObject BossManager;
     public GameObject SellConsume;
@@ -377,9 +376,9 @@ public class ShopScript : MonoBehaviour
     }
     public void Leave()
     {
-
-        Shop.SetActive(false);
+        StopAllCoroutines();
         NextLevels.SetActive(true);
+        StartCoroutine(sa.NextLevelAnim());
     }
 
     public void Sell(int ID)

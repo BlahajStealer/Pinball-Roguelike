@@ -56,6 +56,9 @@ public class UniversalScript : MonoBehaviour
 
     public bool StopFollow;
     [Header("--Goals and Gameover--")]
+    Vector2 StartPos = new Vector2(2257, -124);
+    RectTransform rtShop;
+    public GameObject animMan;
     public TextMeshProUGUI MoneyDisp;
     public char endlessGoal;
     public GameObject GameOver;
@@ -90,6 +93,8 @@ public class UniversalScript : MonoBehaviour
     }
     void Start()
     {
+        rtShop = animMan.GetComponent<RectTransform>();
+
         StartingPinger = GameObject.FindGameObjectsWithTag("Pingy Thing").Length;
         BossManager = GameObject.FindGameObjectWithTag("BossMan");
         bm = BossManager.GetComponent<BossManager>();
@@ -220,6 +225,8 @@ public class UniversalScript : MonoBehaviour
 
             if (target <= score)
             {
+                rtShop.anchoredPosition = StartPos;
+                Debug.Log("What did I do");
                 Shop.SetActive(true);
                 rb.linearVelocity = Vector3.zero;
                 ball.transform.position = transformFirst.transform.position;
