@@ -29,10 +29,11 @@ public class NextLevels : MonoBehaviour
     bool sectionAccounted;
     bool startCoro;
 
-
+    ShopAnimations sa;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        sa = ShopScriptObj.GetComponent<ShopAnimations>();
         DiffMult = 1.25f;
         us = UniversalObj.GetComponent<UniversalScript>();
         bm = BossManObj.GetComponent<BossManager>();
@@ -51,8 +52,8 @@ public class NextLevels : MonoBehaviour
         {
             if (startCoro)
             {
+                
                 StartCoroutine(cs.ResetRot());
-                StartCoroutine(cs.moveCameraThree());
                 startCoro=false;
             }
 
@@ -137,8 +138,11 @@ public class NextLevels : MonoBehaviour
 
     public void StartNextLevel(int ID)
     {
+        StopAllCoroutines();
+        StartCoroutine(sa.levelEnd());
+        StartCoroutine(cs.moveCameraThree());
+        ss.noTab = true;
         startCoro = true;
-
         Canvas.SetActive(true); 
         if (ss.cutPts)
         {
@@ -210,9 +214,9 @@ public class NextLevels : MonoBehaviour
                 ss.Money += 5;
             }
         }
+        
         ss.shopMoneyStarted = false;
         ss.Leaving = true;
-        self.SetActive(false);
     }
     void ChangeText(bool start)
     {

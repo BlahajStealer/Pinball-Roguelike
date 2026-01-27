@@ -93,6 +93,7 @@ public class ShopScript : MonoBehaviour
     public GameObject NextLevels;
     public float backup;
     public bool BadgeBoughtNext = false;
+    public bool noTab;
     private void Awake()
     {
     }
@@ -137,6 +138,7 @@ public class ShopScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         Leaving = false;
 
 
@@ -152,6 +154,7 @@ public class ShopScript : MonoBehaviour
     {
         if (shopMoneyStart && !shopMoneyStarted)
         {
+            noTab = true;
             Canvas.SetActive(false);
             StartCoroutine(cs.ShopMove());
             StartCoroutine(sa.ShopAnim());
@@ -379,6 +382,8 @@ public class ShopScript : MonoBehaviour
         StopAllCoroutines();
         NextLevels.SetActive(true);
         StartCoroutine(sa.NextLevelAnim());
+        StartCoroutine(cs.moveCameraThree());
+        StartCoroutine(cs.ResetRot());
     }
 
     public void Sell(int ID)

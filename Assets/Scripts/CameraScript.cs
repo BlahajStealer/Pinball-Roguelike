@@ -90,7 +90,7 @@ public class CameraScript : MonoBehaviour
                 FollowsNot();
             }
         }
-        if (Keyboard.current.tabKey.wasPressedThisFrame)
+        if (Keyboard.current.tabKey.wasPressedThisFrame && !ss.noTab)
         {
             ChangePersp();
         }
@@ -166,7 +166,6 @@ public class CameraScript : MonoBehaviour
 
         if (EventSystem.current == null)
         {
-            Debug.LogError("No EventSystem in scene!");
             return;
         }
 
@@ -174,7 +173,6 @@ public class CameraScript : MonoBehaviour
             return;
 
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        Debug.Log("Hello");
 
         PointerEventDataGraphics = new PointerEventData(EventSystem.current);
         PointerEventDataGraphics.position = mousePos;
@@ -185,7 +183,6 @@ public class CameraScript : MonoBehaviour
 
         {
 
-            Debug.Log(result.gameObject.tag);
             if (result.gameObject.tag == "Badge1" && ss.BadgeBools[0] == true)
             {
                 DescriptionActivator(mousePos, 0);
@@ -418,5 +415,6 @@ public class CameraScript : MonoBehaviour
         yield return null;
 
     }
+
 }
 

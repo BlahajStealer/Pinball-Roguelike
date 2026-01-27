@@ -56,7 +56,7 @@ public class UniversalScript : MonoBehaviour
 
     public bool StopFollow;
     [Header("--Goals and Gameover--")]
-    Vector2 StartPos = new Vector2(2257, -124);
+    Vector2 StartPos = new Vector2(2050, 40);
     RectTransform rtShop;
     public GameObject animMan;
     public TextMeshProUGUI MoneyDisp;
@@ -226,7 +226,6 @@ public class UniversalScript : MonoBehaviour
             if (target <= score)
             {
                 rtShop.anchoredPosition = StartPos;
-                Debug.Log("What did I do");
                 Shop.SetActive(true);
                 rb.linearVelocity = Vector3.zero;
                 ball.transform.position = transformFirst.transform.position;
