@@ -4,8 +4,7 @@ public class Every2Gold : MonoBehaviour
 {
     GameObject Universal;
     UniversalScript us;
-    GameObject Ball;
-    BallScript bs;
+
     GameObject Shop;
     ShopScript sc;
     float goldAmount;

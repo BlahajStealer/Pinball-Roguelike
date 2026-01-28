@@ -39,6 +39,9 @@ TagManager:
   - Opt2
   - Corner Colliders
   - gPinger100
+  - BallMan
+  - ScoreText
+  - BossWin
   layers:
   - Default
   - TransparentFX

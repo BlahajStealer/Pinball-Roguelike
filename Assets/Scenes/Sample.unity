@@ -402,6 +402,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8071249939432071916, guid: fd40f12df11494d7596219efd2835f52, type: 3}
+      propertyPath: m_TagString
+      value: ScoreText
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -424,6 +428,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2422885752873214510, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
   m_PrefabInstance: {fileID: 1201690121}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4060688 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+  m_PrefabInstance: {fileID: 1201690121}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4060687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20ea0353b1c1099479092ca815e579a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &11075003
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3313,7 +3328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 5524058187864060457, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_Radius
@@ -3387,7 +3402,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 1162918981}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -3537,7 +3552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 5524058187864060457, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_Radius
@@ -3611,7 +3626,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 2087791490}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -5303,7 +5318,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 5524058187864060457, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_Radius
@@ -5377,7 +5392,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 874399742}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -8070,7 +8085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 7088340991161585741, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -8132,7 +8147,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 735998890}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -11524,7 +11539,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 7088340991161585741, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -11586,7 +11601,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 1609873022}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -15883,7 +15898,7 @@ Transform:
   m_GameObject: {fileID: 735998889}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0413045, y: -0.04130453, z: 0.70589936, w: -0.7058994}
-  m_LocalPosition: {x: -0, y: -0.0012, z: -0.0035}
+  m_LocalPosition: {x: 0, y: -0.0012, z: -0.0035}
   m_LocalScale: {x: 0.021161309, y: 0.022056002, z: 0.022119334}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16460,7 +16475,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 5524058187864060457, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_Radius
@@ -16534,7 +16549,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 1111998401}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -18135,7 +18150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 7088340991161585741, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -18197,7 +18212,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 892710919}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -21064,6 +21079,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8802952185664641169, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
   m_PrefabInstance: {fileID: 1553163383}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &985071301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 985071303}
+  - component: {fileID: 985071302}
+  m_Layer: 0
+  m_Name: BallManager
+  m_TagString: BallMan
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &985071302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985071301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c7ad20f4cd6044eda3d066c0781ef45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  amtOfBalls: 0
+--- !u!4 &985071303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985071301}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.07407, y: -9.47704, z: 0.60495}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &998122328
 GameObject:
   m_ObjectHideFlags: 0
@@ -21426,7 +21486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 5524058187864060457, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_Radius
@@ -21508,7 +21568,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 644106686}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -38610,7 +38670,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 7088340991161585741, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -38672,7 +38732,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 477037845}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -40076,6 +40136,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
+      propertyPath: us
+      value: 
+      objectReference: {fileID: 4060688}
+    - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: Shop
       value: 
       objectReference: {fileID: 952135911}
@@ -40098,7 +40162,7 @@ PrefabInstance:
     - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: GameObject
       value: 
-      objectReference: {fileID: 1030716800}
+      objectReference: {fileID: 4060687}
     - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: PointForceX
       value: 1.25
@@ -40111,6 +40175,10 @@ PrefabInstance:
       propertyPath: ScoreCooldown
       value: 0.15
       objectReference: {fileID: 0}
+    - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
+      propertyPath: BallManagerObj
+      value: 
+      objectReference: {fileID: 985071301}
     - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: BossManagerObj
       value: 
@@ -43094,7 +43162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 5524058187864060457, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_Radius
@@ -43168,7 +43236,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 1045003251}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -43191,7 +43259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 7088340991161585741, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -43253,7 +43321,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 1725046715}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -43514,7 +43582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 5524058187864060457, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_Radius
@@ -43588,7 +43656,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 974566034}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -44792,7 +44860,7 @@ GameObject:
   - component: {fileID: 2136203448}
   m_Layer: 5
   m_Name: BossWin!
-  m_TagString: Untagged
+  m_TagString: BossWin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45259,7 +45327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3875400768118242474, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_TagString
-      value: Untagged
+      value: Pingy Thing
       objectReference: {fileID: 0}
     - target: {fileID: 5524058187864060457, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
       propertyPath: m_Height
@@ -45349,7 +45417,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6440792214624620361, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
-      insertIndex: 0
+      insertIndex: -1
       addedObject: {fileID: 1107111016}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
@@ -45541,3 +45609,4 @@ SceneRoots:
   - {fileID: 1854745413}
   - {fileID: 3019717774499524589}
   - {fileID: 2048121430}
+  - {fileID: 985071303}

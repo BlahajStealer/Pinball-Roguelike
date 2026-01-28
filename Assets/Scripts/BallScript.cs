@@ -1,34 +1,37 @@
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.UI;
+using Mono.Cecil.Cil;
+using Unity.VisualScripting;
 
 public class BallScript : MonoBehaviour
 {
     Rigidbody rb;
     UniversalScript us;
-    public float ForceX;
-    public float ForceY;
+    float ForceX;
+    GameObject BallManagerObj;
+    BallManager bms;
+    float ForceY;
     AudioSource audioSource;
-    public GameObject GameObject;
-    public TextMeshProUGUI Text;
-    public GameObject Camera;
+    GameObject GameObj;
+    TextMeshProUGUI Text;
+    GameObject Camera;
     Vector3 initial;
-    [SerializeField] bool startCooldown;
-    [SerializeField] float cooldown;
-    public BoxCollider mc;
-    MeshRenderer Main;
+    bool startCooldown;
+    float cooldown;
     Transform Sub;
-    public float ScoreCooldown;
+    float ScoreCooldown;
     bool wait;
     float waitToTruify;
-    public float PointForceX;
-    public float PointForceY;
+    float PointForceX;
+    float PointForceY;
     public bool JustHit;
     BossManager bm;
     BosssRewards br;
-    public GameObject BossManagerObj;
-    public GameObject BossRewardsObj;
+    GameObject BossManagerObj;
+    GameObject BossRewardsObj;
     bool flapCooldown;
     float timer;
     public bool AllNormalPingers;
@@ -45,20 +48,77 @@ public class BallScript : MonoBehaviour
     public bool hits15;
     public int hitc15;
     bool down = false;
+    bool start;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-        ss = Shop.GetComponent<ShopScript>();
-        br = BossRewardsObj.GetComponent<BosssRewards>();
-        bm = BossManagerObj.GetComponent<BossManager>();
-        audioSource = Camera.GetComponent<AudioSource>();
-        rb = GetComponent<Rigidbody>();
-        GameObject = GameObject.FindGameObjectWithTag("Empty");
+  
+
     }
     void Start()
     {
+
+        Shop = GameObject.FindGameObjectWithTag("Shop");
+
+        Text = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
+        Camera = GameObject.FindGameObjectWithTag("MainCamera");
+        BossManagerObj = GameObject.FindGameObjectWithTag("BossMan");
+        BossRewardsObj = GameObject.FindGameObjectWithTag("BossWin");
+        BallManagerObj = GameObject.FindGameObjectWithTag("BallMan");
+        GameObj = GameObject.FindGameObjectWithTag("Empty");
+
+        if (BossRewardsObj != null)
+        {
+            Debug.Log("Why Null");
+            br = BossRewardsObj.GetComponent<BosssRewards>();
+
+        }
+        bm = BossManagerObj.GetComponent<BossManager>();
+        audioSource = Camera.GetComponent<AudioSource>();
+        rb = GetComponent<Rigidbody>();
+        ss = Shop.GetComponent<ShopScript>();
+        bms = BallManagerObj.GetComponent<BallManager>();
+        us = GameObj.GetComponent<UniversalScript>();
+        ss = Shop.GetComponent<ShopScript>();
+        transform.position = us.transformFirst.transform.position;
+        bms.amtOfBalls++;
+
+        if (us.DDOL != null)
+        {
+            GetComponent<Renderer>().material = us.ballColors[us.DDOLS.colorChoiceInt];
+        } else
+        {
+            GetComponent<Renderer>().material = us.ballColors[6];
+        }
+
+        //Initialization
+        ForceX = 1.6f;
+        ForceY = 1.6f;
+
+        startCooldown = false;
+        cooldown = 0;
+        ScoreCooldown = 0.15f;
+        PointForceX = 1.25f;
+        PointForceY = 1.25f;
+        JustHit = false;
+
+        JustHit = false;
+        AllNormalPingers = false;
+        Every50Norms = false;
+        gPinger100 = false;
+        Remove100Pinger = false;
+        hammerDownTime = 0.2f;
+        hits = false;
+        hitc = 0;
+        hits15 = false;
+        hitc = 0;
+
+
+
+
+
         initial = transform.position;
-        us = GameObject.GetComponent<UniversalScript>();
+
         CurrentPingers = GameObject.FindGameObjectsWithTag("Pingy Thing").Length + GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length + GameObject.FindGameObjectsWithTag("AddedPinger").Length + GameObject.FindGameObjectsWithTag("Evil Pinger").Length;
 
     }
@@ -66,6 +126,37 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (start)
+        {
+
+        }
+
+        if (us.xAlligned && us.yAlligned)
+        {
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                rb.linearVelocity = new Vector3(0, us.forceTime, 0);
+                us.Respawning = false;
+                us.cooldown = true;
+                us.StopFollow = false;
+
+            }
+        }
+        if (us.cooldown)
+        {
+            us.cooldownTimer += Time.deltaTime;
+            if (us.cooldownTimer >= 5 || transform.position.y >= (.02 + us.transformFirst.transform.position.y))
+            {
+                us.cooldown = false;
+                us.cooldownTimer = 0;
+            }
+        }
+        us.xAlligned = Mathf.Abs(transform.position.x - us.transformFirst.transform.position.x) < 0.05f;
+        us.yAlligned = Mathf.Abs(transform.position.y - us.transformFirst.transform.position.y) < 0.05f;
+        if (transform.position.y > us.transformFirst.transform.position.y)
+        {
+            us.Respawning = false;
+        }
         if (ss.PercChanged)
         {
             CurrentPingers = GameObject.FindGameObjectsWithTag("Pingy Thing").Length + GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length + GameObject.FindGameObjectsWithTag("AddedPinger").Length + GameObject.FindGameObjectsWithTag("Evil Pinger").Length;
@@ -110,6 +201,43 @@ public class BallScript : MonoBehaviour
             //Main.enabled = false;
         }
         
+
+        if (us.target <= us.score)
+        {
+            rb.linearVelocity = Vector3.zero;
+            transform.position = us.transformFirst.transform.position;
+
+        }
+        if (transform.position.y <= us.transformFirst.transform.position.y + .1f && !us.Respawning && !us.cooldown)
+        {
+            if (bms.amtOfBalls > 1)
+            {
+                Destroy(this.gameObject);
+            } else
+            {
+                if (us.Lives == 0)
+                {
+                    us.GameOver.SetActive(true);
+                }
+                else if (us.Lives > 0)
+                {
+                    us.Lives -= 1;
+                    rb.angularVelocity = Vector3.zero;
+                    rb.linearVelocity = Vector3.zero;
+                    us.StopFollow = true;
+                    transform.position = us.transformFirst.transform.position;
+
+
+                    us.Respawning = true;
+
+                }
+            }
+
+
+            //Vector3 tempVect = ball.transform.position;
+            //Vector3 NewVect = new Vector3(tempVect.x, 10.18f, tempVect.z);
+
+        }
     }
     void OnCollisionEnter(Collision collision)
     {

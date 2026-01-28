@@ -13,10 +13,10 @@ public class UniversalScript : MonoBehaviour
     public float force;
     public int Lives = 1;
     public Material[] ballColors;
-    float forceTime = 0;
+    public float forceTime = 0;
     bool down;
-    bool cooldown;
-    double cooldownTimer;
+    public bool cooldown;
+    public double cooldownTimer;
     public float timeMult;
     public TextMeshProUGUI livesCounter;
     public Slider ForceCounterText;
@@ -44,8 +44,7 @@ public class UniversalScript : MonoBehaviour
     GameObject BossManager;
     [Header("--Scripts--")]
     ShopScript sp;
-    BallScript bs;
-    DontDestroyOnLoadScript DDOLS;
+    public DontDestroyOnLoadScript DDOLS;
     Rigidbody rb;
     BossManager bm;
 
@@ -66,7 +65,8 @@ public class UniversalScript : MonoBehaviour
     public TextMeshProUGUI goalText;
     public int target = 10000;
     public int StartingPinger;
-
+    public bool xAlligned;
+    public bool yAlligned;
     Rigidbody Flap1rb;
     Rigidbody Flap2rb;
 
@@ -107,13 +107,13 @@ public class UniversalScript : MonoBehaviour
             DDOLS = DDOL.GetComponent<DontDestroyOnLoadScript>();
             Debug.Log("DDOL is not NUll");
             endlessGoal = DDOLS.goalOrEndless;
-            ball.GetComponent<Renderer>().material = ballColors[DDOLS.colorChoiceInt];
+            
             
 
         } else
         {
             endlessGoal = 'g';
-            ball.GetComponent<Renderer>().material = ballColors[6];
+            
         }
         if (endlessGoal == 'g')
         {
@@ -126,11 +126,9 @@ public class UniversalScript : MonoBehaviour
         }
 
         cs = Camera.GetComponent<CameraScript>();
-        ball.transform.position = transformFirst.transform.position;
-        bs = ball.GetComponent<BallScript>();
+        
         score = 0f;
         Respawning = true;
-        rb = ball.GetComponent<Rigidbody>();
         GameOver.SetActive(false);
         ForceCounterText.value = 0;
         multiplication = 1;
@@ -221,14 +219,10 @@ public class UniversalScript : MonoBehaviour
         }
         if (endlessGoal == 'g')
         {
-
-
             if (target <= score)
             {
                 cs.doingAnims = true;
                 Shop.SetActive(true);
-                rb.linearVelocity = Vector3.zero;
-                ball.transform.position = transformFirst.transform.position;
                 if (!sp.shopMoneyStarted)
                 {
                     sp.shopMoneyStart = true;
@@ -244,44 +238,10 @@ public class UniversalScript : MonoBehaviour
         }
         livesCounter.text = "Lives: " + Lives.ToString();
 
-        if (cooldown)
-        {
-            cooldownTimer += Time.deltaTime;
-            if (cooldownTimer >= 5 || ball.transform.position.y >= (.02 + transformFirst.transform.position.y))
-            {
-                cooldown = false;
-                cooldownTimer = 0;
-            }
-        }
-        if (ball.transform.position.y <= transformFirst.transform.position.y + .1f && !Respawning && !cooldown)
-        {
-            if (Lives == 0)
-            {
-                GameOver.SetActive(true);
-            }
-            else if (Lives > 0)
-            {
-                Lives -= 1;
-                rb.angularVelocity = Vector3.zero;
-                rb.linearVelocity = Vector3.zero;
-                StopFollow = true;
-                ball.transform.position = transformFirst.transform.position;
 
 
-                Respawning = true;
-
-            }
-
-            //Vector3 tempVect = ball.transform.position;
-            //Vector3 NewVect = new Vector3(tempVect.x, 10.18f, tempVect.z);
-
-        }
-        else if (ball.transform.position.y > transformFirst.transform.position.y)
-        {
-            Respawning = false;
-        }
-        bool xAlligned = Mathf.Abs(ball.transform.position.x - transformFirst.transform.position.x) < 0.05f;
-        bool yAlligned = Mathf.Abs(ball.transform.position.y - transformFirst.transform.position.y) < 0.05f;
+        
+        
         if (xAlligned && yAlligned)
         {
             ForceCounter.SetActive(true);
@@ -299,14 +259,7 @@ public class UniversalScript : MonoBehaviour
                     down = false;
                 }
             }
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            {
-                rb.linearVelocity = new Vector3(0, forceTime, 0);
-                Respawning = false;
-                cooldown = true;
-                StopFollow = false;
 
-            }
             ForceCounterText.value = forceTime / 100;
         }
         else

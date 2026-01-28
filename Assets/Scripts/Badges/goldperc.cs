@@ -4,8 +4,7 @@ public class goldperc : MonoBehaviour
 {
     GameObject Universal;
     UniversalScript us;
-    GameObject Ball;
-    BallScript bs;
+
     GameObject Shop;
     ShopScript sc;
     public float totalGold;
@@ -14,8 +13,7 @@ public class goldperc : MonoBehaviour
     {
         Universal = GameObject.FindGameObjectWithTag("Empty");
         us = Universal.GetComponent<UniversalScript>();
-        Ball = GameObject.FindGameObjectWithTag("Player");
-        bs = Ball.GetComponent<BallScript>();
+
         Shop = GameObject.FindGameObjectWithTag("Shop");
         sc = Shop.GetComponent<ShopScript>();
         totalGold = GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length;

@@ -63,6 +63,10 @@ public class CameraScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Ball == null)
+        {
+            Ball = GameObject.FindGameObjectsWithTag("Player")[0];
+        }
         if (InShop)
         {
             transform.position = ShopTrans.transform.position;
@@ -108,8 +112,8 @@ public class CameraScript : MonoBehaviour
 
             if (hit.collider.CompareTag("Pingy Thing") && goldPingActive && Mouse.current.leftButton.wasPressedThisFrame)
             {
-                hit.collider.gameObject.transform.GetChild(0).GetComponentInChildren<Renderer>().material = Gold;
                 hit.collider.tag = "Gold Pingy Thing";
+                hit.collider.gameObject.transform.GetChild(0).GetComponentInChildren<Renderer>().material = Gold;
                 goldPingActive = false;
                 ss.SellConsume.SetActive(false);
                 ss.PercChanged = true;
