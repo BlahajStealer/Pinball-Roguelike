@@ -156,8 +156,13 @@ public class ShopScript : MonoBehaviour
         {
             noTab = true;
             Canvas.SetActive(false);
+            if (bm.Round % 3  != 0)
+            {
+                
+                StartCoroutine(sa.ShopAnim());
+            }
             StartCoroutine(cs.ShopMove());
-            StartCoroutine(sa.ShopAnim());
+
             bm.Round++;
             for (int i = 0; i < BadgeBools.Length; i++)
             {

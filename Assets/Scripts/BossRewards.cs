@@ -9,6 +9,8 @@ public class BosssRewards : MonoBehaviour
     public RawImage Opt2;
     bool started;
     public GameObject self;
+    public GameObject Shop;
+    ShopAnimations sa;    
     public Texture[] Prizes;
     public GameObject descriptionObj;
     public string[] descs;
@@ -25,6 +27,7 @@ public class BosssRewards : MonoBehaviour
             Levels[i] = 0;
         }
         started = false;
+        sa = Shop.GetComponent<ShopAnimations>();   
     }
 
     // Update is called once per frame
@@ -58,7 +61,9 @@ public class BosssRewards : MonoBehaviour
 
     public void continueReward()
     {
-        self.SetActive(false);
+        StopAllCoroutines();
+        StartCoroutine(sa.ShopAnim());
+        
         started = false;
 
     }

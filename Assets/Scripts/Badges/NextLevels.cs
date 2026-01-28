@@ -141,7 +141,8 @@ public class NextLevels : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(sa.levelEnd());
         StartCoroutine(cs.moveCameraThree());
-        ss.noTab = true;
+        cs.doingAnims = false;
+        ss.noTab = false;
         startCoro = true;
         Canvas.SetActive(true); 
         if (ss.cutPts)

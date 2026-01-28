@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0, g: 0.3333335, b: 1, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: ea76b1e68d9d8254a9e8b92dbbc08f54, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 369b9ebe3a62b904dbc19bd332b44086, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1559,8 +1559,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -39.5991, y: 59.3987}
-  m_SizeDelta: {x: 475.1899, y: 578.1478}
+  m_AnchoredPosition: {x: 0, y: -1091}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &51691204
 MonoBehaviour:
@@ -1575,7 +1575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.745283, g: 0.6509977, b: 0, a: 1}
+  m_Color: {r: 0.745283, g: 0.6509977, b: 0, a: 0.11764706}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5192,7 +5192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -500}
+  m_AnchoredPosition: {x: 0, y: -446}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &239923243
@@ -13138,13 +13138,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589460807}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.032021243, y: 0, z: 0, w: 0.9994872}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.6, y: -21.98, z: -20.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -3.67, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &589460811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13235,6 +13235,7 @@ MonoBehaviour:
   cooldown: 0
   BossRewardObj: {fileID: 2136203447}
   DestroyPinger: 0
+  doingAnims: 0
 --- !u!82 &589460813
 AudioSource:
   m_ObjectHideFlags: 0
@@ -20429,6 +20430,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   AnimMan: {fileID: 1815922710}
   LevelMan: {fileID: 953010068}
+  WinMan: {fileID: 51691202}
+  BossMan: {fileID: 1000295689}
   TimeWait: 0.75
 --- !u!1 &953010068
 GameObject:
@@ -21367,6 +21370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   Shop: {fileID: 952135911}
+  BossMove: {fileID: 51691202}
   Round: 1
   CompletedBosses: 000000000000000000000000000000000000000000000000000000000000000000000000
   RandomNum: 0
@@ -21876,7 +21880,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027543297}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -21934,7 +21938,7 @@ Transform:
   m_GameObject: {fileID: 1027543297}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.017, y: 0.083, z: -0.41}
+  m_LocalPosition: {x: -0.017, y: 3.65, z: -0.41}
   m_LocalScale: {x: 0.5019882, y: 3.9458, z: 1.568404}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21957,7 +21961,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -25976,15 +25980,15 @@ RectTransform:
   m_GameObject: {fileID: 1169588438}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.2828, y: 1.2828, z: 1.2828}
+  m_LocalScale: {x: 1.8071028, y: 2.2308002, z: 1.2828}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1815922711}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -62.857178, y: 124.36694}
-  m_SizeDelta: {x: 965.4922, y: 419.38263}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -237, y: 131}
+  m_SizeDelta: {x: 1080, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1169588440
 MonoBehaviour:
@@ -40115,6 +40119,10 @@ PrefabInstance:
       propertyPath: BossRewardsObj
       value: 
       objectReference: {fileID: 2136203447}
+    - target: {fileID: 5310934808755659470, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
+      propertyPath: hammerDownTime
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 5632923875091882778, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: m_IsKinematic
       value: 0
@@ -44805,6 +44813,7 @@ MonoBehaviour:
   text: {fileID: 1033417358}
   Opt2: {fileID: 2045112906}
   self: {fileID: 2136203447}
+  Shop: {fileID: 952135911}
   Prizes:
   - {fileID: 2800000, guid: c475923ff3f6f4e229e1fed7114c6dde, type: 3}
   - {fileID: 2800000, guid: 96b7cf75a6e744a98a36084bf9fd3d4c, type: 3}

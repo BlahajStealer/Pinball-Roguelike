@@ -45,6 +45,7 @@ public class CameraScript : MonoBehaviour
     BosssRewards br;
     public bool DestroyPinger;
     bool InShop;
+    public bool doingAnims;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -69,7 +70,7 @@ public class CameraScript : MonoBehaviour
         }
 
         cooldown +=Time.deltaTime;
-        if (Following)
+        if (Following && !doingAnims)
         {
             if (US.StopFollow)
             {
@@ -83,7 +84,7 @@ public class CameraScript : MonoBehaviour
                 Follows();
 
             } 
-        } else
+        } else if (!Following && !doingAnims)
         {
             if (!moveBool2)
             {
@@ -329,6 +330,7 @@ public class CameraScript : MonoBehaviour
             yield return null;
 ;           Debug.Log("Respawned");
         }
+        transform.localPosition = Destination;
         US.StopFollow = false;
         yield return null;
     }
@@ -349,6 +351,7 @@ public class CameraScript : MonoBehaviour
             yield return null;
 ;
         }
+        transform.position = Destination;
         transform.rotation = endRot;
         moveBool = false;
         yield return null;
@@ -368,7 +371,7 @@ public class CameraScript : MonoBehaviour
             yield return null;
 
         }
-
+        transform.position = Destination;
         moveBool2 = false;
         yield return null;
     }    
@@ -389,6 +392,7 @@ public class CameraScript : MonoBehaviour
 
         }
         transform.position = ShopTrans.transform.position;
+        transform.rotation = endRot;
         InShop = true;
         yield return null;
     }

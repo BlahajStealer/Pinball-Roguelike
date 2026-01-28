@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using TMPro;
-using UnityEngine.Rendering;
-using UnityEngine.Serialization;
+
+using System.Collections;
+
 public class BallScript : MonoBehaviour
 {
     Rigidbody rb;
@@ -18,7 +18,7 @@ public class BallScript : MonoBehaviour
     [SerializeField] float cooldown;
     public BoxCollider mc;
     MeshRenderer Main;
-    MeshRenderer Sub;
+    Transform Sub;
     public float ScoreCooldown;
     bool wait;
     float waitToTruify;
@@ -39,11 +39,12 @@ public class BallScript : MonoBehaviour
     int CurrentPingers;
     public GameObject Shop;
     ShopScript ss;
-
+    public float hammerDownTime;
     public bool hits;
     public int hitc;
     public bool hits15;
     public int hitc15;
+    bool down = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -84,9 +85,6 @@ public class BallScript : MonoBehaviour
         {
             waitToTruify += Time.deltaTime;
             if (waitToTruify > .1f) {
-                mc.enabled = true;
-                //Main.enabled = true;
-                Sub.enabled = true;
                 wait = false;
                 waitToTruify = 0;
             }
@@ -100,15 +98,18 @@ public class BallScript : MonoBehaviour
                 cooldown = 0.0f;
             }
         }
-        if (mc != null)
+
+        if (us.ForceCounter.activeSelf)
         {
-            if (us.ForceCounter.activeSelf)
+            if (down)
             {
-                mc.enabled = false;
-                //Main.enabled = false;
-                Sub.enabled = false;
+                down = false;   
+                StartCoroutine(BrickUp());
+
             }
+            //Main.enabled = false;
         }
+        
     }
     void OnCollisionEnter(Collision collision)
     {
@@ -328,11 +329,14 @@ public class BallScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Appear Trigger"))
         {
-            Debug.Log(("Hello Chat"));
-            mc = other.transform.GetChild(0).GetComponent<BoxCollider>();
-            //Main = other.GetComponent<MeshRenderer>();
-            Sub = other.transform.GetComponentInChildren<MeshRenderer>();
+ 
+            Sub = other.transform.GetComponentInChildren<Transform>();
             wait = true;
+            if (down == false)
+            {
+                down = true;
+                StartCoroutine(BrickDown());
+            }
 
         }
         else if (other.gameObject.CompareTag("FlapRight") && (us.RightFlap))
@@ -366,8 +370,40 @@ public class BallScript : MonoBehaviour
 
 
     }
-    private void OnMouseOver()
+    public IEnumerator BrickDown()
     {
-        Debug.Log("Hai :3");
+
+        Vector3 Destination = new Vector3(-6.31f, 8.5f, 0f);        
+        Vector3 Origin = Sub.transform.localPosition; // -0.017 0 -0.41 // 3.65
+        float CurrentTime = 0f;
+        while (Vector3.Distance(Sub.localPosition, Destination) > 0.1f)
+        {
+            CurrentTime += Time.deltaTime;
+            Sub.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / hammerDownTime);
+
+            yield return null;
+
+        }
+        Sub.transform.localPosition = Destination;
+        
+        yield return null;
+    }    public IEnumerator BrickUp()
+    {
+
+        Vector3 Destination = new Vector3(-6.31f, 12.303f, 0);        
+        Vector3 Origin = Sub.transform.localPosition;
+        float CurrentTime = 0f;
+        while (Vector3.Distance(Sub.localPosition, Destination) > 0.1f)
+        {
+            CurrentTime += Time.deltaTime;
+            Sub.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / hammerDownTime);
+
+            yield return null;
+
+        }
+        Sub.transform.localPosition = Destination;
+        
+        yield return null;
     }
+
 }

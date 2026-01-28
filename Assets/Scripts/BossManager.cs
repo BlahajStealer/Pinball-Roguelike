@@ -6,9 +6,11 @@ public class BossManager : MonoBehaviour
     [Header("--GameObjects--")]
     GameObject UniversalScriptObj;
     public GameObject Shop;
+    public GameObject BossMove;
     [Header("--Scripts--")]
     UniversalScript us;
     ShopScript ss;
+    ShopAnimations sa;
     [Header("--RoundManger--")]
     public int Round;
     bool BossActive;
@@ -59,6 +61,7 @@ public class BossManager : MonoBehaviour
         UniversalScriptObj = GameObject.FindGameObjectWithTag("Empty");
         us = UniversalScriptObj.GetComponent<UniversalScript>();
         ss = Shop.GetComponent<ShopScript>();
+        sa = Shop.GetComponent<ShopAnimations>();
 
     }
 
@@ -112,7 +115,10 @@ public class BossManager : MonoBehaviour
         {
             BossActive = false;
             CompletedBosses[RandomNum] = 2;
+            BossMove.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -1091);
             BossWin.SetActive(true);
+            StartCoroutine(sa.BossWin());
+
             NextLevelRestarter = true;
             randomGen = false;
         }
@@ -213,7 +219,10 @@ public class BossManager : MonoBehaviour
             {
                 BossActive = false;
                 CompletedBosses[RandomNum] = 2;
+                BossMove.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -1091);
+
                 BossWin.SetActive(true);
+                StartCoroutine(sa.BossWin());
                 NextLevelRestarter = true;
                 randomGen = false;
             }

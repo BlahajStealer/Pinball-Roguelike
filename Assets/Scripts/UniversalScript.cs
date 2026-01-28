@@ -225,7 +225,7 @@ public class UniversalScript : MonoBehaviour
 
             if (target <= score)
             {
-                rtShop.anchoredPosition = StartPos;
+                cs.doingAnims = true;
                 Shop.SetActive(true);
                 rb.linearVelocity = Vector3.zero;
                 ball.transform.position = transformFirst.transform.position;
@@ -237,6 +237,8 @@ public class UniversalScript : MonoBehaviour
             }
             else
             {
+                rtShop.anchoredPosition = StartPos;
+
                 Shop.SetActive(false);
             }
         }
