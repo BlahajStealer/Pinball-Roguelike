@@ -28,10 +28,10 @@ public class Every15 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bs.JustHit)
+        if (us.JustHit)
         {
             Hits += 1;
-            bs.JustHit = false;
+            us.JustHit = false;
         }
         if (Hits >= 15)
         { 

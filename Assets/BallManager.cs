@@ -1,8 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class BallManager : MonoBehaviour
 {
     public float amtOfBalls = 0;
+    public GameObject Ball;
+    public GameObject Transform;
+    public Transform Sub;
+    public bool down = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,5 +22,12 @@ public class BallManager : MonoBehaviour
             Debug.Log("You lose");
             amtOfBalls++;
         }
+        if (Keyboard.current.fKey.wasPressedThisFrame)
+            {
+                Debug.Log("Deployed the Package; Mission Acomplished!");
+                Instantiate(Ball, new Vector3(2.5f, 12, 0), Transform.transform.rotation);
+                Debug.Log(Transform.transform.position);
+            }
     }
+    
 }

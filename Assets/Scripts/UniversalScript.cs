@@ -8,7 +8,6 @@ using Unity.VisualScripting;
 public class UniversalScript : MonoBehaviour
 {
     [Header("--Ball--")]
-    public GameObject ball;
     public float score;
     public float force;
     public int Lives = 1;
@@ -20,6 +19,7 @@ public class UniversalScript : MonoBehaviour
     public float timeMult;
     public TextMeshProUGUI livesCounter;
     public Slider ForceCounterText;
+    public GameObject BossRewards;
 
     [Header("--Flaps--")]
     public GameObject Flap1; //right
@@ -86,7 +86,17 @@ public class UniversalScript : MonoBehaviour
     [Header("--GeneralBadges--")]
     public int Addition;
     public float multiplication;
-    void Awake()
+
+    public bool AllNormalPingers;
+    public int hitc;
+    public bool JustHit;
+    public bool Every50Norms;
+    public bool gPinger100;
+    public bool hits15;
+    public int hitc15;
+    public bool Remove100Pinger;
+    public bool hits;
+        void Awake()
     {
         Shop.SetActive(false);
         sp = Shop.GetComponent<ShopScript>();

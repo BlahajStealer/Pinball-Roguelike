@@ -21109,6 +21109,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   amtOfBalls: 0
+  Ball: {fileID: 249512508567093818, guid: 06cd2df62b9ec484abd189370fae5309, type: 3}
+  Transform: {fileID: 1247543087}
+  Sub: {fileID: 0}
+  down: 0
 --- !u!4 &985071303
 Transform:
   m_ObjectHideFlags: 0
@@ -26562,6 +26566,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
+      propertyPath: BossRewards
+      value: 
+      objectReference: {fileID: 2136203447}
+    - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
       propertyPath: goalTextObj
       value: 
       objectReference: {fileID: 1717968266}
@@ -27683,6 +27691,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6746f92c39bdc654d8f6fac0862f1db0, type: 3}
+--- !u!1 &1247543087
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1247543088}
+  m_Layer: 0
+  m_Name: Third
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1247543088
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247543087}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 12, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1249444428
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40097,11 +40136,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1028085531595171841, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1028085531595171841, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 19
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 1028085531595171841, guid: 3b921a29d0eda4d28ba326a085c46ac0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -45587,6 +45626,7 @@ SceneRoots:
   - {fileID: 1526746}
   - {fileID: 1036438790}
   - {fileID: 163094456}
+  - {fileID: 1247543088}
   - {fileID: 1392060410}
   - {fileID: 937506579}
   - {fileID: 4569371507735036243}

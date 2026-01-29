@@ -22,7 +22,7 @@ public class Every50 : MonoBehaviour
 
     void Update()
     {
-        bs.Every50Norms = true;
+        us.Every50Norms = true;
     }
 
 }

@@ -21,6 +21,6 @@ public class Remove100 : MonoBehaviour
 
     void Update()
     {
-        bs.Remove100Pinger = true;
+        us.Remove100Pinger = true;
     }
 }

@@ -21,11 +21,11 @@ public class Every10 : MonoBehaviour
 
     void Update()
     {
-        bs.hits = true;
-        if (bs.hitc == 10)
+        us.hits = true;
+        if (us.hitc == 10)
         {
             us.Addition += 50;
-            bs.hitc = 0;
+            us.hitc = 0;
             total += 50;
         }
     }

@@ -27,27 +27,19 @@ public class BallScript : MonoBehaviour
     float waitToTruify;
     float PointForceX;
     float PointForceY;
-    public bool JustHit;
     BossManager bm;
     BosssRewards br;
     GameObject BossManagerObj;
     GameObject BossRewardsObj;
     bool flapCooldown;
     float timer;
-    public bool AllNormalPingers;
-    public bool Every50Norms;
     //BadgeMods
-    public bool gPinger100;
-    public bool Remove100Pinger;
     int CurrentPingers;
-    public GameObject Shop;
+    GameObject Shop;
     ShopScript ss;
-    public float hammerDownTime;
-    public bool hits;
-    public int hitc;
-    public bool hits15;
-    public int hitc15;
-    bool down = false;
+    float hammerDownTime;
+    bool hits;
+
     bool start;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -57,31 +49,29 @@ public class BallScript : MonoBehaviour
     }
     void Start()
     {
+        GameObj = GameObject.FindGameObjectWithTag("Empty");
+        us = GameObj.GetComponent<UniversalScript>();
 
-        Shop = GameObject.FindGameObjectWithTag("Shop");
+
 
         Text = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         Camera = GameObject.FindGameObjectWithTag("MainCamera");
         BossManagerObj = GameObject.FindGameObjectWithTag("BossMan");
-        BossRewardsObj = GameObject.FindGameObjectWithTag("BossWin");
         BallManagerObj = GameObject.FindGameObjectWithTag("BallMan");
-        GameObj = GameObject.FindGameObjectWithTag("Empty");
-
-        if (BossRewardsObj != null)
-        {
-            Debug.Log("Why Null");
-            br = BossRewardsObj.GetComponent<BosssRewards>();
-
-        }
+        br = us.BossRewards.GetComponent<BosssRewards>();
         bm = BossManagerObj.GetComponent<BossManager>();
+
         audioSource = Camera.GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-        ss = Shop.GetComponent<ShopScript>();
+        ss = us.Shop.GetComponent<ShopScript>();
         bms = BallManagerObj.GetComponent<BallManager>();
-        us = GameObj.GetComponent<UniversalScript>();
-        ss = Shop.GetComponent<ShopScript>();
-        transform.position = us.transformFirst.transform.position;
         bms.amtOfBalls++;
+
+        if (bms.amtOfBalls == 1)
+        {
+            transform.position = us.transformFirst.transform.position;
+
+        }
 
         if (us.DDOL != null)
         {
@@ -100,18 +90,10 @@ public class BallScript : MonoBehaviour
         ScoreCooldown = 0.15f;
         PointForceX = 1.25f;
         PointForceY = 1.25f;
-        JustHit = false;
 
-        JustHit = false;
-        AllNormalPingers = false;
-        Every50Norms = false;
-        gPinger100 = false;
-        Remove100Pinger = false;
+        us.Every50Norms = false;
         hammerDownTime = 0.2f;
-        hits = false;
-        hitc = 0;
-        hits15 = false;
-        hitc = 0;
+
 
 
 
@@ -126,10 +108,7 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (start)
-        {
 
-        }
 
         if (us.xAlligned && us.yAlligned)
         {
@@ -192,9 +171,9 @@ public class BallScript : MonoBehaviour
 
         if (us.ForceCounter.activeSelf)
         {
-            if (down)
+            if (bms.down)
             {
-                down = false;   
+                bms.down = false;     
                 StartCoroutine(BrickUp());
 
             }
@@ -204,6 +183,7 @@ public class BallScript : MonoBehaviour
 
         if (us.target <= us.score)
         {
+            
             rb.linearVelocity = Vector3.zero;
             transform.position = us.transformFirst.transform.position;
 
@@ -213,6 +193,7 @@ public class BallScript : MonoBehaviour
             if (bms.amtOfBalls > 1)
             {
                 Destroy(this.gameObject);
+                bms.amtOfBalls--;
             } else
             {
                 if (us.Lives == 0)
@@ -244,7 +225,7 @@ public class BallScript : MonoBehaviour
 
         if ((collision.gameObject.CompareTag("Pingy Thing") || collision.gameObject.CompareTag("AddedPinger")) && !startCooldown)
         {
-            JustHit = true;
+            us.JustHit = true;
 
             startCooldown = true;
             audioSource.Play();
@@ -263,15 +244,15 @@ public class BallScript : MonoBehaviour
 
             }
             
-            if (AllNormalPingers)
+            if (us.AllNormalPingers)
             {
                 scoreToAdd += 200;
             }
-            if (Every50Norms)
+            if (us.Every50Norms)
             {
                 scoreToAdd += 50;
             }
-            if (Remove100Pinger)
+            if (us.Remove100Pinger)
             {
                 int AmountBelowPingers = us.StartingPinger - CurrentPingers;
                 if (AmountBelowPingers > 0)
@@ -282,13 +263,13 @@ public class BallScript : MonoBehaviour
                     }
                 }
             }
-            if (hits)
+            if (us.hits)
             {
-                hitc++;
+                us.hitc++;
             }
-            if (hits15)
+            if (us.hits15)
             {
-                hitc15++;
+                us.hitc15++;
             }
             if (br.Levels[0] > 0)
             {
@@ -308,7 +289,7 @@ public class BallScript : MonoBehaviour
 
         } else if (collision.gameObject.CompareTag("Gold Pingy Thing") && !startCooldown)
         {
-            JustHit = true;
+            us.JustHit = true;
 
             startCooldown = true;
             audioSource.Play();
@@ -325,11 +306,11 @@ public class BallScript : MonoBehaviour
                 scoreToAdd += 300;
 
             }
-            if (gPinger100)
+            if (us.gPinger100)
             {
                 scoreToAdd += 100;
             }
-            if (Remove100Pinger)
+            if (us.Remove100Pinger)
             {
                 int AmountBelowPingers = us.StartingPinger - CurrentPingers;
                 if (AmountBelowPingers > 0)
@@ -352,20 +333,20 @@ public class BallScript : MonoBehaviour
             {
                 us.score += scoreToAdd;
             }
-            if (hits)
+            if (us.hits)
             {
-                hitc++;
+                us.hitc++;
             }
-            if (hits15)
+            if (us.hits15)
             {
-                hitc15++;
+                us.hitc15++;
             }
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
 
         }else if (collision.gameObject.CompareTag("Corner Colliders") && !startCooldown)
         {
-            JustHit = true;
+            us.JustHit = true;
 
             startCooldown = true;
             audioSource.Play();
@@ -415,7 +396,7 @@ public class BallScript : MonoBehaviour
 
         else if (collision.gameObject.CompareTag("Evil Pinger") && !startCooldown)
         {
-            JustHit = true;
+            us.JustHit = true;
 
             startCooldown = true;
             audioSource.Play();
@@ -439,13 +420,13 @@ public class BallScript : MonoBehaviour
             {
                 us.score = 0;
             }
-            if (hits)
+            if (us.hits)
             {
-                hitc++;
+                us.hitc++;
             }
-            if (hits15)
+            if (us.hits15)
             {
-                hitc15++;
+                us.hitc15++;
             }
             Debug.Log(us.score);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x * PointForceX, rb.linearVelocity.y * PointForceY, 0);
@@ -458,11 +439,11 @@ public class BallScript : MonoBehaviour
         if (other.gameObject.CompareTag("Appear Trigger"))
         {
  
-            Sub = other.transform.GetComponentInChildren<Transform>();
+            bms.Sub = other.transform.GetComponentInChildren<Transform>();
             wait = true;
-            if (down == false)
+            if (bms.down == false)
             {
-                down = true;
+                bms.down = true;
                 StartCoroutine(BrickDown());
             }
 
@@ -502,34 +483,34 @@ public class BallScript : MonoBehaviour
     {
 
         Vector3 Destination = new Vector3(-6.31f, 8.5f, 0f);        
-        Vector3 Origin = Sub.transform.localPosition; // -0.017 0 -0.41 // 3.65
+        Vector3 Origin = bms.Sub.transform.localPosition; // -0.017 0 -0.41 // 3.65
         float CurrentTime = 0f;
-        while (Vector3.Distance(Sub.localPosition, Destination) > 0.1f)
+        while (Vector3.Distance(bms.Sub.localPosition, Destination) > 0.1f)
         {
             CurrentTime += Time.deltaTime;
-            Sub.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / hammerDownTime);
+            bms.Sub.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / hammerDownTime);
 
             yield return null;
 
         }
-        Sub.transform.localPosition = Destination;
+        bms.Sub.transform.localPosition = Destination;
         
         yield return null;
     }    public IEnumerator BrickUp()
     {
 
         Vector3 Destination = new Vector3(-6.31f, 12.303f, 0);        
-        Vector3 Origin = Sub.transform.localPosition;
+        Vector3 Origin = bms.Sub.transform.localPosition;
         float CurrentTime = 0f;
-        while (Vector3.Distance(Sub.localPosition, Destination) > 0.1f)
+        while (Vector3.Distance(bms.Sub.localPosition, Destination) > 0.1f)
         {
             CurrentTime += Time.deltaTime;
-            Sub.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / hammerDownTime);
+            bms.Sub.transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / hammerDownTime);
 
             yield return null;
 
         }
-        Sub.transform.localPosition = Destination;
+        bms.Sub.transform.localPosition = Destination;
         
         yield return null;
     }

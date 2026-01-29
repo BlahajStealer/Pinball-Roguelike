@@ -23,9 +23,9 @@ public class Money15 : MonoBehaviour
 
     void Update()
     {
-        bs.hits15 = true;
+        us.hits15 = true;
         
-        if (bs.hitc15 == 15)
+        if (us.hitc15 == 15)
         {
             MoneyAdded--;
         }
@@ -37,7 +37,7 @@ public class Money15 : MonoBehaviour
 
             }
             MoneyAdded = 5;
-            bs.hitc15 = 0;
+            us.hitc15 = 0;
             ran = true;
         } if (!sc.inShop)
         {

@@ -168,13 +168,11 @@ public class BossManager : MonoBehaviour
         }
         if (CompletedBosses[5] == 1 && us.score < (1f/3f * us.target))
         {
-            Debug.Log("Hiya");
             for (int i = 0; i < Badges.Length; i++)
             {
                 if (Badges[i] != null)
                 {
                     Badges[i].SetActive(false);
-                    Debug.Log("Hiya");
 
                 }
             }
@@ -185,8 +183,6 @@ public class BossManager : MonoBehaviour
                 if (Badges[i] != null)
                 {
                     Badges[i].SetActive(true);
-                    Debug.Log("Hiya2");
-
                 }
 
             }

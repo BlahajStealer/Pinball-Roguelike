@@ -43,7 +43,6 @@ public class ShopScript : MonoBehaviour
     UniversalScript us;
     CameraScript cs;
     NextLevels nl;
-    BallScript bs;
     ShopAnimations sa;
     [Header("--Descriptions--")]
     public TextMeshProUGUI Description;
@@ -100,7 +99,6 @@ public class ShopScript : MonoBehaviour
 
     void Start()
     {
-        bs = Ball.GetComponent<BallScript>();
         NextLevels.SetActive(false);
         sa = Shop.GetComponent<ShopAnimations>();
         nl = NextLevelObj.GetComponent<NextLevels>();
@@ -479,7 +477,7 @@ public class ShopScript : MonoBehaviour
             Halfpts = false;
         } else if (Photos[ID].TryGetComponent<EveryGoldPinger>(out _))
         {
-            bs.gPinger100 = false;
+            us.gPinger100 = false;
 
         } else if (Photos[ID].TryGetComponent<goldperc>(out _))
         {
@@ -495,16 +493,16 @@ public class ShopScript : MonoBehaviour
         {
             us.Addition -= Photos[ID].GetComponent<Every4>().amountToAdd;
         } else if (Photos[ID].TryGetComponent<AllNormal>(out _)) {
-            bs.AllNormalPingers = false;
+            us.AllNormalPingers = false;
         } else if (Photos[ID].TryGetComponent<Every50>(out _))
         {
-            bs.AllNormalPingers = false;
+            us.AllNormalPingers = false;
         } else if (Photos[ID].TryGetComponent<Add500>(out _))
         {
             us.Addition -= Photos[ID].GetComponent<Add500>().Add;
         } else if (Photos[ID].TryGetComponent<Remove100>(out _))
         {
-            bs.Remove100Pinger = false;
+            us.Remove100Pinger = false;
         } else if (Photos[ID].TryGetComponent<PingerDestroyMoney>(out _))
         {
             cs.DestroyPinger = false;
@@ -519,8 +517,8 @@ public class ShopScript : MonoBehaviour
             us.Addition -= Mathf.RoundToInt(Photos[ID].GetComponent<MoneyPoints>().lastAdd);
         } else if (Photos[ID].TryGetComponent<Money15>(out _))
         {
-            bs.hitc15 = 0;
-            bs.hits15 = false;
+            us.hitc15 = 0;
+            us.hits15 = false;
         }
 
 

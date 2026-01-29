@@ -332,7 +332,6 @@ public class CameraScript : MonoBehaviour
             transform.localPosition = Vector3.Lerp(Origin, Destination, CurrentTime / RespawnSpeed);
 
             yield return null;
-;           Debug.Log("Respawned");
         }
         transform.localPosition = Destination;
         US.StopFollow = false;

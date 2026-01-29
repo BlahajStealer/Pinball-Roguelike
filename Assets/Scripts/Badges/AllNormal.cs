@@ -5,6 +5,8 @@ public class AllNormal : MonoBehaviour
 
     GameObject Ball;
     BallScript bs;
+    GameObject Universal;
+    UniversalScript us;
     GameObject Shop;
     ShopScript sc;
 
@@ -14,10 +16,12 @@ public class AllNormal : MonoBehaviour
         bs = Ball.GetComponent<BallScript>();
         Shop = GameObject.FindGameObjectWithTag("Shop");
         sc = Shop.GetComponent<ShopScript>();
+        Universal = GameObject.FindGameObjectWithTag("Empty");
+        us = Universal.GetComponent<UniversalScript>();    
         int Gold = GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length;
         if (Gold == 0)
         {
-            bs.AllNormalPingers = true;
+            us.AllNormalPingers = true;
         }
 
     }
@@ -29,7 +33,7 @@ public class AllNormal : MonoBehaviour
             int Gold = GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length;
             if (Gold == 0)
             {
-                bs.AllNormalPingers = true;
+                us.AllNormalPingers = true;
             }
         }
     }
