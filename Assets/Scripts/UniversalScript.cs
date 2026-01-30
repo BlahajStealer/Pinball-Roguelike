@@ -65,8 +65,7 @@ public class UniversalScript : MonoBehaviour
     public TextMeshProUGUI goalText;
     public int target = 10000;
     public int StartingPinger;
-    public bool xAlligned;
-    public bool yAlligned;
+
     Rigidbody Flap1rb;
     Rigidbody Flap2rb;
 
@@ -251,8 +250,7 @@ public class UniversalScript : MonoBehaviour
 
 
         
-        
-        if (xAlligned && yAlligned)
+        if (Respawning)
         {
             ForceCounter.SetActive(true);
             if (forceTime <= 100 && !down)

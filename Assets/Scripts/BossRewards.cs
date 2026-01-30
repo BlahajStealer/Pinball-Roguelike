@@ -9,7 +9,7 @@ public class BosssRewards : MonoBehaviour
     public RawImage Opt2;
     bool started;
     public GameObject self;
-    public GameObject Shop;
+    public GameObject Shop;          
     ShopAnimations sa;    
     public Texture[] Prizes;
     public GameObject descriptionObj;

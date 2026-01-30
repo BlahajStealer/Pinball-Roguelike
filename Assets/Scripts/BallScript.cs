@@ -108,10 +108,12 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-        if (us.xAlligned && us.yAlligned)
+        if (us.Respawning)
         {
+            if (transform.position != us.transformFirst.transform.position)
+            {
+                transform.position = us.transformFirst.transform.position;
+            }
             if (Keyboard.current.spaceKey.wasPressedThisFrame)
             {
                 rb.linearVelocity = new Vector3(0, us.forceTime, 0);
@@ -130,12 +132,7 @@ public class BallScript : MonoBehaviour
                 us.cooldownTimer = 0;
             }
         }
-        us.xAlligned = Mathf.Abs(transform.position.x - us.transformFirst.transform.position.x) < 0.05f;
-        us.yAlligned = Mathf.Abs(transform.position.y - us.transformFirst.transform.position.y) < 0.05f;
-        if (transform.position.y > us.transformFirst.transform.position.y)
-        {
-            us.Respawning = false;
-        }
+        
         if (ss.PercChanged)
         {
             CurrentPingers = GameObject.FindGameObjectsWithTag("Pingy Thing").Length + GameObject.FindGameObjectsWithTag("Gold Pingy Thing").Length + GameObject.FindGameObjectsWithTag("AddedPinger").Length + GameObject.FindGameObjectsWithTag("Evil Pinger").Length;

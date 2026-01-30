@@ -9,7 +9,7 @@ public class ShopScript : MonoBehaviour
     public idDeterminer IdDet;
     public TextMeshProUGUI MoneyText;
 
-
+    BosssRewards br;
 
     public bool shopMoneyStart;
     public bool shopMoneyStarted;
@@ -36,7 +36,7 @@ public class ShopScript : MonoBehaviour
     public GameObject Univ;
     public GameObject Camera;
     public GameObject NextLevelObj;
-    public GameObject Ball;
+    public GameObject BossRewards;
     public GameObject Canvas;
     [Header("--Scripts--")]
     BossManager bm;
@@ -93,12 +93,16 @@ public class ShopScript : MonoBehaviour
     public float backup;
     public bool BadgeBoughtNext = false;
     public bool noTab;
+    public int ConsumeLastID;
+    public int BadgeLastID;
+
     private void Awake()
     {
     }
 
     void Start()
     {
+        br = BossRewards.GetComponent<BosssRewards>();
         NextLevels.SetActive(false);
         sa = Shop.GetComponent<ShopAnimations>();
         nl = NextLevelObj.GetComponent<NextLevels>();
@@ -198,6 +202,12 @@ public class ShopScript : MonoBehaviour
             {
                 normalTarget = (Mathf.RoundToInt(normalTarget / 5) * 5) * 10;
             }
+            int livesToAdd = 3;
+            for (int i = 1; i <= br.Levels[2]; i++)
+            {
+                livesToAdd++;
+            }
+            us.Lives = livesToAdd;
             us.Lives = 4;
             NumberBadges = 1;
             inShop = true;
@@ -362,7 +372,7 @@ public class ShopScript : MonoBehaviour
     public void BadgeButtonHit(int ID)
     {
 
-        if ((BadgeButtons[ID].image.sprite != outOfStock))
+        if ((BadgeButtons[ID].image.sprite != outOfStock) && BadgeBuyValue[BadgeArray[ID]] <= Money)
         {
             BadgeBoughtNext = true;
             IdDet.Badge(BadgeArray[ID], ID);
@@ -394,6 +404,7 @@ public class ShopScript : MonoBehaviour
         
         if (Photos[ID] != null)
         {
+            BadgeLastID = ID;
             int Y;
             switch (ID)
             {
@@ -437,30 +448,8 @@ public class ShopScript : MonoBehaviour
     }
     public void SellButtonFunc()
     {
-        float y;
-        y = rt.anchoredPosition.y;
-        int ID;
-        switch (y)
-        {
-            case 287+37:
-                ID = 0;
-                break;
-            case 137 + 37:
-                ID = 1;
-                break;
-            case -13 + 37:
-                ID = 2;
-                break;
-            case -163 + 37:
-                ID = 3;
-                break;
-            case -313 + 37:
-                ID = 4;
-                break;
-            default:
-                ID = 0;
-                break;
-        }
+        
+        int ID = BadgeLastID;
         Money += BadgeSellValue[currentBadgeIDs[ID]];
         currentBadgeIDs[ID] = 7;
         Swap[ID].sprite = Transparent;
@@ -529,42 +518,22 @@ public class ShopScript : MonoBehaviour
 
     public void SellConsumable()
     {
-        float y;
-        y = rtc.anchoredPosition.y;
-        int ID = 0;
-        if (y == 180)
-        {
-            ID = 0;
-        }
-        else if (y == -120)
-        {
-            ID = 1;
+        Money += ConsumeSellValue[currentConsumeIDs[ConsumeLastID]];
+        currentConsumeIDs[ConsumeLastID] = 7;
 
-        }
-
-        Money += ConsumeSellValue[currentConsumeIDs[ID]];
-        currentConsumeIDs[ID] = 7;
-
-        ConsumableSpots[ID].sprite = Transparent;
-        Destroy(Consumables[ID]);
-        Consumables[ID] = null;
+        ConsumableSpots[ConsumeLastID].sprite = Transparent;
+        Destroy(Consumables[ConsumeLastID]);
+        Consumables[ConsumeLastID] = null;
         SellConsume.SetActive(false);
     }
     public void UseConsume()
     {
         Image Parent;
         if (rtc.anchoredPosition.y == 180)
-        {
             Parent = GameObject.FindGameObjectWithTag("First Image").GetComponent<Image>();
-            currentConsumeIDs[0] = 7;
-
-        }
+        
         else
-        {
             Parent = GameObject.FindGameObjectWithTag("Second Image").GetComponent<Image>();
-            currentConsumeIDs[0] = 7;
-
-        }
         if (Parent.sprite == ConsumeSprites[0])
         {
             cs.GoldPinger(0);
@@ -584,6 +553,7 @@ public class ShopScript : MonoBehaviour
     {
         if (Consumables[ID] != null)
         {
+            ConsumeLastID = ID;
             int y = 180;
             if (ID == 0)
             {

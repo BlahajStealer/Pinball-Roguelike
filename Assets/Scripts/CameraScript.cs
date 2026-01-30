@@ -115,6 +115,15 @@ public class CameraScript : MonoBehaviour
                 hit.collider.tag = "Gold Pingy Thing";
                 hit.collider.gameObject.transform.GetChild(0).GetComponentInChildren<Renderer>().material = Gold;
                 goldPingActive = false;
+                if (ss.ConsumeLastID == 0)
+                {
+                    ss.currentConsumeIDs[0] = 7;
+
+                } else
+                {
+                    ss.currentConsumeIDs[1] = 7;
+
+                }
                 ss.SellConsume.SetActive(false);
                 ss.PercChanged = true;
                 if (ss.rtc.anchoredPosition.y == 180)
@@ -131,6 +140,15 @@ public class CameraScript : MonoBehaviour
                 ss.PercChanged = true;
                 Debug.Log("Hiya");
                 addPingActive = false;
+                if (ss.ConsumeLastID == 0)
+                {
+                    ss.currentConsumeIDs[0] = 7;
+
+                } else
+                {
+                    ss.currentConsumeIDs[1] = 7;
+
+                }
                 ss.SellConsume.SetActive(false);
                 if (ss.rtc.anchoredPosition.y == 180)
                 {
@@ -149,6 +167,15 @@ public class CameraScript : MonoBehaviour
                 Destroy(hit.collider.gameObject);
                 removePingActive = false;
                 ss.SellConsume.SetActive(false);
+                if (ss.ConsumeLastID == 0)
+                {
+                    ss.currentConsumeIDs[0] = 7;
+
+                } else
+                {
+                    ss.currentConsumeIDs[1] = 7;
+
+                }
                 if (DestroyPinger)
                 {
                     ss.Money += 5;
