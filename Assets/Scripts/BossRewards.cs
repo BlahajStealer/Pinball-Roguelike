@@ -16,7 +16,8 @@ public class BosssRewards : MonoBehaviour
     public string[] descs;
     public int random1;
     public int random2;
-
+    public GameObject GameObj;
+    UniversalScript us;
     public TextMeshProUGUI[] LevelDisp;
     public int[] Levels;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,6 +27,8 @@ public class BosssRewards : MonoBehaviour
         {
             Levels[i] = 0;
         }
+        GameObj = GameObject.FindGameObjectWithTag("Empty");
+        us = GameObj.GetComponent<UniversalScript>();
         started = false;
         sa = Shop.GetComponent<ShopAnimations>();   
     }
@@ -38,8 +41,9 @@ public class BosssRewards : MonoBehaviour
             if (!started)
             {
                 started=true;
-                random1 = Random.Range(0, Prizes.Length-1);
-                random2 = Random.Range(0, Prizes.Length-1);
+                random1 = Random.Range(0, Prizes.Length);
+                random2 = Random.Range(0, Prizes.Length);
+                Debug.Log("Prizes.Length: " + (Prizes.Length-1));
                 if (random1 == random2)
                 {
                     if (random1 == Prizes.Length-1)
@@ -72,9 +76,17 @@ public class BosssRewards : MonoBehaviour
         if (placement == 1)
         {
             Levels[random1]++;
+            if (random1 == 2)
+            {
+                us.Lives++;
+            }
         } else
         {
             Levels[random2]++;
+            if (random2 == 2)
+            {
+                us.Lives++;
+            }
         }
         continueReward();
 

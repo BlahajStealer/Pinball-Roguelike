@@ -190,6 +190,7 @@ public class BallScript : MonoBehaviour
             if (bms.amtOfBalls > 1)
             {
                 Destroy(this.gameObject);
+                us.addedBall = true;
                 bms.amtOfBalls--;
             } else
             {
@@ -199,7 +200,7 @@ public class BallScript : MonoBehaviour
                 }
                 else if (us.Lives > 0)
                 {
-                    us.Lives -= 1;
+                    us.Lives--;
                     rb.angularVelocity = Vector3.zero;
                     rb.linearVelocity = Vector3.zero;
                     us.StopFollow = true;

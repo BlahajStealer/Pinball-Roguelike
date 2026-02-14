@@ -26678,7 +26678,7 @@ PrefabInstance:
       objectReference: {fileID: 386381200}
     - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
       propertyPath: Lives
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7117163820517752109, guid: dd89da9a932c54baeaec1f1a0b4370e8, type: 3}
       propertyPath: force
@@ -45175,6 +45175,7 @@ MonoBehaviour:
   - Badge count increases by 1; Max of 5
   random1: 0
   random2: 0
+  GameObj: {fileID: 0}
   LevelDisp:
   - {fileID: 1215986089}
   - {fileID: 57101476}

@@ -95,6 +95,7 @@ public class UniversalScript : MonoBehaviour
     public int hitc15;
     public bool Remove100Pinger;
     public bool hits;
+    public bool addedBall;
         void Awake()
     {
         Shop.SetActive(false);

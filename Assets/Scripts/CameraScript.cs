@@ -46,6 +46,8 @@ public class CameraScript : MonoBehaviour
     public bool DestroyPinger;
     bool InShop;
     public bool doingAnims;
+    GameObject[] balls;
+    int currentBall = 0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -58,6 +60,7 @@ public class CameraScript : MonoBehaviour
         Following = true;
         OriginalPos = transform.position;
         rb = GetComponent<Rigidbody>();
+        balls = GameObject.FindGameObjectsWithTag("Player");
     }
 
     // Update is called once per frame
@@ -66,6 +69,35 @@ public class CameraScript : MonoBehaviour
         if (Ball == null)
         {
             Ball = GameObject.FindGameObjectsWithTag("Player")[0];
+        }
+        if (US.addedBall)
+        {
+            US.addedBall = false;
+            balls = GameObject.FindGameObjectsWithTag("Player");
+        }
+        if (Keyboard.current.leftArrowKey.wasPressedThisFrame)
+        {
+            if (currentBall == 0)
+            {
+                currentBall = balls.Length-1;
+            } else
+            {
+                currentBall--;
+            }
+            Ball = balls[currentBall];
+            
+        }
+        if (Keyboard.current.rightArrowKey.wasPressedThisFrame)
+        {
+            if (currentBall == balls.Length)
+            {
+                currentBall = 0;
+            } else
+            {
+                currentBall++;
+            }       
+            Ball = balls[currentBall];
+
         }
         if (InShop)
         {

@@ -30,6 +30,7 @@ public class BallManager : MonoBehaviour
             Debug.Log("Deployed the Package; Mission Acomplished!");
             Instantiate(Ball, new Vector3(2.5f, 12, 0), Transform.transform.rotation);
             us.Lives--;
+            us.addedBall = true;
             
         }
     }

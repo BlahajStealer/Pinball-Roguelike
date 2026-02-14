@@ -208,7 +208,6 @@ public class ShopScript : MonoBehaviour
                 livesToAdd++;
             }
             us.Lives = livesToAdd;
-            us.Lives = 4;
             NumberBadges = 1;
             inShop = true;
             shopMoneyStart = false;
