@@ -96,7 +96,15 @@ public class CameraScript : MonoBehaviour
             {
                 currentBall++;
             }       
-            Ball = balls[currentBall];
+            if (currentBall >= balls.Length)
+            {
+                currentBall = 0;
+            }
+            if (balls[currentBall] != null)
+            {
+                Ball = balls[currentBall];
+
+            }
 
         }
         if (InShop)
