@@ -62,9 +62,7 @@ public class ShopScript : MonoBehaviour
     RectTransform rt;
     public int[] currentBadgeIDs;
     public TextMeshProUGUI[] BadgeSellTexts;
-    public GameObject[] BadgeModels;
-    public GameObject[] BadgeBase;
-    public GameObject[] Temps = new GameObject[3];
+   
     [Header("--Consumables--")]
     public int[] ConsumeBuyValue;
     public int[] ConsumeSellValue;
@@ -238,8 +236,6 @@ public class ShopScript : MonoBehaviour
                 TakenBadges[i] = RandomInt;
                 BadgeButtons[i].image.sprite = Badges[RandomInt];
                 BadgeArray[i] = RandomInt;
-                GameObject.Destroy(Temps[i]);
-                Temps[i] = Instantiate(BadgeModels[RandomInt], BadgeBase[i].transform.position, Quaternion.Euler(-180,-90,90));
                 for (int n = 0; n < IDSprites.Length; n++)
                 {
                     if (IDSprites[n] == null)
@@ -257,9 +253,6 @@ public class ShopScript : MonoBehaviour
                 int RandomInt = Random.Range(0, MachineMods.Length);
                 MachineModsButton[i].image.sprite = MachineMods[RandomInt];
                 MachineArray[i] = RandomInt;
-
-
-
                 for (int n = 0; n < IDConsumables.Length; n++)
                 {
                     if (IDConsumables[n] == null)
