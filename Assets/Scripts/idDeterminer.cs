@@ -4,7 +4,6 @@ public class idDeterminer : MonoBehaviour
 {
     public GameObject[] BadgeObjects;
     public GameObject[] ConsumableObjs;
-
     ShopScript ss;
     int MoneyTaken;
     void Start()
