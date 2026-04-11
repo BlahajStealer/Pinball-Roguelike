@@ -28,7 +28,7 @@ public class BallManager : MonoBehaviour
         if (Keyboard.current.fKey.wasPressedThisFrame && us.Lives > 0 && !us.Respawning)
         {
             Debug.Log("Deployed the Package; Mission Acomplished!");
-            Instantiate(Ball, new Vector3(2.5f, 12, 0), Transform.transform.rotation);
+            Instantiate(Ball, Transform.transform.position, Transform.transform.rotation);
             us.Lives--;
             us.addedBall = true;
             

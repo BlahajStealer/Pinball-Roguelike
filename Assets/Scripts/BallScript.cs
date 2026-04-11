@@ -5,6 +5,7 @@ using System.Collections;
 using UnityEngine.UI;
 using Mono.Cecil.Cil;
 using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class BallScript : MonoBehaviour
 {
@@ -192,7 +193,7 @@ public class BallScript : MonoBehaviour
                 Destroy(this.gameObject);
                 us.addedBall = true;
                 bms.amtOfBalls--;
-            } else
+            } else if (us.score < us.target)
             {
                 if (us.Lives == 0)
                 {

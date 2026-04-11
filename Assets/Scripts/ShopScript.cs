@@ -78,7 +78,9 @@ public class ShopScript : MonoBehaviour
     public Button[] MachineModsButton;
     public int[] currentConsumeIDs;
     public TextMeshProUGUI[] ConsumeSellTexts;
-
+    public GameObject[] ConsumableObjects;
+    public GameObject[] ConsumablePlaces;
+    public GameObject[] TemporaryConsumes;
     [Header("--BadgeSpecifics--")]
     public bool Percent20;
     public float NumberBadges = 1;
@@ -238,8 +240,21 @@ public class ShopScript : MonoBehaviour
                 TakenBadges[i] = RandomInt;
                 BadgeButtons[i].image.sprite = Badges[RandomInt];
                 BadgeArray[i] = RandomInt;
-                GameObject.Destroy(Temps[i]);
-                Temps[i] = Instantiate(BadgeModels[RandomInt], BadgeBase[i].transform.position, Quaternion.Euler(-180,-90,90));
+                if (i < Temps.Length)
+                {
+                    GameObject.Destroy(Temps[i]);
+                    if (BadgeModels[RandomInt].name == "EmptySlot500")
+                    {
+                        Temps[i] = Instantiate(BadgeModels[RandomInt], BadgeBase[i].transform.position, Quaternion.Euler(-180, 0, 90));
+
+                    } else
+                    {
+                        Temps[i] = Instantiate(BadgeModels[RandomInt], BadgeBase[i].transform.position, Quaternion.Euler(-180, -90, 90));
+
+                    }
+
+
+                }
                 for (int n = 0; n < IDSprites.Length; n++)
                 {
                     if (IDSprites[n] == null)
@@ -251,13 +266,24 @@ public class ShopScript : MonoBehaviour
 
             }
 
-
+            for (int i = 0; i < TemporaryConsumes.Length; i++)
+            {
+                TemporaryConsumes[i] = null;
+            }
             for (int i = 0; i < MachineModsButton.Length; i++)
             {
                 int RandomInt = Random.Range(0, MachineMods.Length);
                 MachineModsButton[i].image.sprite = MachineMods[RandomInt];
                 MachineArray[i] = RandomInt;
+                if (RandomInt == 2 || RandomInt == 5)
+                {
+                    TemporaryConsumes[i] = Instantiate(ConsumableObjects[RandomInt], ConsumablePlaces[i].transform.position, Quaternion.Euler(90, 0, -180));
 
+                } else
+                {
+                    TemporaryConsumes[i] = Instantiate(ConsumableObjects[RandomInt], ConsumablePlaces[i].transform.position, Quaternion.Euler(0, 0, 0));
+
+                }
 
 
                 for (int n = 0; n < IDConsumables.Length; n++)
@@ -398,6 +424,10 @@ public class ShopScript : MonoBehaviour
     }
     public void Leave()
     {
+        for (int i = 0; i < TemporaryConsumes.Length; i++)
+        {
+            GameObject.Destroy(TemporaryConsumes[i]);
+        }
         StopAllCoroutines();
         NextLevels.SetActive(true);
         StartCoroutine(sa.NextLevelAnim());

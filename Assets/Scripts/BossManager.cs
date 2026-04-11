@@ -140,7 +140,11 @@ public class BossManager : MonoBehaviour
         {
             for (int i = 0; i < FakePingers.Length; i++)
             {
-                FakePingers[i].SetActive(true);
+                if (FakePingers[i] != null)
+                {
+                    FakePingers[i].SetActive(true);
+
+                }
             }
         }
         if (CompletedBosses[2] == 1 && !twoStarted)

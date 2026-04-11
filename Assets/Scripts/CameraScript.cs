@@ -363,7 +363,11 @@ public class CameraScript : MonoBehaviour
     }
     void Follows()
     {
-        transform.position = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z-3.5f);
+        if (Ball != null)
+        {
+            transform.position = new Vector3(Ball.transform.position.x, Ball.transform.position.y, OriginalPos.z - 3.5f);
+
+        }
 
     }
     void FollowsNot()
