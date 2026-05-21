@@ -1,1 +1,1 @@
-A Pinball-Rouguelike that is very much in early development. Don't expect a beta-release until September 2026 at the earliest.
+A Pinball-Rouguelike that is in middle-stage development. Currently a dead project :< but maybe not for long...?
